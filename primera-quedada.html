@@ -1,85 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Dónde fuimos en nuestra primera quedada?</title>
-    <style>
-        body {
-            background-color: #84b7f0; /* Fondo rosa */
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        .message {
-            font-size: 1.2rem;
-            margin-top: 30px;
-        }
-        .button, .option-button {
-            background-color: #84b7f0; /* Rosa para botones y notificación */
-            color: white;
-            font-size: 1rem;
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .button:hover, .option-button:hover {
-            background-color: #5b85b5; /* Azul más oscuro para hover */
-        }
-        .options {
-            margin-top: 30px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Dónde fuimos en nuestra primera quedada?</title>
+  <style>
+    body {
+      background-color: #f0b7d4; /* Fondo rosa original de las escenas de elegir */
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
 
-        /* Estilo de la notificación */
-        .notification {
-            position: fixed;
-            top: -50px;
-            right: 20px;
-            background-color: #6d98d4; /* Azul para la notificación */
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-align: center;
-            width: 250px;
-            z-index: 1000;
-            animation: slideDown 1s forwards;
-        }
+    h1 {
+      color: #333;
+    }
 
-        @keyframes slideDown {
-            0% {
-                top: -50px;
-            }
-            100% {
-                top: 20px;
-            }
-        }
-    </style>
+    .message {
+      font-size: 1.2rem;
+      margin-top: 30px;
+    }
+
+    .button, .option-button {
+      background-color: #f0b7d4; /* Mismo rosa que el fondo */
+      color: white;
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover, .option-button:hover {
+      background-color: #d89cbc; /* Rosa más oscuro para hover */
+    }
+
+    .options-box {
+      background-color: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      width: fit-content;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Estilo de la notificación */
+    .notification {
+      position: fixed;
+      top: -50px;
+      right: 20px;
+      background-color: #6d98d4; /* Azul para la notificación */
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      width: 250px;
+      z-index: 1000;
+      animation: slideDown 1s forwards;
+    }
+
+    @keyframes slideDown {
+      0% {
+        top: -50px;
+      }
+      100% {
+        top: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Notificación -->
-    <div class="notification">
-        Modo 1ª persona activado en esta pregunta, ¡disfruta!
-    </div>
+  <!-- Notificación -->
+  <div class="notification">
+    Modo 1ª persona activado en esta pregunta, ¡disfruta!
+  </div>
 
-    <h1>¿Dónde fuimos en nuestra primera quedada?</h1>
-    <p class="message">Escoge la respuesta correcta:</p>
-    
+  <h1>¿Dónde fuimos en nuestra primera quedada?</h1>
+  <p class="message">Escoge la respuesta correcta:</p>
+
+  <div class="options-box">
     <div class="options">
-        <button class="option-button" onclick="alert('¡Incorrecto! Aún no era el lugar donde fuimos :)')">Al Mood</button>
-        <button class="option-button" onclick="alert('¡Incorrecto! Aunque hubiera estado genial, no fue allí ;)')">A mi casa</button>
-        <button class="option-button" onclick="alert('¡Correcto! Fue al Hotel La Paz, ¡qué bonito recuerdo!')">Al Hotel La Paz</button>
+      <button class="option-button" onclick="alert('¡Incorrecto! Aún no era el lugar donde fuimos :)')">Al Mood</button>
+      <button class="option-button" onclick="alert('¡Incorrecto! Aunque hubiera estado genial, no fue allí ;)')">A mi casa</button>
+      <button class="option-button" onclick="alert('¡Correcto! Fue al Hotel La Paz, ¡qué bonito recuerdo!')">Al Hotel La Paz</button>
     </div>
-    
-    <button class="button" onclick="window.history.back()">Volver atrás</button>
+  </div>
+
+  <button class="button" onclick="window.history.back()">Volver atrás</button>
 
 </body>
 </html>
