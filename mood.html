@@ -3,68 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vas al Mood con Mario, Carla y Joel</title>
+    <title>¿Dónde fuimos en nuestra primera quedada?</title>
     <style>
         body {
-            background-color: #f0b7d4; /* El color de fondo igual al de la escena 2 */
+            background-color: #84b7f0; /* Fondo rosa */
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
         }
+
         h1 {
-            font-size: 1.8rem;
             color: #333;
-        }
-        .message {
-            font-size: 1.2rem;
-            margin-top: 30px;
-        }
-        .button, .option-button {
-            background-color: #f0b7d4; /* Azul para botones y opciones */
-            color: white;
-            font-size: 1rem;
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .button:hover, .option-button:hover {
-            background-color: #6d98d4; /* Azul más oscuro para hover */
-        }
-        .options {
-            margin-top: 30px;
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
-        /* Estilo de las opciones en cuadraditos */
+        .message-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .message-container p {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            width: 100%;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .option-button {
-            background-color: #f0b7d4; /* Igual que el fondo */
-            color: #333; /* Color del texto */
+            background-color: #e8f0ff; /* Fondo de los botones */
+            color: #333;
             font-size: 1rem;
-            padding: 15px 20px;
-            margin: 10px;
-            border: 2,5px solid #84b7f0; /* Borde para los cuadraditos */
+            padding: 10px 20px;
+            margin: 5px;
+            border: 1px solid #d0e3fc; /* Cuadradito transparente */
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 400px;
         }
+
         .option-button:hover {
             background-color: #6d98d4; /* Azul más oscuro para hover */
         }
+
+        .button {
+            background-color: #e8f0ff; /* Igual al fondo de las opciones */
+            color: #333;
+            font-size: 1rem;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: 1px solid #d0e3fc;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .button:hover {
+            background-color: #6d98d4; /* Azul más oscuro para hover */
+        }
+
     </style>
 </head>
 <body>
 
     <h1>Vas al Mood con Mario, Carla y Joel</h1>
-    <p class="message">Vas con ellos al Mood, a Joel no le gusta mucho el sitio como primera "cita", pero acepta por verte. Lo has notado un poco incómodo y por mensaje escribe un poco seco, que haces?</p>
-
-    <div class="options">
-        <button class="option-button" onclick="window.location.href='mood_seco.html'">Le hablo más seco</button>
-        <button class="option-button" onclick="window.location.href='mood_que_pasa.html'">Le pregunto qué le pasa</button>
-        <button class="option-button" onclick="window.location.href='mood_no_lehablo.html'">Le dejo de hablar</button>
+    
+    <!-- Contenedor del mensaje -->
+    <div class="message-container">
+        <p>Vas al Mood con Mario, Carla y Joel. A él no le gusta mucho el sitio como primera cita, pero acepta por verte. Lo has notado un poco incómodo y por mensaje escribe un poco seco, ¿qué haces?</p>
     </div>
 
+    <!-- Opciones -->
+    <div class="options">
+        <button class="option-button" onclick="alert('Has decidido ser más directa con Joel, pero ¿habrá sido lo mejor?')">Le hablo más seco</button>
+        <button class="option-button" onclick="alert('Decides preguntarle qué le pasa, ¿será útil?')">Le pregunto qué le pasa</button>
+        <button class="option-button" onclick="alert('Decides dejar de hablarle por ahora, ¿será una buena decisión?')">Le dejo de hablar</button>
+    </div>
+    
+    <!-- Botón de volver -->
     <button class="button" onclick="window.history.back()">Volver atrás</button>
 
 </body>
