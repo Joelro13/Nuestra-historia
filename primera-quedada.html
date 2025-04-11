@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Donde fuimos en nuestra primera quedada</title>
+    <title>¿Donde fuimos en nuestra primera quedada?</title>
     <style>
         body {
             background-color: #84b7f0; /* Fondo azul igual al de Instagram y fiesta */
@@ -49,9 +49,40 @@
         .option-button:hover {
             background-color: #5b85b5;
         }
+
+        /* Estilos para la notificación */
+        .notification {
+            position: fixed;
+            top: -50px; /* Inicialmente fuera de la pantalla */
+            right: 20px; /* A la derecha */
+            background-color: #ff66b2; /* Rosa */
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 250px;
+            z-index: 1000;
+            animation: slideDown 1s forwards; /* Animación para que baje */
+        }
+
+        @keyframes slideDown {
+            0% {
+                top: -50px;
+            }
+            100% {
+                top: 20px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Notificación -->
+    <div class="notification">
+        Modo 1ª persona activado en esta pregunta, ¡disfruta!
+    </div>
 
     <h1>¿Dónde fuimos en nuestra primera quedada?</h1>
     <p class="message">Escoge la respuesta correcta:</p>
