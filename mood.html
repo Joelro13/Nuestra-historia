@@ -1,84 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¿Qué hacer con Joel?</title>
-  <style>
-    body {
-      background-color: #84b7f0; /* Fondo rosado */
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vas al Mood con Mario, Carla y Joel</title>
+    <style>
+        body {
+            background-color: #e8f0ff; /* El color de fondo igual al de la escena 2 */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .message {
+            font-size: 1.2rem;
+            margin-top: 30px;
+        }
+        .button, .option-button {
+            background-color: #e8f0ff; /* Azul para botones y opciones */
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover, .option-button:hover {
+            background-color: #6d98d4; /* Azul más oscuro para hover */
+        }
+        .options {
+            margin-top: 30px;
+        }
 
-    h1 {
-      color: #333;
-    }
-
-    .message {
-      font-size: 1.2rem;
-      margin-top: 30px;
-      font-weight: bold;
-    }
-
-    .options-box {
-      margin-top: 30px;
-    }
-
-    .button, .option-button {
-      background-color: #84b7f0; /* Fondo rosado para los botones */
-      color: white;
-      font-size: 1rem;
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-      width: 200px;
-      display: inline-block;
-    }
-
-    .button:hover, .option-button:hover {
-      background-color: #6d98d4; /* Azul más oscuro para hover */
-    }
-
-    .option-button {
-      background-color: #84b7f0; /* Fondo rosado claro para opciones */
-    }
-
-    .option-button:hover {
-      background-color: #6d98d4; /* Azul más oscuro para hover en opciones */
-    }
-
-    /* Estilo para los botones de "volver atrás" */
-    .button {
-      background-color: #6d98d4; /* Azul para el botón de volver */
-    }
-
-    .button:hover {
-      background-color: #5b85b5; /* Azul más oscuro para hover en "volver atrás" */
-    }
-  </style>
+        /* Estilo de las opciones en cuadraditos */
+        .option-button {
+            background-color: #e8f0ff; /* Igual que el fondo */
+            color: #333; /* Color del texto */
+            font-size: 1rem;
+            padding: 15px 20px;
+            margin: 10px;
+            border: 2px solid #84b7f0; /* Borde para los cuadraditos */
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .option-button:hover {
+            background-color: #6d98d4; /* Azul más oscuro para hover */
+        }
+    </style>
 </head>
 <body>
 
-  <h1>Vas al Mood con Mario, Carla y Joel</h1>
-  <p class="message">
-    Mario no le gusta mucho el sitio como primera "cita" pero acepta por verte, lo has notado un poco incómodo y por mensaje escribe un poco seco, ¿qué haces?
-  </p>
+    <h1>Vas al Mood con Mario, Carla y Joel</h1>
+    <p class="message">Vas con ellos al Mood, a Joel no le gusta mucho el sitio como primera "cita", pero acepta por verte. Lo has notado un poco incómodo y por mensaje escribe un poco seco, que haces?</p>
 
-  <div class="options-box">
-    <button class="option-button" onclick="alert('¡Incorrecto! Aunque hablar más seco podría ser una opción, no ayuda mucho en este tipo de situaciones.')">Le hablo más seco</button>
-    <button class="option-button" onclick="alert('¡Correcto! Preguntar qué le pasa podría ayudar a mejorar la situación.')">Le pregunto qué le pasa</button>
-    <button class="option-button" onclick="alert('¡Incorrecto! Dejar de hablar no es la mejor opción para resolver el problema.')">Le dejo de hablar</button>
-  </div>
+    <div class="options">
+        <button class="option-button" onclick="window.location.href='mood_seco.html'">Le hablo más seco</button>
+        <button class="option-button" onclick="window.location.href='mood_que_pasa.html'">Le pregunto qué le pasa</button>
+        <button class="option-button" onclick="window.location.href='mood_no_lehablo.html'">Le dejo de hablar</button>
+    </div>
 
-  <div class="options-box">
     <button class="button" onclick="window.history.back()">Volver atrás</button>
-  </div>
 
 </body>
 </html>
