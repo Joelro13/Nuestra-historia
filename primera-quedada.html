@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Donde fuimos en nuestra primera quedada?</title>
+    <title>¿Dónde fuimos en nuestra primera quedada?</title>
     <style>
         body {
-            background-color: #84b7f0; /* Fondo azul igual al de Instagram y fiesta */
+            background-color: #84b7f0; /* Fondo rosa */
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
@@ -18,44 +18,30 @@
             font-size: 1.2rem;
             margin-top: 30px;
         }
-        .button {
-            background-color: #84b7f0; /* Un tono más oscuro que el fondo */
+        .button, .option-button {
+            background-color: #6d98d4; /* Azul para botones y notificación */
             color: white;
             font-size: 1rem;
             padding: 10px 20px;
-            margin-top: 20px;
+            margin: 10px;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
-        .button:hover {
-            background-color: #5b85b5; /* Otro tono oscuro para el hover */
+        .button:hover, .option-button:hover {
+            background-color: #5b85b5; /* Azul más oscuro para hover */
         }
         .options {
             margin-top: 30px;
         }
-        .option-button {
-            background-color: #84b7f0; /* Igual que el botón principal */
-            color: white;
-            font-size: 1rem;
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .option-button:hover {
-            background-color: #5b85b5;
-        }
 
-        /* Estilos para la notificación */
+        /* Estilo de la notificación */
         .notification {
             position: fixed;
-            top: -50px; /* Inicialmente fuera de la pantalla */
-            right: 20px; /* A la derecha */
-            background-color: #ff66b2; /* Rosa */
+            top: -50px;
+            right: 20px;
+            background-color: #6d98d4; /* Azul para la notificación */
             color: white;
             font-size: 1.2rem;
             font-weight: bold;
@@ -64,7 +50,7 @@
             text-align: center;
             width: 250px;
             z-index: 1000;
-            animation: slideDown 1,5s forwards; /* Animación para que baje */
+            animation: slideDown 1s forwards;
         }
 
         @keyframes slideDown {
