@@ -5,91 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vas con Carla, Mario y Joel al mood</title>
   <style>
-    /* Fondo de la escena 2 (rosa #84b7f0) */
-    .scene-mood {
-      background-color: #84b7f0; /* Fondo rosa */
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+    body {
+      background-color: #84b7f0; /* Fondo rosa claro */
+      font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
+      margin: 0;
     }
 
-    /* Título */
     h1 {
-      font-size: 28px;
       color: #ffffff;
-      margin-bottom: 20px;
+      margin-top: 100px; /* Espacio para el título */
     }
 
-    /* Texto de contexto */
     .context-text {
-      font-size: 18px;
+      font-size: 1.2rem;
+      margin-top: 30px;
       color: #ffffff;
-      margin-bottom: 40px;
     }
 
-    /* Contenedor de los botones centrado */
-    .button-container {
-      display: flex;
-      justify-content: space-between; /* Para que los botones estén de izquierda a derecha */
-      align-items: center;
-      width: 100%;
-      max-width: 800px; /* Limitar el ancho para que se vean bien */
-      border: 2px solid #84b7f0;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    /* Estilo para los botones de opción */
-    button.option-button {
-      background-color: #84b7f0; /* Fondo de los botones igual al fondo */
-      border: 2px solid #ffffff; /* Borde blanco */
+    .button, .option-button {
+      background-color: #84b7f0;
+      color: white;
+      font-size: 1rem;
       padding: 10px 20px;
-      font-size: 16px;
-      color: #ffffff; /* Texto blanco */
       margin: 10px;
+      border: none;
       cursor: pointer;
       border-radius: 5px;
-      width: 200px; /* Ancho fijo para todos los botones */
       transition: background-color 0.3s ease;
     }
 
-    button.option-button:hover {
-      background-color: #a2c8f7; /* Un tono más claro para el hover */
+    .button:hover, .option-button:hover {
+      background-color: #a2c8f7; /* Tono más claro para hover */
     }
 
-    /* Botón de volver atrás */
-    button.back {
-      background-color: #84b7f0; /* Fondo del mismo color */
-      border: 2px solid #ffffff; /* Borde blanco */
+    .options-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      width: fit-content;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .back-button {
+      background-color: #84b7f0;
+      color: white;
       padding: 10px 20px;
-      font-size: 16px;
-      color: #ffffff;
-      margin-top: 20px;
-      cursor: pointer;
+      font-size: 1rem;
+      border: none;
       border-radius: 5px;
-      width: 200px; /* Ancho fijo para todos los botones */
+      cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
-    button.back:hover {
-      background-color: #a2c8f7; /* Un tono más claro para el hover */
+    .back-button:hover {
+      background-color: #a2c8f7; /* Tono más claro para hover */
     }
   </style>
 </head>
 <body>
-  <div class="scene-mood">
-    <h1>Vas con Carla, Mario y Joel al mood</h1>
-    <p class="context-text">A Joel no le gusta mucho el sitio como primera cita, pero acepta por verte. Lo has notado un poco incómodo y por mensaje escribe un poco seco, ¿qué haces?</p>
-    <div class="button-container">
-        <button class="option-button" onclick="window.location.href='mood_seco.html'">Le hablo más seco</button>
-        <button class="option-button" onclick="window.location.href='mood_que_pasa.html'">Le pregunto qué le pasa</button>
-        <button class="option-button" onclick="window.location.href='mood_no_lehablo.html'">Le dejo de hablar</button>
-    </div>
-    <button class="back" onclick="window.history.back()">Volver atrás</button>
+
+  <h1>Vas con Carla, Mario y Joel al mood</h1>
+  <p class="context-text">A Joel no le gusta mucho el sitio como primera cita, pero acepta por verte. Lo has notado un poco incómodo y por mensaje escribe un poco seco, ¿qué haces?</p>
+
+  <div class="options-box">
+    <button class="option-button" onclick="window.location.href='mood_seco.html'">Le hablo más seco</button>
+    <button class="option-button" onclick="window.location.href='mood_que_pasa.html'">Le pregunto qué le pasa</button>
+    <button class="option-button" onclick="window.location.href='mood_no_lehablo.html'">Le dejo de hablar</button>
   </div>
+
+  <div class="options-box">
+    <button class="back-button" onclick="window.history.back()">Volver atrás</button>
+  </div>
+
 </body>
 </html>
