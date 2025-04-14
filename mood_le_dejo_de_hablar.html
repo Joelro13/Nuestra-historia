@@ -64,7 +64,8 @@
     }
 
     @keyframes pendulo {
-      0% { transform: translateX(0); }
+      0% { transform: translateX(0); opacity: 0; }
+      10% { opacity: 1; }
       25% { transform: translateX(-10px); }
       50% { transform: translateX(10px); }
       75% { transform: translateX(-5px); }
