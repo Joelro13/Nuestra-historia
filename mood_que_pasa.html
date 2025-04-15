@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le pregunto que le pasa</title>
+  <style>
+    body {
+      background-color: #f0b7d4; /* Fondo rosa pastel real */
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+      margin-top: 100px;
+      font-weight: bold;
+    }
+
+    .context-text {
+      font-size: 1.2rem;
+      margin-top: 30px;
+      color: #333;
+      font-weight: bold;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .button, .option-button {
+      background-color: #f0b7d4;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover, .option-button:hover {
+      background-color: #d89cbc;
+    }
+
+    .options-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      width: fit-content;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .back-button {
+      background-color: #f0b7d4;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #d89cbc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Le pregunto que le pasa</h1>
+
+  <p class="context-text">
+    Te dice alguna cosa que no le sentó bien sobre el lugar y la conversación, y lo habláis. Entendéis el punto del otro y os disculpáis ambos.
+  </p>
+  <p class="context-text">
+    Joel te dice de quedar la siguiente semana los mismos para ir al Hotel La Paz y poder tener algo de tiempo a solas, ¿qué le dices?
+  </p>
+
+  <div class="options-box">
+    <button class="option-button" onclick="window.location.href='hotel_aceptas_ir.html'">Aceptas ir</button>
+    <button class="option-button" onclick="window.location.href='hotel_pereza.html'">Nahhh qué pereza</button>
+    <button class="option-button" onclick="window.location.href='hotel_vamos_solos.html'">Vamos pero solos</button>
+  </div>
+
+  <div class="options-box">
+    <button class="back-button" onclick="window.history.back()">Volver atrás</button>
+  </div>
+
+</body>
+</html>
