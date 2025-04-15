@@ -6,7 +6,7 @@
   <title>Le pregunto que le pasa</title>
   <style>
     body {
-      background-color: #f0b7d4; /* Fondo rosa pastel real */
+      background-color: #f0b7d4;
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
@@ -19,14 +19,25 @@
       font-weight: bold;
     }
 
-    .context-text {
+    .context-text, .decision-text {
       font-size: 1.2rem;
-      margin-top: 30px;
       color: #333;
       font-weight: bold;
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .context-text {
+      margin-top: 30px;
+    }
+
+    .divider {
+      height: 2px;
+      background-color: #ffffff88;
+      margin: 30px auto;
+      width: 80%;
+      border-radius: 10px;
     }
 
     .button, .option-button {
@@ -77,7 +88,10 @@
   <p class="context-text">
     Te dice alguna cosa que no le sentó bien sobre el lugar y la conversación, y lo habláis. Entendéis el punto del otro y os disculpáis ambos.
   </p>
-  <p class="context-text">
+
+  <div class="divider"></div>
+
+  <p class="decision-text">
     Joel te dice de quedar la siguiente semana los mismos para ir al Hotel La Paz y poder tener algo de tiempo a solas, ¿qué le dices?
   </p>
 
