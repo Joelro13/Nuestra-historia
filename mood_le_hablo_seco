@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le hablo seco</title>
+  <style>
+    body {
+      background-color: #e8f0ff;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: #666;
+      max-width: 600px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      z-index: 1;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+
+    .mensaje-extra {
+      opacity: 0;
+      animation: aparecer 1s ease-in forwards;
+      animation-delay: 7s;
+      position: absolute;
+      bottom: 40px;
+      color: #4a4a4a;
+      font-size: 1rem;
+      background-color: #ffffffc7;
+      padding: 10px 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Le hablo seco</h1>
+  <p>
+    Eso no ha mejorado el problema, ambos os enfadáis y como no os entendéis, os dejáis de hablar.
+  </p>
+  <button onclick="window.location.href='mood.html'">Volver a intentar</button>
+
+  <div class="mensaje-extra">
+    Es una opción muy extremista pero se entiende la solución que busco siempre a los problemas jajaja.
+  </div>
+</body>
+</html>
