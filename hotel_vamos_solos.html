@@ -58,15 +58,14 @@
       background-color: #357ab8;
     }
 
-    /* Nuevo estilo para el botón "Recuperar la consciencia" */
     .go-button {
-      background: linear-gradient(135deg, #6e7a9d, #4b5c73); /* Degradado entre azul y morado */
+      background: linear-gradient(135deg, #ff6ec4, #7873f5, #4deeea);
       color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
     .go-button:hover {
-      background: linear-gradient(135deg, #4b5c73, #3a4657); /* Degradado más oscuro al hacer hover */
-      opacity: 0.9;
+      filter: brightness(1.1);
     }
   </style>
 </head>
@@ -83,14 +82,14 @@
     <button class="go-button" onclick="recuperarConsciencia()">Recuperar la consciencia</button>
   </div>
 
-  <!-- SONIDO DEL GOLPE -->
+  <!-- SONIDO DEL GOLPE FUERTE -->
   <audio id="punch-sound" src="sonidos/golpe-fuerte-36583.mp3" preload="auto"></audio>
 
   <script>
     function recuperarConsciencia() {
       const punch = document.getElementById('punch-sound');
       punch.currentTime = 0;
-      punch.play().catch(e => console.error("Error al reproducir golpe:", e));
+      punch.play().catch(e => console.error("Error al reproducir el golpe:", e));
 
       document.body.style.opacity = 0;
 
