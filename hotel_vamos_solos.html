@@ -58,12 +58,14 @@
       background-color: #357ab8;
     }
 
+    /* Nuevo estilo para el botón "Recuperar la consciencia" */
     .go-button {
-      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+      background: linear-gradient(135deg, #6e7a9d, #4b5c73); /* Degradado entre azul y morado */
       color: white;
     }
 
     .go-button:hover {
+      background: linear-gradient(135deg, #4b5c73, #3a4657); /* Degradado más oscuro al hacer hover */
       opacity: 0.9;
     }
   </style>
@@ -82,7 +84,7 @@
   </div>
 
   <!-- SONIDO DEL GOLPE -->
-  <audio id="punch-sound" src="sonidos/real-punch-in-the-face-233286.mp3" preload="auto"></audio>
+  <audio id="punch-sound" src="sonidos/golpe-fuerte-36583.mp3" preload="auto"></audio>
 
   <script>
     function recuperarConsciencia() {
