@@ -102,29 +102,33 @@
 
   <script>
     const breath = document.getElementById('breath-sound');
-    
+
     // Reproduce el audio automáticamente al cargar la página
     window.onload = () => {
       breath.volume = 1; // Máxima volumen
-      breath.play().then(() => {
-        // Asegura que el audio de respiración se escuche a partir del segundo 4
-        setTimeout(() => {
-          const fadeDuration = 1500;  // Tiempo en ms para el fundido
-          const steps = 15;  // Número de pasos de fundido
-          const stepTime = fadeDuration / steps;
-          let step = 0;
+      breath.play().catch(e => {
+        console.log("Error al reproducir:", e);
+        // Si la reproducción automática falla, mostramos un mensaje al usuario
+        alert("No se pudo reproducir el audio automáticamente. Por favor, interactúa con la página.");
+      });
 
-          const fadeInterval = setInterval(() => {
-            step++;
-            breath.volume = Math.max(0, 1 - step / steps); // Reduce el volumen de forma gradual
-            if (step >= steps) {
-              clearInterval(fadeInterval);  // Detiene el fundido cuando llega a cero
-              breath.pause();
-              breath.currentTime = 0;  // Resetea el tiempo para que se pueda reproducir de nuevo
-            }
-          }, stepTime);
-        }, 4500);  // Empieza el fundido 4.5 segundos después de comenzar el audio
-      }).catch(e => console.log("Error al reproducir:", e));
+      // Fundido suave después de 4.5 segundos
+      setTimeout(() => {
+        const fadeDuration = 1500;  // Tiempo en ms para el fundido
+        const steps = 15;  // Número de pasos de fundido
+        const stepTime = fadeDuration / steps;
+        let step = 0;
+
+        const fadeInterval = setInterval(() => {
+          step++;
+          breath.volume = Math.max(0, 1 - step / steps); // Reduce el volumen de forma gradual
+          if (step >= steps) {
+            clearInterval(fadeInterval);  // Detiene el fundido cuando llega a cero
+            breath.pause();
+            breath.currentTime = 0;  // Resetea el tiempo para que se pueda reproducir de nuevo
+          }
+        }, stepTime);
+      }, 4500);  // Empieza el fundido 4.5 segundos después de comenzar el audio
     };
   </script>
 
