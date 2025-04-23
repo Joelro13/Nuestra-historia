@@ -2,101 +2,104 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vais solos al hotel</title>
   <style>
     body {
       background-color: #e8f0ff;
-      font-family: Arial, sans-serif;
-      text-align: center;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      text-align: center;
       position: relative;
-      overflow: hidden;
-      transition: opacity 0.5s ease;
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
     }
 
     h1 {
-      color: #333;
-      margin-top: 100px;
       font-size: 2rem;
-      font-weight: bold;
-    }
-
-    .content {
-      max-width: 600px;
-      margin: 30px auto;
-      padding: 0 20px;
-      font-size: 1.2rem;
+      margin-bottom: 20px;
       color: #333;
     }
 
-    .buttons {
-      margin-top: 40px;
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: #555;
+      max-width: 600px;
     }
 
-    .btn {
-      background-color: #a4c8ff;
-      color: #fff;
+    .button-container {
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+    }
+
+    button {
       padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
       font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
-    .btn:hover {
-      background-color: #7daafc;
+    .back-button {
+      background-color: #4a90e2;
+      color: white;
     }
 
-    .rgb-button {
-      background: linear-gradient(45deg, #ff6ec4, #7873f5);
+    .back-button:hover {
+      background-color: #357ab8;
     }
 
-    .rgb-button:hover {
-      filter: brightness(1.1);
+    .go-button {
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+      color: white;
     }
 
-    /* Fade to black effect */
-    .fade-black::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      opacity: 0;
-      animation: fadeToBlack 1s forwards;
-      z-index: 10;
-    }
-
-    @keyframes fadeToBlack {
-      to {
-        opacity: 1;
-      }
+    .go-button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
 
   <h1>Vais solos al hotel</h1>
-  <div class="content">
-    <p>Entráis al hotel y os quedáis en la terraza, habláis de tantas cosas que se os pasa el tiempo y no os dais ni cuenta. Decidís bajar a investigar abajo, y mientras que bajáis os encontráis de repente a un grupo de 7 chicos fumando y con navajas armados, estos comienzan a perseguiros rápidamente. Lográis salir del hotel, pero te resbalas con un bordillo y pierdes el conocimiento.</p>
+  <p>Entráis al hotel y os quedáis en la terraza, habláis de tantas cosas que se os pasa el tiempo y no os dais ni cuenta.  
+     Decidís bajar a investigar abajo, y mientras que bajáis os encontráis de repente a un grupo de 7 chicos fumando y con navajas armados,  
+     estos comienzan a perseguiros rápidamente.  
+     Lográis salir del hotel, pero te resbalas con un bordillo y pierdes el conocimiento.</p>
+
+  <div class="button-container">
+    <button class="back-button" onclick="window.location.href='hotel.html'">Volver atrás</button>
+    <button class="go-button" onclick="recuperarConsciencia()">Recuperar la consciencia</button>
   </div>
 
-  <div class="buttons">
-    <button class="btn" onclick="window.location.href='hotel.html'">Volver atrás</button>
-    <button class="btn rgb-button" onclick="fadeToBlack()">Recuperar la consciencia</button>
-  </div>
+  <!-- SONIDOS -->
+  <audio id="punch-sound" src="sonidos/real-punch-in-the-face-233286.mp3"></audio>
+  <audio id="breath-sound" src="sonidos/breath_woman-6049.mp3"></audio>
 
   <script>
-    function fadeToBlack() {
-      document.body.classList.add('fade-black');
+    function recuperarConsciencia() {
+      // Reproduce el sonido de golpe
+      const punch = document.getElementById('punch-sound');
+      const breath = document.getElementById('breath-sound');
+      punch.play();
+
+      // Hace fundido de salida
+      document.body.style.opacity = 0;
+
+      // Después de 2 segundos, reproduce respiración y cambia de página
       setTimeout(() => {
-        window.location.href = 'primera_quedada.html';
-      }, 1000);
+        breath.play();
+        window.location.href = "primera_quedada.html";
+      }, 2000);
     }
   </script>
 
