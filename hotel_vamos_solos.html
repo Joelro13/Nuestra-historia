@@ -81,24 +81,19 @@
     <button class="go-button" onclick="recuperarConsciencia()">Recuperar la consciencia</button>
   </div>
 
-  <!-- SONIDOS -->
-  <audio id="punch-sound" src="sonidos/real-punch-in-the-face-233286.mp3"></audio>
-  <audio id="breath-sound" src="sonidos/breath_woman-6049.mp3"></audio>
+  <!-- SONIDO DEL GOLPE -->
+  <audio id="punch-sound" src="sonidos/real-punch-in-the-face-233286.mp3" preload="auto"></audio>
 
   <script>
     function recuperarConsciencia() {
-      // Reproduce el sonido de golpe
       const punch = document.getElementById('punch-sound');
-      const breath = document.getElementById('breath-sound');
-      punch.play();
+      punch.currentTime = 0;
+      punch.play().catch(e => console.error("Error al reproducir golpe:", e));
 
-      // Hace fundido de salida
       document.body.style.opacity = 0;
 
-      // Después de 2 segundos, reproduce respiración y cambia de página
       setTimeout(() => {
-        breath.play();
-        window.location.href = "primera_quedada.html";
+        window.location.href = "primera_quedada_sonido.html";
       }, 2000);
     }
   </script>
