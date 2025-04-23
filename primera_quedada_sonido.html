@@ -11,17 +11,11 @@
       text-align: center;
       padding: 20px;
       margin: 0;
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-
-    body.visible {
-      opacity: 1;
     }
 
     h1 {
       color: #333;
-      margin-top: 100px;
+      margin-top: 100px; /* Espacio para que no lo tape la notificación */
     }
 
     .message {
@@ -30,7 +24,7 @@
     }
 
     .button, .option-button {
-      background-color: #f0b7d4;
+      background-color: #e4a5c0;
       color: white;
       font-size: 1rem;
       padding: 10px 20px;
@@ -42,7 +36,7 @@
     }
 
     .button:hover, .option-button:hover {
-      background-color: #d89cbc;
+      background-color: #c88ead;
     }
 
     .options-box {
@@ -82,6 +76,7 @@
   </style>
 </head>
 <body>
+
   <!-- Notificación -->
   <div class="notification">
     Modo 1ª persona activado en esta pregunta, ¡disfruta!
@@ -100,13 +95,22 @@
     <button class="button" onclick="window.location.href='index.html'">Volver atrás</button>
   </div>
 
-  <audio id="respiro" src="sonidos/breath_woman-6049.mp3"></audio>
+  <!-- SONIDOS -->
+  <audio id="breath-sound" src="audios/breath_woman-6049.mp3"></audio>
 
   <script>
     window.onload = () => {
-      document.body.classList.add('visible');
-      document.getElementById('respiro').play();
-    };
+      const breath = document.getElementById('breath-sound');
+
+      // Reproduce el sonido
+      breath.play();
+
+      // Detiene el sonido después de 6 segundos
+      setTimeout(() => {
+        breath.pause();
+        breath.currentTime = 0; // Resetea al inicio para que se reproduzca desde el principio si se reproduce de nuevo
+      }, 6000); // 6000 ms = 6 segundos
+    }
   </script>
 </body>
 </html>
