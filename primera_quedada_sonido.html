@@ -95,22 +95,37 @@
     <button class="button" onclick="window.location.href='index.html'">Volver atrás</button>
   </div>
 
-  <!-- SONIDOS -->
-  <audio id="breath-sound" src="audios/breath_woman-6049.mp3"></audio>
+  <!-- SONIDO DE RESPIRACIÓN -->
+  <audio id="breath-sound" src="audios/breath_woman-6049.mp3" preload="auto"></audio>
 
   <script>
-    window.onload = () => {
+    window.addEventListener('DOMContentLoaded', () => {
       const breath = document.getElementById('breath-sound');
+      breath.volume = 1;
 
-      // Reproduce el sonido
-      breath.play();
+      breath.play().then(() => {
+        // Empieza el fundido a los 4.5 segundos
+        setTimeout(() => {
+          const fadeDuration = 1500; // 1.5 segundos
+          const steps = 15;
+          const stepTime = fadeDuration / steps;
+          let currentStep = 0;
 
-      // Detiene el sonido después de 6 segundos
-      setTimeout(() => {
-        breath.pause();
-        breath.currentTime = 0; // Resetea al inicio para que se reproduzca desde el principio si se reproduce de nuevo
-      }, 6000); // 6000 ms = 6 segundos
-    }
+          const fadeOut = setInterval(() => {
+            currentStep++;
+            breath.volume = Math.max(0, 1 - (currentStep / steps));
+            if (currentStep >= steps) {
+              clearInterval(fadeOut);
+              breath.pause();
+              breath.currentTime = 0;
+              breath.volume = 1;
+            }
+          }, stepTime);
+        }, 4500); // Espera 4.5 segundos antes de empezar a bajar el volumen
+      }).catch(error => {
+        console.warn("El navegador bloqueó la reproducción automática:", error);
+      });
+    });
   </script>
 </body>
 </html>
