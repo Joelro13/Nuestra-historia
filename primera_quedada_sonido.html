@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>¿Dónde fuimos en nuestra primera quedada?</title>
   <style>
     body {
-      background-color: #f0b7d4;
+      background-color: #f0b7d4; /* Fondo rosa */
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
       margin: 0;
       opacity: 0;
-      animation: fadeInPage 4s ease-in forwards;
+      transition: opacity 2s ease;
     }
 
-    @keyframes fadeInPage {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    body.visible {
+      opacity: 1;
     }
 
     h1 {
@@ -31,7 +30,7 @@
     }
 
     .button, .option-button {
-      background-color: #e4a5c0;
+      background-color: #f0b7d4;
       color: white;
       font-size: 1rem;
       padding: 10px 20px;
@@ -43,7 +42,7 @@
     }
 
     .button:hover, .option-button:hover {
-      background-color: #c88ead;
+      background-color: #d89cbc;
     }
 
     .options-box {
@@ -73,13 +72,17 @@
     }
 
     @keyframes slideDown {
-      0% { top: -60px; }
-      100% { top: 40px; }
+      0% {
+        top: -60px;
+      }
+      100% {
+        top: 40px;
+      }
     }
   </style>
 </head>
 <body>
-
+  <!-- Notificación -->
   <div class="notification">
     Modo 1ª persona activado en esta pregunta, ¡disfruta!
   </div>
@@ -88,49 +91,51 @@
   <p class="message">Escoge la respuesta correcta:</p>
 
   <div class="options-box">
-    <button class="option-button" onclick="window.location.href='mood.html'">Al Mood</button>
-    <button class="option-button" onclick="window.location.href='casa.html'">A mi casa</button>
-    <button class="option-button" onclick="window.location.href='hotel.html'">Al Hotel La Paz</button>
+    <button class="option-button" onclick="fadeOutAndRedirect('mood.html')">Al Mood</button>
+    <button class="option-button" onclick="fadeOutAndRedirect('casa.html')">A mi casa</button>
+    <button class="option-button" onclick="fadeOutAndRedirect('hotel.html')">Al Hotel La Paz</button>
   </div>
 
   <div class="options-box">
-    <button class="button" onclick="window.location.href='index.html'">Volver atrás</button>
+    <button class="button" onclick="fadeOutAndRedirect('index.html')">Volver atrás</button>
   </div>
 
-  <!-- Audio -->
-  <audio id="breath-sound" src="audios/breath_woman-6049.mp3" preload="auto"></audio>
+  <audio id="respiro" src="sonidos/breath_woman-6049.mp3"></audio>
 
-  <script>
-    const breath = document.getElementById('breath-sound');
-
-    // Reproduce el audio automáticamente al cargar la página
-    window.onload = () => {
-      breath.volume = 1; // Máxima volumen
-      breath.play().catch(e => {
-        console.log("Error al reproducir:", e);
-        // Si la reproducción automática falla, mostramos un mensaje al usuario
-        alert("No se pudo reproducir el audio automáticamente. Por favor, interactúa con la página.");
-      });
-
-      // Fundido suave después de 4.5 segundos
+<script>
+  window.onload = () => {
+    document.body.classList.add('visible');
+    const respiro = document.getElementById('respiro');
+    
+    respiro.play().then(() => {
+      // Inicia fundido a los 4.5 segundos
       setTimeout(() => {
-        const fadeDuration = 1500;  // Tiempo en ms para el fundido
-        const steps = 15;  // Número de pasos de fundido
+        const fadeDuration = 1500; // 1.5 segundos
+        const steps = 15;
         const stepTime = fadeDuration / steps;
         let step = 0;
 
         const fadeInterval = setInterval(() => {
           step++;
-          breath.volume = Math.max(0, 1 - step / steps); // Reduce el volumen de forma gradual
+          respiro.volume = Math.max(0, 1 - step / steps);
           if (step >= steps) {
-            clearInterval(fadeInterval);  // Detiene el fundido cuando llega a cero
-            breath.pause();
-            breath.currentTime = 0;  // Resetea el tiempo para que se pueda reproducir de nuevo
+            clearInterval(fadeInterval);
+            respiro.pause();
+            respiro.currentTime = 0;
           }
         }, stepTime);
-      }, 4500);  // Empieza el fundido 4.5 segundos después de comenzar el audio
-    };
-  </script>
+      }, 4500);
+    }).catch(error => {
+      console.warn('Autoplay fallido:', error);
+    });
+  };
 
+  function fadeOutAndRedirect(url) {
+    document.body.classList.remove('visible');
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1000);
+  }
+</script>
 </body>
 </html>
