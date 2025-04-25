@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vais con Mario y Carla al hotel</title>
+  <style>
+    body {
+      background-color: #e8f0ff; /* Fondo azul claro */
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    body.visible {
+      opacity: 1;
+    }
+
+    h1 {
+      color: #333;
+      margin-top: 100px;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-top: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .notification {
+      position: fixed;
+      top: -60px;
+      right: 20px;
+      background-color: #6d98d4;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 8px 30px;
+      border-radius: 20px;
+      text-align: center;
+      z-index: 1000;
+      animation: slideDown 1s forwards;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+    }
+
+    @keyframes slideDown {
+      0% { top: -60px; }
+      100% { top: 40px; }
+    }
+
+    .button-container {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      background-color: #6d98d4;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 25px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #5a84bb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Notificación -->
+  <div class="notification">
+    Sí, aún me acuerdo de cada detalle de aquella noche, me trae unos flipantes recuerdos y me alegro de haberlos pasado contigo, esa noche fue inolvidable para mí
+  </div>
+
+  <h1>Vais con Mario y Carla al hotel</h1>
+  <p class="message">
+    Vais los 4 al hotel abandonado, subís a la terraza, Joel decide bajar abajo a investigar más el lugar y tú vas con él porque quieres estar un rato a solas.<br><br>
+    Una vez bajáis, comenzáis a hablar algo nerviosos ambos porque nunca habíais estado solos antes. Llegáis a una habitación, y de un momento a otro, Joel se lanza besándote...<br><br>
+    Y lo siguiente es historia.
+  </p>
+
+  <div class="button-container">
+    <button class="button" onclick="window.location.href='primera-quedada.html'">Volver atrás</button>
+    <button class="button" onclick="window.location.href='#'">¿Continuar?</button>
+  </div>
+
+  <script>
+    window.onload = () => {
+      document.body.classList.add('visible');
+    };
+  </script>
+</body>
+</html>
