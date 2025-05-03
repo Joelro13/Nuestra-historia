@@ -11,108 +11,102 @@
       text-align: center;
       padding: 20px;
       margin: 0;
-      opacity: 0;
-      transition: opacity 2s ease;
-      transform: scale(0.95);
-      transition: opacity 2s ease, transform 2s ease;
-    }
-
-    body.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    h1 {
-      color: #333;
-      margin-top: 140px;
-    }
-
-    .message {
-      font-size: 1.2rem;
-      margin: 30px auto;
-      max-width: 700px;
     }
 
     .notification {
-      position: fixed;
-      top: 40px;
-      right: 20px;
-      left: 20px;
-      background-color: #6d98d4;
+      background-color: #84b7f0;
       color: white;
-      font-size: 1rem;
+      padding: 15px;
+      border-radius: 10px;
       font-weight: bold;
-      padding: 12px 20px;
-      border-radius: 20px;
-      text-align: center;
-      z-index: 1000;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      white-space: pre-line;
+      font-size: 14px;
+      width: 250px;
+      text-align: left;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      animation: slideIn 1s ease forwards;
+      opacity: 0;
       line-height: 1.4;
     }
 
-    .buttons {
-      margin-top: 40px;
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
-    .button {
-      background-color: #6d98d4;
+    @media (max-width: 768px) {
+      .notification {
+        position: static;
+        width: auto;
+        margin: 10px auto;
+        text-align: center;
+        animation: none;
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      margin-top: 100px;
+    }
+
+    p {
+      margin-top: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    .buttons button {
+      background-color: #84b7f0;
       color: white;
-      font-size: 1rem;
-      padding: 10px 20px;
-      margin: 10px 15px;
       border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 10px;
       cursor: pointer;
-      border-radius: 5px;
+      font-size: 16px;
       transition: background-color 0.3s ease;
     }
 
-    .button:hover {
-      background-color: #4a75b3;
-    }
-
-    @media (max-width: 767px) {
-      h1 {
-        margin-top: 240px;
-      }
-
-      .notification {
-        font-size: 0.85rem;
-        padding: 10px 14px;
-      }
+    .buttons button:hover {
+      background-color: #5a99d4;
     }
   </style>
 </head>
 <body>
+
   <div class="notification">
-    Sí, aún me acuerdo de cada detalle de aquella noche, me trae unos flipantes recuerdos y me alegro de haberlos pasado contigo,   
-    esa noche fue inolvidable para mí.
+    Sí, aún me acuerdo de cada detalle de aquella noche,<br>
+    me trae unos flipantes recuerdos<br>
+    y me alegro de haberlos pasado contigo.<br>
+    Esa noche fue inolvidable para mí.
   </div>
 
   <h1>Vais con Mario y Carla al hotel</h1>
 
-  <p class="message">
-    Vais los 4 al hotel abandonado, subís a la terraza, Joel decide bajar abajo a investigar más el lugar y tú vas con él porque quieres estar un rato a solas.  
-    Una vez bajáis comenzáis a hablar algo nerviosos ambos porque nunca habíais estado solos antes.  
+  <p>
+    Vais los 4 al hotel abandonado, subís a la terraza, Joel decide bajar abajo a investigar más el lugar y tú vas con él porque quieres estar un rato a solas.<br><br>
+    Una vez bajáis comenzáis a hablar algo nerviosos ambos porque nunca habíais estado solos antes.<br><br>
     Llegáis a una habitación, y de un momento a otro, Joel se lanza besándote, y lo siguiente es historia...
   </p>
 
   <div class="buttons">
-    <button class="button" onclick="fadeOutAndRedirect('primeraquedada.html')">Volver atrás</button>
-    <button class="button" onclick="fadeOutAndRedirect('continuar.html')">¿Continuar?</button>
+    <button onclick="window.location.href='primera_quedada.html'">Volver atrás</button>
+    <button onclick="window.location.href='continuar.html'">¿Continuar?</button>
   </div>
 
-  <script>
-    window.onload = () => {
-      document.body.classList.add('visible');
-    };
-
-    function fadeOutAndRedirect(url) {
-      document.body.classList.remove('visible');
-      setTimeout(() => {
-        window.location.href = url;
-      }, 1000);
-    }
-  </script>
 </body>
 </html>
