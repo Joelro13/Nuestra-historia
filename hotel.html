@@ -16,26 +16,24 @@
     .notification {
       background-color: #84b7f0;
       color: white;
-      padding: 15px;
-      border-radius: 10px;
+      padding: 20px;
+      border-radius: 12px;
       font-weight: bold;
-      font-size: 14px;
-      width: 250px;
+      font-size: 15px;
+      width: 300px;
       text-align: left;
       position: fixed;
-      top: 20px;
-      right: 20px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      animation: slideIn 1s ease forwards;
+      top: 30px;
+      right: 30px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
       opacity: 0;
-      line-height: 1.4;
+      transform: translateX(100%);
+      animation: slideIn 1s ease forwards;
+      animation-delay: 2s;
+      line-height: 1.6;
     }
 
     @keyframes slideIn {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
       to {
         transform: translateX(0);
         opacity: 1;
@@ -50,6 +48,7 @@
         text-align: center;
         animation: none;
         opacity: 1;
+        transform: none;
       }
     }
 
@@ -104,7 +103,7 @@
   </p>
 
   <div class="buttons">
-    <button onclick="window.location.href='primera_quedada.html'">Volver atrás</button>
+    <button onclick="window.location.href='primera-quedada.html'">Volver atrás</button>
     <button onclick="window.location.href='continuar.html'">¿Continuar?</button>
   </div>
 
