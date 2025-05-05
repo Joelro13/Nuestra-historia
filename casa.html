@@ -71,7 +71,7 @@
   </div>
 
 <script>
-  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque emm... bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
   const textoDiv = document.getElementById('texto');
   const botonesDiv = document.getElementById('botones');
   let i = 0;
@@ -84,8 +84,10 @@
 
       if (texto.substr(i, 3) === '...') {
         pausa = 600;
-      } else if (texto.substr(i, 31) === 'estas generaciones de hoy en día??') {
+      } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
         pausa = 1200;
+      } else if (texto.substr(i, 44) === 'ya estáis en su casa bro?') {
+        pausa = 300;
       } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
         pausa = 150;
       }
