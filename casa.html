@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vas con Joel a su casa</title>
   <style>
     body {
@@ -10,19 +10,16 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
-      margin: 0;
-      color: #333;
-    }
-
-    h1 {
-      margin-top: 100px;
     }
 
     #texto {
       font-size: 1.2rem;
-      margin: 30px auto;
+      margin-top: 100px;
+      white-space: pre-wrap;
       max-width: 600px;
-      min-height: 160px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #333;
     }
 
     .option-button {
@@ -30,96 +27,59 @@
       color: white;
       font-size: 1rem;
       padding: 10px 20px;
-      margin: 10px;
+      margin: 20px 10px;
       border: none;
       cursor: pointer;
       border-radius: 5px;
       transition: background-color 0.3s ease;
+      display: none;
     }
 
     .option-button:hover {
       background-color: #d89cbc;
     }
-
-    .options-box {
-      display: none;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 20px;
-      margin: 30px auto;
-      width: fit-content;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    @keyframes slideDown {
-      0% {
-        top: -60px;
-      }
-      100% {
-        top: 40px;
-      }
-    }
   </style>
 </head>
 <body>
-  <h1>Vas con Joel a su casa</h1>
-  <div id="texto"></div>
 
-  <div class="options-box" id="botones">
-    <button class="option-button" onclick="mostrarSiguiente()">Sí, narrador guapetón</button>
-    <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
-  </div>
+<h1>Vas con Joel a su casa</h1>
+
+<div id="texto"></div>
+
+<div id="opciones">
+  <button class="option-button" onclick="alert('¡Has elegido que sí!')">Sí, narrador guapetón</button>
+  <button class="option-button" onclick="alert('JAJA eso fue gracioso')">No, qué pereza</button>
+</div>
 
 <script>
-  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?, estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
   const textoDiv = document.getElementById('texto');
-  const botonesDiv = document.getElementById('botones');
+  const botones = document.querySelectorAll('.option-button');
   let i = 0;
 
   function escribirTexto() {
     if (i < texto.length) {
-      textoDiv.innerHTML += texto.charAt(i);
+      textoDiv.textContent += texto.charAt(i);
+      let pausa = 48; // Velocidad base
 
-      let pausa = 47;
+      const previo = texto.substring(i - 7, i + 1); // Para detectar frases completas
 
-      if (texto.substr(i, 3) === '...') {
-        pausa = 600;
-      } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
-        pausa = 1200;
-      } else if (texto.substr(i, 26) === 'ya estáis en su casa bro?') {
-        pausa = 1200;
-      } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
-        pausa = 150;
-      }
+      // Pausas especiales
+      if (previo.includes("bro?")) pausa = 1000;
+      else if (previo.includes("día??")) pausa = 1200;
+      else if (previo.includes("emm...")) pausa = 1000;
+      else if (texto[i] === '.' || texto[i] === ',') pausa = 200;
 
       i++;
       setTimeout(escribirTexto, pausa);
     } else {
-      botonesDiv.style.display = 'block';
+      // Mostrar botones al final
+      botones.forEach(btn => btn.style.display = 'inline-block');
     }
-  }
-
-  function mostrarSiguiente() {
-    textoDiv.innerHTML = '';
-    i = 0;
-    const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
-    function escribirNuevo() {
-      if (i < nuevoTexto.length) {
-        textoDiv.innerHTML += nuevoTexto.charAt(i);
-        i++;
-        setTimeout(escribirNuevo, 45);
-      }
-    }
-    escribirNuevo();
-    botonesDiv.style.display = 'none';
-  }
-
-  function respuestaNegativa() {
-    textoDiv.innerHTML = 'Perfecto, dejo el narrador en modo ahorro de batería. Apagando... 💀';
-    botonesDiv.style.display = 'none';
   }
 
   escribirTexto();
 </script>
+
 </body>
 </html>
