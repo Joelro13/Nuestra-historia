@@ -1,141 +1,145 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vas con Joel a su casa</title>
   <style>
     body {
+      background-color: #f0b7d4;
       font-family: Arial, sans-serif;
-      background-color: #84b7f0;
-      color: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      min-height: 100vh;
       text-align: center;
+      padding: 20px;
+      margin: 0;
+      color: #333;
     }
 
     h1 {
-      font-size: 1.8em;
-      margin-bottom: 30px;
+      margin-top: 100px;
     }
 
-    #typewriter {
-      font-size: 1.2em;
+    #texto {
+      font-size: 1.2rem;
+      margin: 30px auto;
       max-width: 600px;
       min-height: 160px;
-      white-space: pre-wrap;
     }
 
-    .opciones {
-      display: none;
-      margin-top: 40px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .opciones a, .opciones button {
-      background-color: #5a96e3;
+    .option-button {
+      background-color: #f0b7d4;
       color: white;
-      padding: 12px 24px;
-      text-decoration: none;
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 10px;
       border: none;
-      border-radius: 10px;
-      font-size: 1em;
       cursor: pointer;
+      border-radius: 5px;
       transition: background-color 0.3s ease;
     }
 
-    .opciones a:hover, .opciones button:hover {
-      background-color: #4178c2;
+    .option-button:hover {
+      background-color: #d89cbc;
     }
 
-    @keyframes blink {
-      0%, 100% { border-right-color: transparent; }
-      50% { border-right-color: black; }
+    .options-box {
+      display: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      width: fit-content;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    #typewriter::after {
-      content: '';
-      display: inline-block;
-      width: 10px;
-      height: 1em;
-      border-right: 2px solid black;
-      animation: blink 1s step-end infinite;
-      vertical-align: bottom;
+    .notification {
+      position: fixed;
+      top: -60px;
+      right: 20px;
+      background-color: #6d98d4;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 8px 30px;
+      border-radius: 20px;
+      text-align: center;
+      z-index: 1000;
+      animation: slideDown 1.5s forwards;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+    }
+
+    @keyframes slideDown {
+      0% {
+        top: -60px;
+      }
+      100% {
+        top: 40px;
+      }
     }
   </style>
 </head>
 <body>
+
+  <div class="notification">
+    Modo 1ª persona activado en esta pregunta, ¡disfruta!
+  </div>
+
   <h1>Vas con Joel a su casa</h1>
-  <div id="typewriter"></div>
-  <div class="opciones" id="botones">
-    <button onclick="continuar()">Sí, narrador guapetón</button>
-    <button onclick="pereza()">No, qué pereza</button>
+  <div id="texto"></div>
+
+  <div class="options-box" id="botones">
+    <button class="option-button" onclick="mostrarSiguiente()">Sí, narrador guapetón</button>
+    <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
   </div>
 
   <script>
-    const textoIntro = "Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque emm... bueno, es vuestra primera quedada y ya estáis en su casa bro, estás generaciones de hoy en día??. Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?";
-    const textoContinuar = "Vale, vale... ya me calmo. Después de esa incomodidad inicial, os reís un poco, os relajáis, y pasáis la tarde hablando de cosas random. Al final resulta que estar en su casa no fue tan raro como parecía.";
-    const textoPereza = "Vale vale, no te rayes... Me voy a hacer un colacao y ya si eso seguimos otro día, que me está dando ansiedad JAJAJA.";
-
-    const typeEl = document.getElementById("typewriter");
-    const botones = document.getElementById("botones");
-
+    const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro. Estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+    const textoDiv = document.getElementById('texto');
+    const botonesDiv = document.getElementById('botones');
     let i = 0;
 
-    function escribirTexto(texto, callback) {
+    function escribirTexto() {
       if (i < texto.length) {
-        typeEl.textContent += texto.charAt(i);
+        textoDiv.innerHTML += texto.charAt(i);
 
-        if (texto.substring(i, i + 6) === "emm...") {
-          setTimeout(() => {
-            i++;
-            escribirTexto(texto, callback);
-          }, 800); // Pausa más larga en "emm..."
-        } else {
-          setTimeout(() => {
-            i++;
-            escribirTexto(texto, callback);
-          }, 35); // Velocidad normal
+        let pausa = 60;
+
+        if (texto.substr(i, 3) === '...') {
+          pausa = 600;
+        } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
+          pausa = 1600;
+        } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
+          pausa = 180;
         }
+
+        i++;
+        setTimeout(escribirTexto, pausa);
       } else {
-        botones.style.display = "flex";
+        botonesDiv.style.display = 'block';
       }
     }
 
-    function borrarTexto(callback) {
-      const textoActual = typeEl.textContent;
-      if (textoActual.length > 0) {
-        typeEl.textContent = textoActual.slice(0, -1);
-        setTimeout(() => borrarTexto(callback), 20);
-      } else {
-        i = 0;
-        callback();
+    function mostrarSiguiente() {
+      textoDiv.innerHTML = '';
+      i = 0;
+      const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
+      function escribirNuevo() {
+        if (i < nuevoTexto.length) {
+          textoDiv.innerHTML += nuevoTexto.charAt(i);
+          i++;
+          setTimeout(escribirNuevo, 60);
+        }
       }
+      escribirNuevo();
+      botonesDiv.style.display = 'none';
     }
 
-    function continuar() {
-      botones.style.display = "none";
-      borrarTexto(() => {
-        escribirTexto(textoContinuar, () => {});
-      });
+    function respuestaNegativa() {
+      textoDiv.innerHTML = 'Perfecto, dejo el narrador en modo ahorro de batería. Apagando... 💀';
+      botonesDiv.style.display = 'none';
     }
 
-    function pereza() {
-      botones.style.display = "none";
-      borrarTexto(() => {
-        escribirTexto(textoPereza, () => {});
-      });
-    }
-
-    window.onload = () => {
-      escribirTexto(textoIntro, () => {});
-    };
+    escribirTexto();
   </script>
 </body>
 </html>
