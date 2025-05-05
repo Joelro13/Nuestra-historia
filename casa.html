@@ -65,9 +65,9 @@
       const previo = texto.substring(i - 7, i + 1); // Para detectar frases completas
 
       // Pausas especiales
-      if (previo.includes("bro?")) pausa = 1000;
-      else if (previo.includes("día??")) pausa = 1200;
-      else if (previo.includes("emm...")) pausa = 1000;
+      if (previo.includes("bro?")) pausa = 400;
+      else if (previo.includes("día??")) pausa = 500;
+      else if (previo.includes("emm...")) pausa = 500;
       else if (texto[i] === '.' || texto[i] === ',') pausa = 200;
 
       i++;
