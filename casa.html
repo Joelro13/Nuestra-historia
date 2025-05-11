@@ -63,7 +63,7 @@
   </div>
 
   <script>
-    const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+    const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? ,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
     const textoDiv = document.getElementById('texto');
     const botonesDiv = document.getElementById('botones');
     let i = 0;
@@ -111,9 +111,53 @@
       botonesDiv.style.display = 'none';
     }
 
-    function respuestaNegativa() {
-      textoDiv.innerHTML = 'Perfecto, dejo el narrador en modo ahorro de batería. Apagando... 💀';
-      botonesDiv.style.display = 'none';
+     function respuestaNegativa() {
+  textoDiv.innerHTML = '';
+  botonesDiv.style.display = 'none';
+  document.getElementById('foto-castigo').style.display = 'none';
+  const castigoTexto = `Ah sí? O sea que me estás intentando vacilar en mi propio juego??... Qué mal, como castigo te voy a poner esta foto`;
+
+  let j = 0;
+
+  function escribirCastigo() {
+    if (j < castigoTexto.length) {
+      textoDiv.innerHTML += castigoTexto.charAt(j);
+
+      let pausa = 45;
+      if (castigoTexto.substring(0, j + 1).endsWith('...')) pausa = 600;
+
+      j++;
+      setTimeout(escribirCastigo, pausa);
+    } else {
+      document.getElementById('foto-castigo').style.display = 'block';
+
+      setTimeout(() => {
+        const textoExtra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+        textoDiv.innerHTML += '<br><br>';
+        let k = 0;
+
+        function escribirFinal() {
+          if (k < textoExtra.length) {
+            textoDiv.innerHTML += textoExtra.charAt(k);
+
+            let pausa = 45;
+            if (textoExtra.substring(0, k + 1).endsWith('...')) pausa = 600;
+
+            k++;
+            setTimeout(escribirFinal, pausa);
+          } else {
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 2000); // espera 2 seg antes de redirigir
+          }
+        }
+
+        escribirFinal();
+      }, 1000); // espera 1 seg tras mostrar la foto
+    }
+  }
+
+  escribirCastigo();
     }
 
     window.onload = () => {
