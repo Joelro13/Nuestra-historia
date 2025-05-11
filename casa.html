@@ -23,6 +23,7 @@
       margin: 30px auto;
       max-width: 600px;
       min-height: 160px;
+      visibility: visible;
     }
 
     .option-button {
@@ -42,7 +43,7 @@
     }
 
     .options-box {
-      display: none;
+      display: block;
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       padding: 20px;
@@ -101,7 +102,7 @@
         i++;
         setTimeout(escribirTexto, pausa);
       } else {
-        botonesDiv.style.display = 'block';
+        botonesDiv.style.display = 'block'; // Asegura que los botones se muestren
       }
     }
 
@@ -117,13 +118,12 @@
         }
       }
       escribirNuevo();
-      botonesDiv.style.display = 'none';
+      botonesDiv.style.display = 'none'; // Oculta los botones mientras se escribe el texto
     }
 
     function respuestaNegativa() {
       textoDiv.innerHTML = '';
       botonesDiv.style.display = 'none';
-      document.getElementById('foto-castigo').style.display = 'none';
 
       const castigoTexto = `Ah sí? O sea que me estás intentando vacilar en mi propio juego??... Qué mal, como castigo te voy a poner esta foto`;
 
@@ -139,8 +139,12 @@
           j++;
           setTimeout(escribirCastigo, pausa);
         } else {
-          document.getElementById('foto-castigo').style.display = 'block';
+          // Una vez que el texto de castigo se haya completado, mostramos la foto
+          setTimeout(() => {
+            document.getElementById('foto-castigo').style.display = 'block';
+          }, 500); // Espera 0.5 segundos antes de mostrar la foto
 
+          // Después de mostrar la foto, mostramos más texto
           setTimeout(() => {
             const textoExtra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
             textoDiv.innerHTML += '<br><br>';
@@ -163,7 +167,7 @@
             }
 
             escribirFinal();
-          }, 1000); // espera 1 seg tras mostrar la foto
+          }, 3000); // Espera 3 segundos después de mostrar la foto
         }
       }
 
@@ -177,3 +181,4 @@
 
 </body>
 </html>
+
