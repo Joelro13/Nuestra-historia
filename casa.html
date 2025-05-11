@@ -49,12 +49,7 @@
       margin: 30px auto;
       width: fit-content;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-
     }
-  </style>
-</head>
-<body>
-  </div>
 
   <h1>Vas con Joel a su casa</h1>
   <div id="texto"></div>
@@ -65,7 +60,7 @@
   </div>
 
 <script>
-  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?, estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
   const textoDiv = document.getElementById('texto');
   const botonesDiv = document.getElementById('botones');
   let i = 0;
@@ -74,17 +69,16 @@
     if (i < texto.length) {
       textoDiv.innerHTML += texto.charAt(i);
 
-      let pausa = 30;
-      const siguiente = texto.slice(i, i + 5);
+      let pausa = 48;
 
-      if (siguiente.startsWith('...')) {
+      if (texto.substr(i, 3) === '...') {
         pausa = 600;
-      } else if (texto.charAt(i) === ',' || texto.charAt(i) === '?') {
-        pausa = 300;
-      } else if (texto.charAt(i) === '.') {
-        pausa = 350;
-      } else if (texto.slice(i - 3, i + 1) === "emm.") {
-        pausa = 450;
+      } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
+        pausa = 1200;
+      } else if (texto.substr(i, 44) === 'ya estáis en su casa bro?') {
+        pausa = 600;
+      } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
+        pausa = 150;
       }
 
       i++;
@@ -98,25 +92,13 @@
     textoDiv.innerHTML = '';
     i = 0;
     const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
-    let j = 0;
-
     function escribirNuevo() {
-      if (j < nuevoTexto.length) {
-        textoDiv.innerHTML += nuevoTexto.charAt(j);
-
-        let pausa = 35;
-        const siguiente = nuevoTexto.slice(j, j + 3);
-        if (siguiente === "...") {
-          pausa = 400;
-        } else if (nuevoTexto.charAt(j) === ',' || nuevoTexto.charAt(j) === '.') {
-          pausa = 100;
-        }
-
-        j++;
-        setTimeout(escribirNuevo, pausa);
+      if (i < nuevoTexto.length) {
+        textoDiv.innerHTML += nuevoTexto.charAt(i);
+        i++;
+        setTimeout(escribirNuevo, 45);
       }
     }
-
     escribirNuevo();
     botonesDiv.style.display = 'none';
   }
@@ -126,5 +108,10 @@
     botonesDiv.style.display = 'none';
   }
 
-  escribirTexto();
+  window.onload = () => {
+    setTimeout(escribirTexto, 500); // ⏱️ Espera 500ms antes de empezar
+  };
 </script>
+
+</body>
+</html>
