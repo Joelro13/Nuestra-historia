@@ -93,7 +93,7 @@
   </div>
 
 <script>
-  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?, estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
   const textoDiv = document.getElementById('texto');
   const botonesDiv = document.getElementById('botones');
   let i = 0;
@@ -102,16 +102,17 @@
     if (i < texto.length) {
       textoDiv.innerHTML += texto.charAt(i);
 
-      let pausa = 48;
+      let pausa = 30;
+      const siguiente = texto.slice(i, i + 5);
 
-      if (texto.substr(i, 3) === '...') {
-        pausa = 600;
-      } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
-        pausa = 1200;
-      } else if (texto.substr(i, 44) === 'ya estáis en su casa bro?') {
-        pausa = 600;
-      } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
+      if (siguiente.startsWith('...')) {
+        pausa = 500;
+      } else if (texto.charAt(i) === ',' || texto.charAt(i) === '?') {
+        pausa = 100;
+      } else if (texto.charAt(i) === '.') {
         pausa = 150;
+      } else if (texto.slice(i - 3, i + 1) === "emm.") {
+        pausa = 250;
       }
 
       i++;
@@ -125,13 +126,25 @@
     textoDiv.innerHTML = '';
     i = 0;
     const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
+    let j = 0;
+
     function escribirNuevo() {
-      if (i < nuevoTexto.length) {
-        textoDiv.innerHTML += nuevoTexto.charAt(i);
-        i++;
-        setTimeout(escribirNuevo, 45);
+      if (j < nuevoTexto.length) {
+        textoDiv.innerHTML += nuevoTexto.charAt(j);
+
+        let pausa = 35;
+        const siguiente = nuevoTexto.slice(j, j + 3);
+        if (siguiente === "...") {
+          pausa = 400;
+        } else if (nuevoTexto.charAt(j) === ',' || nuevoTexto.charAt(j) === '.') {
+          pausa = 100;
+        }
+
+        j++;
+        setTimeout(escribirNuevo, pausa);
       }
     }
+
     escribirNuevo();
     botonesDiv.style.display = 'none';
   }
@@ -143,6 +156,3 @@
 
   escribirTexto();
 </script>
-
-</body>
-</html>
