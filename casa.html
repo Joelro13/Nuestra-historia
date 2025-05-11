@@ -50,6 +50,9 @@
       width: fit-content;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+  </style>
+</head>
+<body>
 
   <h1>Vas con Joel a su casa</h1>
   <div id="texto"></div>
@@ -59,59 +62,59 @@
     <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
   </div>
 
-<script>
-  const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
-  const textoDiv = document.getElementById('texto');
-  const botonesDiv = document.getElementById('botones');
-  let i = 0;
+  <script>
+    const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro?,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+    const textoDiv = document.getElementById('texto');
+    const botonesDiv = document.getElementById('botones');
+    let i = 0;
 
-  function escribirTexto() {
-    if (i < texto.length) {
-      textoDiv.innerHTML += texto.charAt(i);
+    function escribirTexto() {
+      if (i < texto.length) {
+        textoDiv.innerHTML += texto.charAt(i);
 
-      let pausa = 48;
+        let pausa = 48;
 
-      if (texto.substr(i, 3) === '...') {
-        pausa = 600;
-      } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
-        pausa = 1200;
-      } else if (texto.substr(i, 44) === 'ya estáis en su casa bro?') {
-        pausa = 600;
-      } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
-        pausa = 150;
-      }
+        if (texto.substr(i, 3) === '...') {
+          pausa = 600;
+        } else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
+          pausa = 1200;
+        } else if (texto.substr(i, 44) === 'ya estáis en su casa bro?') {
+          pausa = 600;
+        } else if (texto.charAt(i) === ',' || texto.charAt(i) === '.') {
+          pausa = 150;
+        }
 
-      i++;
-      setTimeout(escribirTexto, pausa);
-    } else {
-      botonesDiv.style.display = 'block';
-    }
-  }
-
-  function mostrarSiguiente() {
-    textoDiv.innerHTML = '';
-    i = 0;
-    const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
-    function escribirNuevo() {
-      if (i < nuevoTexto.length) {
-        textoDiv.innerHTML += nuevoTexto.charAt(i);
         i++;
-        setTimeout(escribirNuevo, 45);
+        setTimeout(escribirTexto, pausa);
+      } else {
+        botonesDiv.style.display = 'block';
       }
     }
-    escribirNuevo();
-    botonesDiv.style.display = 'none';
-  }
 
-  function respuestaNegativa() {
-    textoDiv.innerHTML = 'Perfecto, dejo el narrador en modo ahorro de batería. Apagando... 💀';
-    botonesDiv.style.display = 'none';
-  }
+    function mostrarSiguiente() {
+      textoDiv.innerHTML = '';
+      i = 0;
+      const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
+      function escribirNuevo() {
+        if (i < nuevoTexto.length) {
+          textoDiv.innerHTML += nuevoTexto.charAt(i);
+          i++;
+          setTimeout(escribirNuevo, 45);
+        }
+      }
+      escribirNuevo();
+      botonesDiv.style.display = 'none';
+    }
 
-  window.onload = () => {
-    setTimeout(escribirTexto, 500); // ⏱️ Espera 500ms antes de empezar
-  };
-</script>
+    function respuestaNegativa() {
+      textoDiv.innerHTML = 'Perfecto, dejo el narrador en modo ahorro de batería. Apagando... 💀';
+      botonesDiv.style.display = 'none';
+    }
+
+    window.onload = () => {
+      setTimeout(escribirTexto, 500);
+    };
+  </script>
 
 </body>
 </html>
