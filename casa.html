@@ -55,6 +55,22 @@
     #foto-castigo {
       display: none;
       margin-top: 20px;
+      text-align: center;
+    }
+
+    #foto-castigo img {
+      max-width: 80%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      #texto {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -70,11 +86,11 @@
 
   <!-- Imagen que aparecerá como castigo -->
   <div id="foto-castigo">
-    <img src="images/0.jpg" alt="Nuestra foto" style="max-width: 100%; height: auto; border-radius: 10px;">
+    <img src="images/0.jpg" alt="Nuestra foto">
   </div>
 
   <script>
-    const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? ,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
+    const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
     const textoDiv = document.getElementById('texto');
     const botonesDiv = document.getElementById('botones');
     let i = 0;
@@ -83,20 +99,19 @@
       if (i < texto.length) {
         textoDiv.innerHTML += texto.charAt(i);
 
-        let pausa = 45;
-
+        let pausa = 60; // Modificación para que la pausa sea un poco más larga
         const escrito = textoDiv.innerHTML;
 
         if (escrito.endsWith('...')) {
-          pausa = 700;
+          pausa = 800;
         } else if (escrito.endsWith('bro?')) {
-          pausa = 680;
+          pausa = 850;
         } else if (escrito.endsWith('Estas generaciones de hoy en día??')) {
-          pausa = 1100;
+          pausa = 1200;
         } else if (texto.charAt(i) === '.') {
-          pausa = 280;
+          pausa = 350;
         } else if (texto.charAt(i) === ',') {
-          pausa = 180;
+          pausa = 250;
         }
 
         i++;
@@ -115,7 +130,7 @@
         if (i < nuevoTexto.length) {
           textoDiv.innerHTML += nuevoTexto.charAt(i);
           i++;
-          setTimeout(escribirNuevo, 45);
+          setTimeout(escribirNuevo, 60);
         }
       }
       escribirNuevo();
@@ -134,8 +149,8 @@
         if (j < castigoTexto.length) {
           textoDiv.innerHTML += castigoTexto.charAt(j);
 
-          let pausa = 45;
-          if (castigoTexto.substring(0, j + 1).endsWith('...')) pausa = 600;
+          let pausa = 60;
+          if (castigoTexto.substring(0, j + 1).endsWith('...')) pausa = 750;
 
           j++;
           setTimeout(escribirCastigo, pausa);
@@ -155,15 +170,15 @@
               if (k < textoExtra.length) {
                 textoDiv.innerHTML += textoExtra.charAt(k);
 
-                let pausa = 45;
-                if (textoExtra.substring(0, k + 1).endsWith('...')) pausa = 600;
+                let pausa = 60;
+                if (textoExtra.substring(0, k + 1).endsWith('...')) pausa = 750;
 
                 k++;
                 setTimeout(escribirFinal, pausa);
               } else {
                 setTimeout(() => {
                   window.location.href = 'index.html'; // Redirige a la página principal
-                }, 2000); // espera 2 seg antes de redirigir
+                }, 2500); // espera 2 seg antes de redirigir
               }
             }
 
@@ -182,3 +197,4 @@
 
 </body>
 </html>
+
