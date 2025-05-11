@@ -49,39 +49,11 @@
       margin: 30px auto;
       width: fit-content;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
 
-    .notification {
-      position: fixed;
-      top: -60px;
-      right: 20px;
-      background-color: #6d98d4;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
-      padding: 8px 30px;
-      border-radius: 20px;
-      text-align: center;
-      z-index: 1000;
-      animation: slideDown 1.5s forwards;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      white-space: nowrap;
-    }
-
-    @keyframes slideDown {
-      0% {
-        top: -60px;
-      }
-      100% {
-        top: 40px;
-      }
     }
   </style>
 </head>
 <body>
-
-  <div class="notification">
-    Modo 1ª persona activado en esta pregunta, ¡disfruta!
   </div>
 
   <h1>Vas con Joel a su casa</h1>
@@ -106,13 +78,13 @@
       const siguiente = texto.slice(i, i + 5);
 
       if (siguiente.startsWith('...')) {
-        pausa = 500;
+        pausa = 600;
       } else if (texto.charAt(i) === ',' || texto.charAt(i) === '?') {
-        pausa = 100;
-      } else if (texto.charAt(i) === '.') {
-        pausa = 150;
-      } else if (texto.slice(i - 3, i + 1) === "emm.") {
         pausa = 250;
+      } else if (texto.charAt(i) === '.') {
+        pausa = 350;
+      } else if (texto.slice(i - 3, i + 1) === "emm.") {
+        pausa = 450;
       }
 
       i++;
