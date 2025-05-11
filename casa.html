@@ -50,6 +50,11 @@
       width: fit-content;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    #foto-castigo {
+      display: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -62,6 +67,11 @@
     <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
   </div>
 
+  <!-- Imagen que aparecerá como castigo -->
+  <div id="foto-castigo">
+    <img src="images/0.jpg" alt="Nuestra foto" style="max-width: 100%; height: auto; border-radius: 10px;">
+  </div>
+
   <script>
     const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? ,estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
     const textoDiv = document.getElementById('texto');
@@ -69,32 +79,31 @@
     let i = 0;
 
     function escribirTexto() {
-  if (i < texto.length) {
-    textoDiv.innerHTML += texto.charAt(i);
+      if (i < texto.length) {
+        textoDiv.innerHTML += texto.charAt(i);
 
-    let pausa = 45; // Velocidad base rápida y fluida
+        let pausa = 45;
 
-    const escrito = textoDiv.innerHTML;
+        const escrito = textoDiv.innerHTML;
 
-    if (escrito.endsWith('...')) {
-      pausa = 700;
-    } else if (escrito.endsWith('bro?')) {
-      pausa = 680;
-    } else if (escrito.endsWith('Estas generaciones de hoy en día??')) {
-      pausa = 1100;
-    } else if (texto.charAt(i) === '.') {
-      pausa = 280; // un pelín más rápido que antes
-    } else if (texto.charAt(i) === ',') {
-      pausa = 180; // más rápido que el punto
+        if (escrito.endsWith('...')) {
+          pausa = 700;
+        } else if (escrito.endsWith('bro?')) {
+          pausa = 680;
+        } else if (escrito.endsWith('Estas generaciones de hoy en día??')) {
+          pausa = 1100;
+        } else if (texto.charAt(i) === '.') {
+          pausa = 280;
+        } else if (texto.charAt(i) === ',') {
+          pausa = 180;
+        }
+
+        i++;
+        setTimeout(escribirTexto, pausa);
+      } else {
+        botonesDiv.style.display = 'block';
+      }
     }
-
-    i++;
-    setTimeout(escribirTexto, pausa);
-  } else {
-    botonesDiv.style.display = 'block';
-  }
-}
-
 
     function mostrarSiguiente() {
       textoDiv.innerHTML = '';
@@ -111,53 +120,54 @@
       botonesDiv.style.display = 'none';
     }
 
-     function respuestaNegativa() {
-  textoDiv.innerHTML = '';
-  botonesDiv.style.display = 'none';
-  document.getElementById('foto-castigo').style.display = 'none';
-  const castigoTexto = `Ah sí? O sea que me estás intentando vacilar en mi propio juego??... Qué mal, como castigo te voy a poner esta foto`;
+    function respuestaNegativa() {
+      textoDiv.innerHTML = '';
+      botonesDiv.style.display = 'none';
+      document.getElementById('foto-castigo').style.display = 'none';
 
-  let j = 0;
+      const castigoTexto = `Ah sí? O sea que me estás intentando vacilar en mi propio juego??... Qué mal, como castigo te voy a poner esta foto`;
 
-  function escribirCastigo() {
-    if (j < castigoTexto.length) {
-      textoDiv.innerHTML += castigoTexto.charAt(j);
+      let j = 0;
 
-      let pausa = 45;
-      if (castigoTexto.substring(0, j + 1).endsWith('...')) pausa = 600;
+      function escribirCastigo() {
+        if (j < castigoTexto.length) {
+          textoDiv.innerHTML += castigoTexto.charAt(j);
 
-      j++;
-      setTimeout(escribirCastigo, pausa);
-    } else {
-      document.getElementById('foto-castigo').style.display = 'block';
+          let pausa = 45;
+          if (castigoTexto.substring(0, j + 1).endsWith('...')) pausa = 600;
 
-      setTimeout(() => {
-        const textoExtra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-        textoDiv.innerHTML += '<br><br>';
-        let k = 0;
+          j++;
+          setTimeout(escribirCastigo, pausa);
+        } else {
+          document.getElementById('foto-castigo').style.display = 'block';
 
-        function escribirFinal() {
-          if (k < textoExtra.length) {
-            textoDiv.innerHTML += textoExtra.charAt(k);
+          setTimeout(() => {
+            const textoExtra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+            textoDiv.innerHTML += '<br><br>';
+            let k = 0;
 
-            let pausa = 45;
-            if (textoExtra.substring(0, k + 1).endsWith('...')) pausa = 600;
+            function escribirFinal() {
+              if (k < textoExtra.length) {
+                textoDiv.innerHTML += textoExtra.charAt(k);
 
-            k++;
-            setTimeout(escribirFinal, pausa);
-          } else {
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 2000); // espera 2 seg antes de redirigir
-          }
+                let pausa = 45;
+                if (textoExtra.substring(0, k + 1).endsWith('...')) pausa = 600;
+
+                k++;
+                setTimeout(escribirFinal, pausa);
+              } else {
+                setTimeout(() => {
+                  window.location.href = 'index.html'; // Redirige a la página principal
+                }, 2000); // espera 2 seg antes de redirigir
+              }
+            }
+
+            escribirFinal();
+          }, 1000); // espera 1 seg tras mostrar la foto
         }
+      }
 
-        escribirFinal();
-      }, 1000); // espera 1 seg tras mostrar la foto
-    }
-  }
-
-  escribirCastigo();
+      escribirCastigo();
     }
 
     window.onload = () => {
