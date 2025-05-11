@@ -69,29 +69,32 @@
     let i = 0;
 
     function escribirTexto() {
-      if (i < texto.length) {
-        textoDiv.innerHTML += texto.charAt(i);
+  if (i < texto.length) {
+    textoDiv.innerHTML += texto.charAt(i);
 
-        let pausa = 48;
+    let pausa = 45; // Velocidad base rápida y fluida
 
-if (texto.substr(i, 3) === '...') {
-  pausa = 750;
-} else if (texto.substr(i, 31) === 'Estas generaciones de hoy en día??') {
-  pausa = 1200;
-} else if (texto.substr(i, 25) === 'ya estáis en su casa bro?') {
-  pausa = 1000;
-} else if (texto.charAt(i) === ',') {
-  pausa = 150;
-} else if (texto.charAt(i) === '.') {
-  pausa = 250;
+    const escrito = textoDiv.innerHTML;
+
+    if (escrito.endsWith('...')) {
+      pausa = 700;
+    } else if (escrito.endsWith('bro?')) {
+      pausa = 1000;
+    } else if (escrito.endsWith('Estas generaciones de hoy en día??')) {
+      pausa = 1200;
+    } else if (texto.charAt(i) === '.') {
+      pausa = 280; // un pelín más rápido que antes
+    } else if (texto.charAt(i) === ',') {
+      pausa = 180; // más rápido que el punto
+    }
+
+    i++;
+    setTimeout(escribirTexto, pausa);
+  } else {
+    botonesDiv.style.display = 'block';
+  }
 }
 
-        i++;
-        setTimeout(escribirTexto, pausa);
-      } else {
-        botonesDiv.style.display = 'block';
-      }
-    }
 
     function mostrarSiguiente() {
       textoDiv.innerHTML = '';
