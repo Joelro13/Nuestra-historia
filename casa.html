@@ -63,7 +63,7 @@
   <h1>Vas con Joel a su casa</h1>
   <div id="texto"></div>
 
-  <div class="options-box" id="botones">
+  <div class="options-box" id="botones" style="display: none;">
     <button class="option-button" onclick="mostrarSiguiente()">Sí, narrador guapetón</button>
     <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
   </div>
@@ -102,7 +102,8 @@
         i++;
         setTimeout(escribirTexto, pausa);
       } else {
-        botonesDiv.style.display = 'block'; // Asegura que los botones se muestren
+        // Los botones deben aparecer cuando el narrador se pone nervioso
+        botonesDiv.style.display = 'block';
       }
     }
 
@@ -181,4 +182,3 @@
 
 </body>
 </html>
-
