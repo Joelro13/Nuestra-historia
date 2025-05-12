@@ -121,21 +121,58 @@
         botonesDiv.style.display = 'block';
       }
     }
+<!-- Añade esto dentro del <script> después de respuestaNegativa() -->
 
-    function mostrarSiguiente() {
-      textoDiv.innerHTML = '';
-      i = 0;
-      const nuevoTexto = `Vale, vale, ya me calmo... Continúo.`;
+function mostrarSiguiente() {
+  botonesDiv.style.display = 'none'; // Oculta botones antiguos
+  let currentText = textoDiv.innerHTML;
+  let i = currentText.length;
+
+  // Paso 1: Borrar el texto con efecto máquina de escribir en retroceso
+  function borrarTexto() {
+    if (i > 0) {
+      textoDiv.innerHTML = currentText.substring(0, i - 1);
+      i--;
+      setTimeout(borrarTexto, 25);
+    } else {
+      // Paso 2: Mostrar nuevo texto con efecto máquina de escribir
+      const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
+      let j = 0;
+      textoDiv.innerHTML = "";
+
       function escribirNuevo() {
-        if (i < nuevoTexto.length) {
-          textoDiv.innerHTML += nuevoTexto.charAt(i);
-          i++;
-          setTimeout(escribirNuevo, 60);
+        if (j < nuevoTexto.length) {
+          textoDiv.innerHTML += nuevoTexto.charAt(j);
+          j++;
+
+          let pausa = 50;
+          if (nuevoTexto.substring(0, j).endsWith('...')) pausa = 750;
+          else if (nuevoTexto.charAt(j - 1) === ',' || nuevoTexto.charAt(j - 1) === '.') pausa = 250;
+
+          setTimeout(escribirNuevo, pausa);
+        } else {
+          // Paso 3: Mostrar nuevas opciones
+          mostrarOpcionesNuevaEscena();
         }
       }
+
       escribirNuevo();
-      botonesDiv.style.display = 'none'; // Oculta los botones mientras se escribe el texto
     }
+  }
+
+  borrarTexto();
+}
+
+// Paso 4: Nueva función para mostrar los botones de la nueva escena
+function mostrarOpcionesNuevaEscena() {
+  const nuevasOpciones = document.createElement('div');
+  nuevasOpciones.className = 'options-box';
+  nuevasOpciones.innerHTML = `
+    <button class="option-button" onclick="alert('Elegiste decirlo')">Se lo dices</button>
+    <button class="option-button" onclick="alert('Elegiste no decir nada')">No decírselo</button>
+  `;
+  document.body.appendChild(nuevasOpciones);
+}
 
     function respuestaNegativa() {
       textoDiv.innerHTML = '';
