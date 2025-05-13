@@ -65,18 +65,19 @@
     }
 
     .back-button {
-      background-color: #d89cbc;
+      background-color: #f0b7d4;
       color: white;
       font-size: 1rem;
       padding: 10px 20px;
-      margin-top: 20px;
+      margin-top: 10px;
       border: none;
       cursor: pointer;
       border-radius: 5px;
+      transition: background-color 0.3s ease;
     }
 
     .back-button:hover {
-      background-color: #c18b9b;
+      background-color: #d89cbc;
     }
 
     @media (max-width: 768px) {
@@ -97,15 +98,14 @@
   <div class="options-box" id="botones" style="display: none;">
     <button class="option-button" onclick="mostrarSiguiente()">Sí, narrador guapetón</button>
     <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
+    <button class="back-button" onclick="window.location.href='primera-quedada.html'">Volver atrás</button>
   </div>
 
   <div id="foto-castigo">
     <img src="images/0.jpg" alt="Nuestra foto">
   </div>
 
-  <audio id="vozSonido" src="Record (online-voice-recorder.com).mp3"></audio>
-
-  <button class="back-button" onclick="window.location.href='primera-quedada.html'">Volver atrás</button>
+  <audio id="sonidos" src="Record (online-voice-recorder.com).mp3"></audio>
 
   <script>
     const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
