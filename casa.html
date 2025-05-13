@@ -98,7 +98,7 @@
   <div class="options-box" id="botones" style="display: none;">
     <button class="option-button" onclick="mostrarSiguiente()">Sí, narrador guapetón</button>
     <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
-    <button class="back-button" onclick="window.location.href='primera-.html'">Volver a primera quedada</button>
+    <button class="back-button" onclick="window.location.href='primera-.html'">Volver atrás</button>
   </div>
 
   <div id="foto-castigo">
@@ -154,37 +154,57 @@
             const audio = document.getElementById('vozSonido');
             audio.play();
 
-            const nuevoTexto = `vale (suena un sonido de afinar la voz) ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
+            const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
             let j = 0;
             textoDiv.innerHTML = "";
 
-            function escribirNuevo() {
-              if (j < nuevoTexto.length) {
-                textoDiv.innerHTML += nuevoTexto.charAt(j);
-                j++;
+  function mostrarSiguiente() {
+  botonesDiv.style.display = 'none';
+  let currentText = textoDiv.innerHTML;
+  let i = currentText.length;
 
-                let pausa = 50;
-                const escrito = nuevoTexto.substring(0, j);
+  function borrarTexto() {
+    if (i > 0) {
+      textoDiv.innerHTML = currentText.substring(0, i - 1);
+      i--;
+      setTimeout(borrarTexto, 25);
+    } else {
+      setTimeout(() => {
+        // Reproducir el sonido después de borrar el texto
+        const audio = document.getElementById('vozSonido');
+        audio.play();
 
-                if (escrito.endsWith('vale')) pausa = 250;
-                else if (escrito.endsWith('ya está.')) pausa = 350;
-                else if (nuevoTexto.substring(j - 3, j) === '...') pausa = 750;
-                else if (nuevoTexto.charAt(j - 1) === ',') pausa = 250;
-                else if (nuevoTexto.charAt(j - 1) === '.') pausa = 350;
+        const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
+        let j = 0;
+        textoDiv.innerHTML = "";
 
-                setTimeout(escribirNuevo, pausa);
-              } else {
-                mostrarOpcionesNuevaEscena();
-              }
-            }
+        function escribirNuevo() {
+          if (j < nuevoTexto.length) {
+            textoDiv.innerHTML += nuevoTexto.charAt(j);
+            j++;
 
-            escribirNuevo();
-          }, 1000);
+            let pausa = 50;
+            const escrito = nuevoTexto.substring(0, j);
+
+            if (escrito.endsWith('vale')) pausa = 250;
+            else if (escrito.endsWith('ya está.')) pausa = 350;
+            else if (nuevoTexto.substring(j - 3, j) === '...') pausa = 750;
+            else if (nuevoTexto.charAt(j - 1) === ',') pausa = 250;
+            else if (nuevoTexto.charAt(j - 1) === '.') pausa = 350;
+
+            setTimeout(escribirNuevo, pausa);
+          } else {
+            mostrarOpcionesNuevaEscena();
+          }
         }
-      }
 
-      borrarTexto();
+        escribirNuevo();
+      }, 1000); // Añadido un pequeño retraso antes de reproducir el sonido
     }
+  }
+
+  borrarTexto();
+}
 
     function mostrarOpcionesNuevaEscena() {
       const nuevasOpciones = document.createElement('div');
