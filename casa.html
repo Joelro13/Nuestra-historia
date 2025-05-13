@@ -89,6 +89,9 @@
     <img src="images/0.jpg" alt="Nuestra foto">
   </div>
 
+  <!-- Sonido que se reproduce -->
+  <audio id="vozSonido" src="Record (online-voice-recorder.com).mp3"></audio>
+
   <script>
     const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
     const textoDiv = document.getElementById('texto');
@@ -99,7 +102,7 @@
       if (i < texto.length) {
         textoDiv.innerHTML += texto.charAt(i);
 
-        let pausa = 50; // Modificación para que la pausa sea un poco más larga
+        let pausa = 50;
         const escrito = textoDiv.innerHTML;
 
         if (escrito.endsWith('...')) {
@@ -117,62 +120,69 @@
         i++;
         setTimeout(escribirTexto, pausa);
       } else {
-        // Los botones deben aparecer cuando el narrador se pone nervioso
         botonesDiv.style.display = 'block';
       }
     }
-<!-- Añade esto dentro del <script> después de respuestaNegativa() -->
 
-function mostrarSiguiente() {
-  botonesDiv.style.display = 'none'; // Oculta botones antiguos
+ function mostrarSiguiente() {
+  botonesDiv.style.display = 'none';
   let currentText = textoDiv.innerHTML;
   let i = currentText.length;
 
-  // Paso 1: Borrar el texto con efecto máquina de escribir en retroceso
   function borrarTexto() {
     if (i > 0) {
       textoDiv.innerHTML = currentText.substring(0, i - 1);
       i--;
       setTimeout(borrarTexto, 25);
     } else {
-      // Paso 2: Mostrar nuevo texto con efecto máquina de escribir
-      const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
-      let j = 0;
-      textoDiv.innerHTML = "";
+      // 🔹 Pausa de 1 segundo antes de empezar
+      setTimeout(() => {
+        // 🔊 Reproducir sonido
+        const audio = document.getElementById('vozSonido');
+        audio.play();
 
-      function escribirNuevo() {
-        if (j < nuevoTexto.length) {
-          textoDiv.innerHTML += nuevoTexto.charAt(j);
-          j++;
+        // 🔹 Texto nuevo con pausas especiales
+        const nuevoTexto = `vale (suena un sonido de afinar la voz) ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
+        let j = 0;
+        textoDiv.innerHTML = "";
 
-          let pausa = 50;
-          if (nuevoTexto.substring(0, j).endsWith('...')) pausa = 750;
-          else if (nuevoTexto.charAt(j - 1) === ',' || nuevoTexto.charAt(j - 1) === '.') pausa = 250;
+        function escribirNuevo() {
+          if (j < nuevoTexto.length) {
+            textoDiv.innerHTML += nuevoTexto.charAt(j);
+            j++;
 
-          setTimeout(escribirNuevo, pausa);
-        } else {
-          // Paso 3: Mostrar nuevas opciones
-          mostrarOpcionesNuevaEscena();
+            let pausa = 50;
+            const escrito = nuevoTexto.substring(0, j);
+
+            if (escrito.endsWith('vale')) pausa = 250;
+            else if (escrito.endsWith('ya está.')) pausa = 350;
+            else if (nuevoTexto.substring(j - 3, j) === '...') pausa = 750;
+            else if (nuevoTexto.charAt(j - 1) === ',') pausa = 250;
+            else if (nuevoTexto.charAt(j - 1) === '.') pausa = 350;
+
+            setTimeout(escribirNuevo, pausa);
+          } else {
+            mostrarOpcionesNuevaEscena();
+          }
         }
-      }
 
-      escribirNuevo();
+        escribirNuevo();
+      }, 1000); // ← Espera antes de reproducir el sonido y escribir
     }
   }
 
   borrarTexto();
 }
 
-// Paso 4: Nueva función para mostrar los botones de la nueva escena
-function mostrarOpcionesNuevaEscena() {
-  const nuevasOpciones = document.createElement('div');
-  nuevasOpciones.className = 'options-box';
-  nuevasOpciones.innerHTML = `
-    <button class="option-button" onclick="alert('Elegiste decirlo')">Se lo dices</button>
-    <button class="option-button" onclick="alert('Elegiste no decir nada')">No decírselo</button>
-  `;
-  document.body.appendChild(nuevasOpciones);
-}
+    function mostrarOpcionesNuevaEscena() {
+      const nuevasOpciones = document.createElement('div');
+      nuevasOpciones.className = 'options-box';
+      nuevasOpciones.innerHTML = `
+        <button class="option-button" onclick="alert('Elegiste decirlo')">Se lo dices</button>
+        <button class="option-button" onclick="alert('Elegiste no decir nada')">No decírselo</button>
+      `;
+      document.body.appendChild(nuevasOpciones);
+    }
 
     function respuestaNegativa() {
       textoDiv.innerHTML = '';
@@ -186,18 +196,16 @@ function mostrarOpcionesNuevaEscena() {
         if (j < castigoTexto.length) {
           textoDiv.innerHTML += castigoTexto.charAt(j);
 
-          let pausa = 60;
+          let pausa = 50;
           if (castigoTexto.substring(0, j + 1).endsWith('...')) pausa = 750;
 
           j++;
           setTimeout(escribirCastigo, pausa);
         } else {
-          // Una vez que el texto de castigo se haya completado, mostramos la foto
           setTimeout(() => {
             document.getElementById('foto-castigo').style.display = 'block';
-          }, 500); // Espera 0.5 segundos antes de mostrar la foto
+          }, 500);
 
-          // Después de mostrar la foto, mostramos más texto
           setTimeout(() => {
             const textoExtra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
             textoDiv.innerHTML += '<br><br>';
@@ -207,20 +215,20 @@ function mostrarOpcionesNuevaEscena() {
               if (k < textoExtra.length) {
                 textoDiv.innerHTML += textoExtra.charAt(k);
 
-                let pausa = 60;
+                let pausa = 50;
                 if (textoExtra.substring(0, k + 1).endsWith('...')) pausa = 750;
 
                 k++;
                 setTimeout(escribirFinal, pausa);
               } else {
                 setTimeout(() => {
-                  window.location.href = 'index.html'; // Redirige a la página principal
-                }, 2500); // espera 2 seg antes de redirigir
+                  window.location.href = 'index.html';
+                }, 2500);
               }
             }
 
             escribirFinal();
-          }, 3000); // Espera 3 segundos después de mostrar la foto
+          }, 3000);
         }
       }
 
