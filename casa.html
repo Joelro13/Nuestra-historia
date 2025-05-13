@@ -64,6 +64,21 @@
       border-radius: 10px;
     }
 
+    .back-button {
+      background-color: #d89cbc;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .back-button:hover {
+      background-color: #c18b9b;
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 1.5rem;
@@ -84,13 +99,13 @@
     <button class="option-button" onclick="respuestaNegativa()">No, qué pereza</button>
   </div>
 
-  <!-- Imagen que aparecerá como castigo -->
   <div id="foto-castigo">
     <img src="images/0.jpg" alt="Nuestra foto">
   </div>
 
-  <!-- Sonido que se reproduce -->
   <audio id="vozSonido" src="Record (online-voice-recorder.com).mp3"></audio>
+
+  <button class="back-button" onclick="window.location.href='primera-quedada.html'">Volver atrás</button>
 
   <script>
     const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
@@ -124,55 +139,52 @@
       }
     }
 
- function mostrarSiguiente() {
-  botonesDiv.style.display = 'none';
-  let currentText = textoDiv.innerHTML;
-  let i = currentText.length;
+    function mostrarSiguiente() {
+      botonesDiv.style.display = 'none';
+      let currentText = textoDiv.innerHTML;
+      let i = currentText.length;
 
-  function borrarTexto() {
-    if (i > 0) {
-      textoDiv.innerHTML = currentText.substring(0, i - 1);
-      i--;
-      setTimeout(borrarTexto, 25);
-    } else {
-      // 🔹 Pausa de 1 segundo antes de empezar
-      setTimeout(() => {
-        // 🔊 Reproducir sonido
-        const audio = document.getElementById('vozSonido');
-        audio.play();
+      function borrarTexto() {
+        if (i > 0) {
+          textoDiv.innerHTML = currentText.substring(0, i - 1);
+          i--;
+          setTimeout(borrarTexto, 25);
+        } else {
+          setTimeout(() => {
+            const audio = document.getElementById('vozSonido');
+            audio.play();
 
-        // 🔹 Texto nuevo con pausas especiales
-        const nuevoTexto = `vale (suena un sonido de afinar la voz) ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
-        let j = 0;
-        textoDiv.innerHTML = "";
+            const nuevoTexto = `vale (suena un sonido de afinar la voz) ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
+            let j = 0;
+            textoDiv.innerHTML = "";
 
-        function escribirNuevo() {
-          if (j < nuevoTexto.length) {
-            textoDiv.innerHTML += nuevoTexto.charAt(j);
-            j++;
+            function escribirNuevo() {
+              if (j < nuevoTexto.length) {
+                textoDiv.innerHTML += nuevoTexto.charAt(j);
+                j++;
 
-            let pausa = 50;
-            const escrito = nuevoTexto.substring(0, j);
+                let pausa = 50;
+                const escrito = nuevoTexto.substring(0, j);
 
-            if (escrito.endsWith('vale')) pausa = 250;
-            else if (escrito.endsWith('ya está.')) pausa = 350;
-            else if (nuevoTexto.substring(j - 3, j) === '...') pausa = 750;
-            else if (nuevoTexto.charAt(j - 1) === ',') pausa = 250;
-            else if (nuevoTexto.charAt(j - 1) === '.') pausa = 350;
+                if (escrito.endsWith('vale')) pausa = 250;
+                else if (escrito.endsWith('ya está.')) pausa = 350;
+                else if (nuevoTexto.substring(j - 3, j) === '...') pausa = 750;
+                else if (nuevoTexto.charAt(j - 1) === ',') pausa = 250;
+                else if (nuevoTexto.charAt(j - 1) === '.') pausa = 350;
 
-            setTimeout(escribirNuevo, pausa);
-          } else {
-            mostrarOpcionesNuevaEscena();
-          }
+                setTimeout(escribirNuevo, pausa);
+              } else {
+                mostrarOpcionesNuevaEscena();
+              }
+            }
+
+            escribirNuevo();
+          }, 1000);
         }
+      }
 
-        escribirNuevo();
-      }, 1000); // ← Espera antes de reproducir el sonido y escribir
+      borrarTexto();
     }
-  }
-
-  borrarTexto();
-}
 
     function mostrarOpcionesNuevaEscena() {
       const nuevasOpciones = document.createElement('div');
@@ -242,4 +254,3 @@
 
 </body>
 </html>
-
