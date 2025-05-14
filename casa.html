@@ -105,7 +105,7 @@
     <img src="images/0.jpg" alt="Nuestra foto">
   </div>
 
-  <audio id="sonidos" src="record (online-voice-recorder.com).mp3"></audio>
+  <audio id="sonidos" src="sonidos/Record (online-voice-recorder.com).mp3"></audio>
 
   <script>
     const texto = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
@@ -168,6 +168,7 @@
         // Reproducir el sonido después de borrar el texto
         const audio = document.getElementById('sonidos');
         audio.play();
+audio.currentTime = 0;
 
         const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
         let j = 0;
