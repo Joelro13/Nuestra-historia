@@ -151,17 +151,12 @@
           setTimeout(borrarTexto, 25);
         } else {
           setTimeout(() => {
-            const audio = document.getElementById('vozSonido');
+            const audio = document.getElementById('sonidos');
             audio.play();
 
             const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
             let j = 0;
             textoDiv.innerHTML = "";
-
-  function mostrarSiguiente() {
-  botonesDiv.style.display = 'none';
-  let currentText = textoDiv.innerHTML;
-  let i = currentText.length;
 
   function borrarTexto() {
     if (i > 0) {
@@ -171,7 +166,7 @@
     } else {
       setTimeout(() => {
         // Reproducir el sonido después de borrar el texto
-        const audio = document.getElementById('vozSonido');
+        const audio = document.getElementById('sonidos');
         audio.play();
 
         const nuevoTexto = `vale ya está. Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio, pero por otra parte te da una vergüenza que flipas. ¿Qué haces?`;
