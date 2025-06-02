@@ -51,7 +51,7 @@ function escribirTexto(str,cb){
   (function loop(){
     if(i<str.length){
       textoDiv.innerHTML+=str.charAt(i);
-      let pausa=50;
+      let pausa 40;
       const escrito=textoDiv.innerHTML;
       if(escrito.endsWith('...')) pausa=800;
       else if(escrito.endsWith('bro?')) pausa=750;
