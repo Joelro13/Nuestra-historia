@@ -58,6 +58,7 @@ function escribirTexto(str,cb){
       else if(escrito.endsWith('Estas generaciones de hoy en día??')) pausa=1200;
       else if(str.charAt(i)==='.') pausa=350;
       else if(str.charAt(i)===',') pausa=250;
+      else if(escrito.endsWith('??')) pausa=350;
       i++; setTimeout(loop,pausa);
     }else if(cb){cb();}
   })();
@@ -108,7 +109,7 @@ function mostrarOpcionesNuevaEscena(){
 
 function respuestaNegativa(){
   textoDiv.innerHTML=''; botonesDiv.style.display='none';
-  const castigo=`Ah sí? O sea que me estás intentando vacilar en mi propio juego??... Qué mal, como castigo te voy a poner esta foto`;
+  const castigo=`Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
   escribirTexto(castigo,()=>{
     document.getElementById('foto-castigo').style.display='block';
     setTimeout(()=>{
