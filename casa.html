@@ -57,23 +57,21 @@
       text-align: center;
     }
 
-  #foto-castigo img {
-  width: 300px;
-  height: auto;
-  max-width: 90%;
-  border-radius: 10px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
+    #foto-castigo img {
+      width: 300px;
+      height: auto;
+      max-width: 90%;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
 
     @media (max-width: 768px) {
       h1 { font-size: 1.5rem; }
       #texto { font-size: 1rem; }
     }
 
-    /* 🎉 Animación */
     @keyframes fadeInScale {
       0% { opacity: 0; transform: scale(0.8); }
       100% { opacity: 1; transform: scale(1); }
@@ -96,10 +94,10 @@
 </div>
 
 <div id="foto-castigo">
-  <img src="images/WhatsApp Image 2025-05-18 at 16.43.39.jpg" alt="Nuestra foto">
+  <img src="images/joel-casa.jpg" alt="Nuestra foto">
 </div>
 
-<audio id="sonidos" src="sonidos/Record (online-voice-recorder.com).mp3"></audio>
+<audio id="sonidos" src="sonidos/voz.mp3"></audio>
 
 <script>
 const textoIntro = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
@@ -143,20 +141,21 @@ function mostrarSiguiente() {
   borrarTexto(() => {
     setTimeout(() => {
       const audio = document.getElementById('sonidos');
-audio.volume = 0.35;
-audio.currentTime = 0;
-audio.play();
+      audio.volume = 0.35;
+      audio.currentTime = 0;
+      audio.play();
 
-setTimeout(() => {
-  textoDiv.innerHTML = 'vale';
-  setTimeout(() => {
-    textoDiv.innerHTML += ' ya está.';
-    setTimeout(() => {
-      const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
-      escribirTexto(resto, mostrarOpcionesNuevaEscena);
-    }, 800);
-  }, 500);
-}, 800); // Espera 0.8s tras el play para empezar a escribir
+      setTimeout(() => {
+        textoDiv.innerHTML = 'vale';
+        setTimeout(() => {
+          textoDiv.innerHTML += ' ya está.';
+          setTimeout(() => {
+            const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+            escribirTexto(resto, mostrarOpcionesNuevaEscena);
+          }, 800);
+        }, 500);
+      }, 800);
+    });
   });
 }
 
@@ -173,21 +172,19 @@ function respuestaNegativa() {
   textoDiv.innerHTML = '';
   botonesDiv.style.display = 'none';
   const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
-escribirTexto(castigo, () => {
-  const foto = document.getElementById('foto-castigo');
-  foto.style.display = 'block';
-  foto.classList.add('fade-in');
+  escribirTexto(castigo, () => {
+    const foto = document.getElementById('foto-castigo');
+    foto.style.display = 'block';
+    foto.classList.add('fade-in');
 
-  // Espera 600ms para que aparezca la imagen antes de empezar a escribir el texto extra
-  setTimeout(() => {
-    const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-    escribirTexto('<br><br>' + extra, () => {
-      setTimeout(() => location.href = 'index.html', 2500);
-    });
-  }, 1000); // <--- Ajuste de tiempo aquí
-});
+    setTimeout(() => {
+      const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+      escribirTexto('<br><br>' + extra, () => {
+        setTimeout(() => location.href = 'index.html', 2500);
+      });
+    }, 600); // Espera de 0.6s tras mostrar la imagen
+  });
 }
-
 
 window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display = 'block'), 500);
 </script>
