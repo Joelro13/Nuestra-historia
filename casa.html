@@ -57,14 +57,16 @@
       text-align: center;
     }
 
-   #foto-castigo img {
-  max-width: 80vw;
-  max-height: 60vh;
-  width: auto;
+  #foto-castigo img {
+  width: 300px;
   height: auto;
+  max-width: 90%;
   border-radius: 10px;
-  object-fit: contain;
-    }
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
 
     @media (max-width: 768px) {
       h1 { font-size: 1.5rem; }
