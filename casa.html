@@ -178,11 +178,11 @@ escribirTexto(castigo, () => {
 
   // Espera 600ms para que aparezca la imagen antes de empezar a escribir el texto extra
   setTimeout(() => {
-    const extra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+    const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
     escribirTexto('\n\n' + extra, () => {
       setTimeout(() => location.href = 'index.html', 2500);
     });
-  }, 600); // <--- Ajuste de tiempo aquí
+  }, 1000); // <--- Ajuste de tiempo aquí
 });
 }
 
