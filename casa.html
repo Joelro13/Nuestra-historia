@@ -171,18 +171,19 @@ function respuestaNegativa() {
   textoDiv.innerHTML = '';
   botonesDiv.style.display = 'none';
   const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
-  escribirTexto(castigo, () => {
-    const foto = document.getElementById('foto-castigo');
-    foto.style.display = 'block';
-    const imagen = foto.querySelector('img');
-    imagen.classList.remove('fade-in'); // Por si ya la tenía
-    void imagen.offsetWidth; // Hack para reiniciar animación
-    imagen.classList.add('fade-in');
-    setTimeout(() => {
-      const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-      escribirTexto('\n\n' + extra, () => setTimeout(() => location.href = 'index.html', 2500));
-    }, 500);
-  });
+escribirTexto(castigo, () => {
+  const foto = document.getElementById('foto-castigo');
+  foto.style.display = 'block';
+  foto.classList.add('fade-in');
+
+  // Espera 600ms para que aparezca la imagen antes de empezar a escribir el texto extra
+  setTimeout(() => {
+    const extra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+    escribirTexto('\n\n' + extra, () => {
+      setTimeout(() => location.href = 'index.html', 2500);
+    });
+  }, 600); // <--- Ajuste de tiempo aquí
+});
 }
 
 
