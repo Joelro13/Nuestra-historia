@@ -143,18 +143,20 @@ function mostrarSiguiente() {
   borrarTexto(() => {
     setTimeout(() => {
       const audio = document.getElementById('sonidos');
-      audio.volume = 0.35;
-      audio.currentTime = 0;
-      audio.play();
-      textoDiv.innerHTML = 'vale';
-      setTimeout(() => {
-        textoDiv.innerHTML += ' ya está.';
-        setTimeout(() => {
-          const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
-          escribirTexto(resto, mostrarOpcionesNuevaEscena);
-        }, 800);
-      }, 500);
-    }, 500);
+audio.volume = 0.35;
+audio.currentTime = 0;
+audio.play();
+
+setTimeout(() => {
+  textoDiv.innerHTML = 'vale';
+  setTimeout(() => {
+    textoDiv.innerHTML += ' ya está.';
+    setTimeout(() => {
+      const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+      escribirTexto(resto, mostrarOpcionesNuevaEscena);
+    }, 800);
+  }, 500);
+}, 800); // Espera 0.8s tras el play para empezar a escribir
   });
 }
 
