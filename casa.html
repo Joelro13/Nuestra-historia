@@ -64,21 +64,19 @@
       border-radius: 10px;
       object-fit: cover;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    #foto-castigo.show img {
+      opacity: 1;
+      transform: scale(1);
     }
 
     @media (max-width: 768px) {
       h1 { font-size: 1.5rem; }
       #texto { font-size: 1rem; }
-    }
-
-    @keyframes fadeInScale {
-      0% { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    .fade-in {
-      animation: fadeInScale 0.8s ease forwards;
     }
   </style>
 </head>
@@ -113,7 +111,6 @@ function escribirTexto(str, cb) {
       const escrito = textoDiv.innerHTML;
       if (escrito.endsWith('...')) pausa = 800;
       else if (escrito.endsWith('bro?')) pausa = 750;
-      else if (escrito.endsWith('Estas generaciones de hoy en día??')) pausa = 1200;
       else if (str.charAt(i) === '.') pausa = 350;
       else if (str.charAt(i) === ',') pausa = 250;
       else if (escrito.endsWith('??')) pausa = 350;
@@ -137,25 +134,23 @@ function borrarTexto(cb) {
 }
 
 function mostrarSiguiente() {
+  const audio = document.getElementById('sonidos');
+  audio.volume = 0.35;
+  audio.currentTime = 0;
+  audio.play(); // ✅ reproducir antes de mostrar nada
+
   botonesDiv.style.display = 'none';
   borrarTexto(() => {
     setTimeout(() => {
-      const audio = document.getElementById('sonidos');
-      audio.volume = 0.35;
-      audio.currentTime = 0;
-      audio.play();
-
+      textoDiv.innerHTML = 'vale';
       setTimeout(() => {
-        textoDiv.innerHTML = 'vale';
+        textoDiv.innerHTML += ' ya está.';
         setTimeout(() => {
-          textoDiv.innerHTML += ' ya está.';
-          setTimeout(() => {
-            const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
-            escribirTexto(resto, mostrarOpcionesNuevaEscena);
-          }, 800);
-        }, 500);
-      }, 800);
-    });
+          const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+          escribirTexto(resto, mostrarOpcionesNuevaEscena);
+        }, 800);
+      }, 500);
+    }, 800);
   });
 }
 
@@ -171,18 +166,20 @@ function mostrarOpcionesNuevaEscena() {
 function respuestaNegativa() {
   textoDiv.innerHTML = '';
   botonesDiv.style.display = 'none';
+
   const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
   escribirTexto(castigo, () => {
     const foto = document.getElementById('foto-castigo');
     foto.style.display = 'block';
-    foto.classList.add('fade-in');
+    foto.classList.add('show'); // ✅ animación correcta
 
     setTimeout(() => {
+      textoDiv.innerHTML += '<br><br>'; // ✅ Se inserta como HTML directamente
       const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-      escribirTexto('<br><br>' + extra, () => {
+      escribirTexto(extra, () => {
         setTimeout(() => location.href = 'index.html', 2500);
       });
-    }, 600); // Espera de 0.6s tras mostrar la imagen
+    }, 1000); // espera tras mostrar la imagen
   });
 }
 
