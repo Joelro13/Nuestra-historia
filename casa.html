@@ -5,23 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vas con Joel a su casa</title>
   <style>
-    body{
-      background:#f0b7d4;
-      font-family:Arial, sans-serif;
-      text-align:center;
-      padding:20px;margin:0;color:#333}
-    h1{margin-top:100px}
-    #texto{font-size:1.2rem;margin:30px auto;max-width:600px;min-height:160px}
-    .option-button,.back-button{
-      background:#f0b7d4;color:#fff;font-size:1rem;padding:10px 20px;margin:10px;
-      border:none;cursor:pointer;border-radius:5px;transition:background-color .3s}
-    .option-button:hover,.back-button:hover{background:#d89cbc}
-    .options-box{
-      display:block;background:rgba(255,255,255,.2);border-radius:10px;
-      padding:20px;margin:30px auto;width:fit-content;box-shadow:0 4px 10px rgba(0,0,0,.1)}
-    #foto-castigo{display:none;margin-top:20px;text-align:center}
-    #foto-castigo img{max-width:80%;border-radius:10px;height:auto}
-    @media(max-width:768px){h1{font-size:1.5rem}#texto{font-size:1rem}}
+    body {
+      background: #f0b7d4;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      color: #333;
+    }
+
+    h1 {
+      margin-top: 100px;
+    }
+
+    #texto {
+      font-size: 1.2rem;
+      margin: 30px auto;
+      max-width: 600px;
+      min-height: 160px;
+    }
+
+    .option-button, .back-button {
+      background: #f0b7d4;
+      color: #fff;
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .option-button:hover, .back-button:hover {
+      background: #d89cbc;
+    }
+
+    .options-box {
+      display: block;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      width: fit-content;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #foto-castigo {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #foto-castigo img {
+      max-width: 80%;
+      border-radius: 10px;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.5rem; }
+      #texto { font-size: 1rem; }
+    }
+
+    /* 🎉 Animación */
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .fade-in {
+      animation: fadeInScale 0.8s ease forwards;
+    }
   </style>
 </head>
 <body>
@@ -48,7 +103,6 @@ const botonesDiv = document.getElementById('botones');
 
 function escribirTexto(str, cb) {
   let i = 0;
-  textoDiv.innerHTML = '';
   (function loop() {
     if (i < str.length) {
       textoDiv.innerHTML += str.charAt(i);
@@ -56,9 +110,10 @@ function escribirTexto(str, cb) {
       const escrito = textoDiv.innerHTML;
       if (escrito.endsWith('...')) pausa = 800;
       else if (escrito.endsWith('bro?')) pausa = 750;
-      else if (escrito.endsWith('??')) pausa = 500;
+      else if (escrito.endsWith('Estas generaciones de hoy en día??')) pausa = 1200;
       else if (str.charAt(i) === '.') pausa = 350;
       else if (str.charAt(i) === ',') pausa = 250;
+      else if (escrito.endsWith('??')) pausa = 350;
       i++;
       setTimeout(loop, pausa);
     } else if (cb) {
@@ -112,23 +167,17 @@ function respuestaNegativa() {
   botonesDiv.style.display = 'none';
   const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
   escribirTexto(castigo, () => {
-    document.getElementById('foto-castigo').style.display = 'block';
+    const foto = document.getElementById('foto-castigo');
+    foto.style.display = 'block';
+    foto.classList.add('fade-in');
     setTimeout(() => {
       const extra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-      escribirTexto('\n\n' + extra, () => {
-        setTimeout(() => location.href = 'index.html', 2500);
-      });
+      escribirTexto('\n\n' + extra, () => setTimeout(() => location.href = 'index.html', 2500));
     }, 500);
   });
 }
 
-window.onload = () => {
-  setTimeout(() => {
-    escribirTexto(textoIntro, () => {
-      botonesDiv.style.display = 'block';
-    });
-  }, 500);
-};
+window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display = 'block'), 500);
 </script>
 
 </body>
