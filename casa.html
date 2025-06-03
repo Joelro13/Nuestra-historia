@@ -114,7 +114,7 @@ function respuestaNegativa(){
     document.getElementById('foto-castigo').style.display='block';
     setTimeout(()=>{
       const extra=`Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-      escribirTexto('<br><br>'+extra,()=>setTimeout(()=>location.href='index.html',2500));
+      escribirTexto('\n\n' + extra, () => setTimeout(() => location.href='index.html', 2500));
     },500);
   });
 }
