@@ -172,13 +172,17 @@ function respuestaNegativa() {
   escribirTexto(castigo, () => {
     const foto = document.getElementById('foto-castigo');
     foto.style.display = 'block';
-    foto.classList.add('fade-in');
+    const imagen = foto.querySelector('img');
+    imagen.classList.remove('fade-in'); // Por si ya la tenía
+    void imagen.offsetWidth; // Hack para reiniciar animación
+    imagen.classList.add('fade-in');
     setTimeout(() => {
       const extra = `Salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
       escribirTexto('\n\n' + extra, () => setTimeout(() => location.href = 'index.html', 2500));
     }, 500);
   });
 }
+
 
 window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display = 'block'), 500);
 </script>
