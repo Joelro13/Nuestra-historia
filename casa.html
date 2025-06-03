@@ -20,7 +20,11 @@
       display:block;background:rgba(255,255,255,.2);border-radius:10px;
       padding:20px;margin:30px auto;width:fit-content;box-shadow:0 4px 10px rgba(0,0,0,.1)}
     #foto-castigo{display:none;margin-top:20px;text-align:center}
-    #foto-castigo img{max-width:80%;border-radius:10px;height:auto}
+    #foto-castigo img{
+      max-width:min(80%, 450px); /* 👈 cambio aquí */
+      height:auto;
+      border-radius:10px;
+    }
     @media(max-width:768px){h1{font-size:1.5rem}#texto{font-size:1rem}}
   </style>
 </head>
@@ -78,17 +82,14 @@ function borrarTexto(cb){
 function mostrarSiguiente(){
   botonesDiv.style.display='none';
   borrarTexto(()=>{
-    // 0,5 s -> suena y se escribe "vale"
     setTimeout(()=>{
       const audio=document.getElementById('sonidos');
       audio.volume=0.35;
       audio.currentTime=0;
       audio.play();
       textoDiv.innerHTML='vale';
-      // 0,5 s -> escribe " ya está."
       setTimeout(()=>{
         textoDiv.innerHTML+=' ya está.';
-        // 0,8 s -> empieza resto de texto
         setTimeout(()=>{
           const resto=` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
           escribirTexto(resto,mostrarOpcionesNuevaEscena);
