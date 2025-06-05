@@ -92,10 +92,10 @@
 </div>
 
 <div id="foto-castigo">
-  <img src="images/joel-casa.jpg" alt="Nuestra foto">
+  <img src="images/WhatsApp Image 2025-05-18 at 16.43.39.jpg" alt="Nuestra foto">
 </div>
 
-<audio id="sonidos" src="sonidos/voz.mp3"></audio>
+<audio id="sonidos" src="sonidos/Record (online-voice-recorder.com).mp3"></audio>
 
 <script>
 const textoIntro = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
@@ -137,7 +137,7 @@ function mostrarSiguiente() {
   const audio = document.getElementById('sonidos');
   audio.volume = 0.35;
   audio.currentTime = 0;
-  audio.play(); // ✅ reproducir antes de mostrar nada
+  audio.play(); // reproducir antes de mostrar texto
 
   botonesDiv.style.display = 'none';
   borrarTexto(() => {
@@ -171,15 +171,14 @@ function respuestaNegativa() {
   escribirTexto(castigo, () => {
     const foto = document.getElementById('foto-castigo');
     foto.style.display = 'block';
-    foto.classList.add('show'); // ✅ animación correcta
+    foto.classList.add('show');
 
     setTimeout(() => {
-      textoDiv.innerHTML += '<br><br>'; // ✅ Se inserta como HTML directamente
       const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
       escribirTexto(extra, () => {
         setTimeout(() => location.href = 'index.html', 2500);
       });
-    }, 1000); // espera tras mostrar la imagen
+    }, 1000);
   });
 }
 
