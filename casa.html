@@ -102,13 +102,13 @@ const textoIntro = `Os quedáis en su casa y tú comienzas a sentirte muy incóm
 const textoDiv = document.getElementById('texto');
 const botonesDiv = document.getElementById('botones');
 
-function escribirTexto(str, cb) {
+function escribirTexto(str, cb, destino = textoDiv) {
   let i = 0;
   (function loop() {
     if (i < str.length) {
-      textoDiv.innerHTML += str.charAt(i);
+      destino.innerHTML += str.charAt(i);
       let pausa = 40;
-      const escrito = textoDiv.innerHTML;
+      const escrito = destino.innerHTML;
       if (escrito.endsWith('...')) pausa = 800;
       else if (escrito.endsWith('bro?')) pausa = 750;
       else if (str.charAt(i) === '.') pausa = 350;
@@ -167,19 +167,22 @@ function respuestaNegativa() {
   textoDiv.innerHTML = '';
   botonesDiv.style.display = 'none';
 
-  const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
-  escribirTexto(castigo, () => {
-    const foto = document.getElementById('foto-castigo');
-    foto.style.display = 'block';
-    foto.classList.add('show');
+const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
+escribirTexto(castigo, () => {
+  const foto = document.getElementById('foto-castigo');
+  foto.style.display = 'block';
+  foto.classList.add('show');
 
-    setTimeout(() => {
-      const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-      escribirTexto(extra, () => {
-        setTimeout(() => location.href = 'index.html', 2500);
-      });
-    }, 1000);
-  });
+  setTimeout(() => {
+    const nuevoParrafo = document.createElement('p');
+    textoDiv.appendChild(nuevoParrafo);
+    const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+    escribirTexto(extra, () => {
+      setTimeout(() => location.href = 'index.html', 2500);
+    }, nuevoParrafo);
+  }, 1000);
+});
+
 }
 
 window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display = 'block'), 500);
