@@ -144,23 +144,23 @@ function mostrarSiguiente() {
 
     audio.onended = () => {
       setTimeout(() => {
-        textoDiv.innerHTML = 'vale';
+        textoDiv.innerHTML = ''; // aseguramos que esté limpio
 
-        setTimeout(() => {
-          textoDiv.innerHTML += ' ya está.';
-
+        escribirTexto('vale', () => {
           setTimeout(() => {
-            const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
-            escribirTexto(resto, mostrarOpcionesNuevaEscena);
-          }, 800);
-
-        }, 250);
+            escribirTexto(' ya está.', () => {
+              setTimeout(() => {
+                const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+                escribirTexto(resto, mostrarOpcionesNuevaEscena);
+              }, 800);
+            });
+          }, 250);
+        });
 
       }, 400);
     };
   });
 }
-
 
 function mostrarOpcionesNuevaEscena() {
   const nuevas = document.createElement('div');
