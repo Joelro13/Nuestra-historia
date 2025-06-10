@@ -142,21 +142,21 @@ function mostrarSiguiente() {
     audio.currentTime = 0;
     audio.play();
 
-    // Cuando el audio empieza, ponemos "vale" tras una pausa corta
-    setTimeout(() => {
-      textoDiv.innerHTML = 'vale';
-
+    audio.onended = () => {
       setTimeout(() => {
-        textoDiv.innerHTML += ' ya está.';
+        textoDiv.innerHTML = 'vale';
 
         setTimeout(() => {
-          const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
-          escribirTexto(resto, mostrarOpcionesNuevaEscena);
-        }, 800);
+          textoDiv.innerHTML += ' ya está.';
 
-      }, 500);
+          setTimeout(() => {
+            const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+            escribirTexto(resto, mostrarOpcionesNuevaEscena);
+          }, 800);
 
-    }, 800);
+        }, 250);
+      }, 400);
+    };
   });
 }
 
