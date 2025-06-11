@@ -28,21 +28,22 @@
   }
 
   .option-button {
-    background: #f0b7d4;
-    color: #fff;
+    background: transparent;
+    color: #f0b7d4;
     font-size: 1rem;
     padding: 10px 20px;
     margin: 10px;
-    border: none;
+    border: 2px solid #f0b7d4;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
     position: relative;
     z-index: 10;
   }
 
   .option-button:hover {
-    background-color: #d89cbc;
+    background-color: #f0b7d4;
+    color: #fff;
   }
 
   .options-box {
@@ -59,7 +60,7 @@
 
   .spam-button {
     position: fixed;
-    background: #d89cbc;
+    background: #f0b7d4;
     color: #fff;
     border-radius: 5px;
     padding: 10px 20px;
@@ -106,22 +107,20 @@
   #progress-bar-inner {
     height: 100%;
     width: 0%;
-    background: #d89cbc;
+    background: #f0b7d4;
     border-radius: 10px 0 0 10px;
     transition: width 0.1s linear;
   }
 
-  #mensaje-azul {
-    background-color: #d89cbc;
+  #loading-message {
+    background-color: #84b7f0;  /* Azul de tus cuadraditos */
     color: white;
     border-radius: 10px;
     padding: 15px 20px;
-    margin-top: 20px;
-    font-size: 1rem;
     max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    margin: 20px auto 0 auto;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 </style>
 </head>
@@ -141,7 +140,7 @@
 <div id="loading-container">
   <div id="loading-text">anticipando ruptura 0%</div>
   <div id="progress-bar"><div id="progress-bar-inner"></div></div>
-  <div id="mensaje-azul" style="display:none;">
+  <div id="loading-message">
     En verdad estoy muy orgulloso de como llevas el tema por mi, te quiero y gracias por hacer cosas como estas que hacen que la relación vaya mejor y me raye menos por el tema
   </div>
 </div>
@@ -153,12 +152,14 @@
   const loadingContainer = document.getElementById('loading-container');
   const loadingText = document.getElementById('loading-text');
   const progressBarInner = document.getElementById('progress-bar-inner');
-  const mensajeAzul = document.getElementById('mensaje-azul');
 
   let spamCount = 0;
+  let loadingInterval;
 
   btnLoCoges.addEventListener('click', () => {
+    // Desaparece el botón original al pulsar
     btnLoCoges.style.display = 'none';
+    // Crear primer botón spam
     crearSpamBoton();
     spamCount++;
   });
@@ -212,6 +213,7 @@
       }
     });
 
+    // Desaparece automáticamente después de 4s (opcional)
     setTimeout(() => {
       if(document.body.contains(spamBtn)){
         spamBtn.style.transition = 'opacity 0.8s';
@@ -226,36 +228,44 @@
   function iniciarCarga() {
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
+
     document.querySelectorAll('.spam-button').forEach(el => el.remove());
 
     loadingContainer.style.display = 'block';
-    mensajeAzul.style.display = 'block';
-
     let progress = 0;
-    let speed = 100; // tiempo en ms para cada incremento inicial
-    const maxProgress = 100;
 
-    function avanzarBarra() {
-      if(progress < maxProgress){
-        progress += 1;
-        if(progress > maxProgress) progress = maxProgress;
+    // Para 7 segundos total, pero más lento a partir del 70%
+    // 100% / 2% = 50 pasos. 
+    // Queremos 7 segundos (7000ms)
+    // Los primeros 70% = 35 pasos
+    // Los últimos 30% = 15 pasos
+    // Asignamos 100ms para cada paso hasta 70%
+    // Y 233ms para cada paso después para aumentar intriga
 
-        loadingText.textContent = `anticipando ruptura ${progress}%`;
-        progressBarInner.style.width = progress + '%';
-
-        // A partir del 70% ralentiza incrementos a 150ms (más lento)
-        if(progress >= 70){
-          speed = 150;
-        }
-
-        setTimeout(avanzarBarra, speed);
+    function avanzarProgreso() {
+      if(progress < 70){
+        progress += 2;
+        actualizarBarra();
+        setTimeout(avanzarProgreso, 140); // más rápido
+      } else if (progress < 100) {
+        progress += 2;
+        if(progress > 100) progress = 100;
+        actualizarBarra();
+        setTimeout(avanzarProgreso, 480); // más lento
       } else {
-        // Cuando llegue a 100%, redirige
+        // Completo
+        clearInterval(loadingInterval);
         window.location.href = 'ruptura.html';
       }
     }
 
-    avanzarBarra();
+    function actualizarBarra(){
+      loadingText.textContent = `anticipando ruptura ${progress}%`;
+      progressBarInner.style.width = progress + '%';
+    }
+
+    avanzarProgreso();
+
   }
 </script>
 
