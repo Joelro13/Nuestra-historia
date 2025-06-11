@@ -1,68 +1,231 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Elegiste no decirlo</title>
-  <style>
-    body {
-      background: #f0b7d4;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-      color: #333;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elegiste no decirlo</title>
+<style>
+  body {
+    background: #f0b7d4;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    color: #333;
+    position: relative;
+    overflow-x: hidden; /* para que no aparezca scroll horizontal */
+  }
 
-    h1 {
-      margin-top: 100px;
-      font-size: 2rem;
-    }
+  h1 {
+    margin-top: 100px;
+    font-size: 2rem;
+  }
 
-    #texto {
-      font-size: 1.2rem;
-      margin: 30px auto;
-      max-width: 700px;
-    }
+  #texto {
+    font-size: 1.2rem;
+    margin: 30px auto;
+    max-width: 700px;
+  }
 
-    .option-button {
-      background: #f0b7d4;
-      color: #fff;
-      font-size: 1rem;
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+  .option-button {
+    background: #f0b7d4;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 10;
+  }
 
-    .option-button:hover {
-      background-color: #d89cbc;
-    }
+  .option-button:hover {
+    background-color: #d89cbc;
+  }
 
-    .options-box {
-      display: block;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 20px;
-      margin: 30px auto;
-      width: fit-content;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-  </style>
+  .options-box {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px auto;
+    width: fit-content;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+  }
+
+  /* estilo para los botones spammeados */
+  .spam-button {
+    position: fixed; /* para posicionarlo respecto a la ventana */
+    background: #d89cbc;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: default; /* no clicable */
+    user-select: none;
+    opacity: 0.85;
+    z-index: 5;
+    pointer-events: none; /* que no se pueda clicar */
+    transition: transform 0.3s ease;
+  }
+
+  .spam-button:hover {
+    transform: scale(1.2);
+  }
+
+  /* barra de carga */
+  #loading-container {
+    display: none;
+    margin: 40px auto;
+    width: 70%;
+    max-width: 400px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    position: relative;
+    z-index: 20;
+  }
+
+  #loading-text {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  #progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: #d89cbc;
+    border-radius: 10px 0 0 10px;
+    transition: width 0.1s linear;
+  }
+</style>
 </head>
 <body>
 
-  <h1>Elegiste no decirlo</h1>
-  <div id="texto">
-    Te callas y pasan los días, cuando algo te molesta prefieres guardártelo para que no hayan problemas y eso hace que mentalmente empeores, un día quedas con Keira y tras contarle todo lo que ocurre te ofrece un cigarro para calmarte.
-  </div>
+<h1>Elegiste no decirlo</h1>
+<div id="texto">
+  Te callas y pasan los días, cuando algo te molesta prefieres guardártelo para que no hayan problemas y eso hace que mentalmente empeores, un día quedas con Keira y tras contarle todo lo que ocurre te ofrece un cigarro para calmarte.
+</div>
 
-  <div class="options-box">
-    <button class="option-button" onclick="location.href='lo_coges.html'">Lo coges</button>
-    <button class="option-button" onclick="location.href='no_lo_coges.html'">No lo coges</button>
-  </div>
+<div class="options-box">
+  <button id="btn-lo-coges" class="option-button">Lo coges</button>
+  <button onclick="location.href='no_lo_coges.html'" class="option-button">No lo coges</button>
+  <button onclick="history.back()" class="option-button">Volver atrás</button>
+</div>
+
+<!-- Contenedor barra de carga -->
+<div id="loading-container">
+  <div id="loading-text">anticipando ruptura 0%</div>
+  <div id="progress-bar"><div id="progress-bar-inner"></div></div>
+</div>
+
+<script>
+  const btnLoCoges = document.getElementById('btn-lo-coges');
+  const texto = document.getElementById('texto');
+  const optionsBox = document.querySelector('.options-box');
+  const loadingContainer = document.getElementById('loading-container');
+  const loadingText = document.getElementById('loading-text');
+  const progressBarInner = document.getElementById('progress-bar-inner');
+
+  let spamCount = 0;
+  let loadingInterval;
+
+  btnLoCoges.addEventListener('click', () => {
+    if (spamCount < 5) {
+      crearSpamBoton();
+      spamCount++;
+    } else if (spamCount === 5) {
+      iniciarCarga();
+      spamCount++;
+    }
+  });
+
+  function crearSpamBoton() {
+    const spamBtn = document.createElement('button');
+    spamBtn.textContent = 'Lo coges';
+    spamBtn.className = 'spam-button';
+
+    // Obtener dimensiones ventana
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Obtener rectángulos de zonas a evitar: optionsBox y texto
+    const rectOptions = optionsBox.getBoundingClientRect();
+    const rectTexto = texto.getBoundingClientRect();
+
+    let x, y;
+    let tries = 0;
+
+    do {
+      // Posición random (con margen para que no se salga)
+      x = Math.random() * (vw - 120) + 10; // ancho botón aprox 100 + margen
+      y = Math.random() * (vh - 40) + 10;  // alto botón aprox 30 + margen
+
+      // Comprobar que no se solape con opciones ni texto
+      const overlapsOptions = x + 100 > rectOptions.left && x < rectOptions.right &&
+                             y + 30 > rectOptions.top && y < rectOptions.bottom;
+      const overlapsTexto = x + 100 > rectTexto.left && x < rectTexto.right &&
+                           y + 30 > rectTexto.top && y < rectTexto.bottom;
+
+      if (!overlapsOptions && !overlapsTexto) break;
+
+      tries++;
+      if (tries > 50) break; // para evitar bucle infinito
+    } while (true);
+
+    spamBtn.style.left = x + 'px';
+    spamBtn.style.top = y + 'px';
+
+    document.body.appendChild(spamBtn);
+
+    // Opcional: animación para que aparezca y desaparezca después de 4 seg
+    setTimeout(() => {
+      spamBtn.style.transition = 'opacity 0.8s';
+      spamBtn.style.opacity = '0';
+      setTimeout(() => spamBtn.remove(), 800);
+    }, 4000);
+  }
+
+  function iniciarCarga() {
+    // Ocultar todo excepto loading
+    texto.style.display = 'none';
+    optionsBox.style.display = 'none';
+    // Borrar todos los botones spam que hayan quedado (por si)
+    document.querySelectorAll('.spam-button').forEach(el => el.remove());
+
+    loadingContainer.style.display = 'block';
+    let progress = 0;
+
+    loadingInterval = setInterval(() => {
+      progress += 2;
+      if (progress > 100) progress = 100;
+
+      loadingText.textContent = `anticipando ruptura ${progress}%`;
+      progressBarInner.style.width = progress + '%';
+
+      if (progress >= 100) {
+        clearInterval(loadingInterval);
+        // Cambiar de página (pon aquí la url que quieras)
+        window.location.href = 'ruptura.html';
+      }
+    }, 80);
+  }
+</script>
 
 </body>
 </html>
