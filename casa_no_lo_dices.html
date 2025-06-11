@@ -14,7 +14,7 @@
       color: #333;
       overflow-x: hidden;
       position: relative;
-      height: 100vh;
+      min-height: 100vh;
     }
 
     h1 {
@@ -26,49 +26,52 @@
 
     #texto {
       font-size: 1.2rem;
-      margin: 30px auto 60px;
+      margin: 30px auto 40px;
       max-width: 700px;
       position: relative;
       z-index: 10;
     }
 
-    /* Botón original "Lo coges" */
-    #coger-btn {
-      background: white;
+    /* Botones */
+    .option-button {
+      background: #f0b7d4;  /* rosa suave */
       color: #333;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       padding: 15px 40px;
-      border: 2px solid #333;
+      margin: 10px 15px;
+      border: 2px solid #d89cbc;
       border-radius: 10px;
       cursor: pointer;
+      user-select: none;
+      transition: transform 0.3s, background-color 0.3s;
       position: relative;
       z-index: 10;
-      user-select: none;
-      transition: transform 0.3s, background-color 0.3s;
-      margin-bottom: 40px;
-    }
-    #coger-btn:hover {
-      transform: scale(1.05);
-      background-color: #f5f5f5;
     }
 
-    /* Botones spam */
+    .option-button:hover {
+      background-color: #d89cbc;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Botones spam del "Lo coges" */
     button.spam-button {
       position: absolute;
-      background: white;
+      background: #f0b7d4;
       color: #333;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       padding: 15px 40px;
-      border: 2px solid #333;
+      border: 2px solid #d89cbc;
       border-radius: 10px;
       cursor: pointer;
-      transition: transform 0.3s, background-color 0.3s;
       user-select: none;
+      transition: transform 0.3s, background-color 0.3s;
       z-index: 100;
     }
     button.spam-button:hover {
+      background-color: #d89cbc;
+      color: white;
       transform: scale(1.05);
-      background-color: #f5f5f5;
     }
 
     /* Contenedor de carga */
@@ -131,7 +134,11 @@
     Te callas y pasan los días, cuando algo te molesta prefieres guardártelo para que no hayan problemas y eso hace que mentalmente empeores, un día quedas con Keira y tras contarle todo lo que ocurre te ofrece un cigarro para calmarte.
   </div>
 
-  <button id="coger-btn">Lo coges</button>
+  <div id="buttons-container">
+    <button id="coger-btn" class="option-button">Lo coges</button>
+    <button onclick="location.href='no_lo_coges.html'" class="option-button">No lo coges</button>
+    <button onclick="history.back()" class="option-button">Volver atrás</button>
+  </div>
 
   <div id="loading-container">
     <div id="loading-text">anticipando ruptura 0%</div>
@@ -146,6 +153,7 @@
   <script>
     const cogerBtn = document.getElementById('coger-btn');
     const texto = document.getElementById('texto');
+    const buttonsContainer = document.getElementById('buttons-container');
     const loadingContainer = document.getElementById('loading-container');
     const loadingText = document.getElementById('loading-text');
     const progressBarInner = document.getElementById('progress-bar-inner');
@@ -155,7 +163,7 @@
     let loadingInterval;
 
     cogerBtn.addEventListener('click', () => {
-      // Desaparece el botón original
+      // Desaparece solo el botón original "Lo coges"
       cogerBtn.style.display = 'none';
       // Crea el primer botón spam
       createSpamButton();
@@ -191,6 +199,7 @@
       const btnHeight = btn.offsetHeight || 50;
 
       const textoRect = texto.getBoundingClientRect();
+      const buttonsRect = buttonsContainer.getBoundingClientRect();
 
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
@@ -202,10 +211,11 @@
         y = Math.floor(Math.random() * (windowHeight - btnHeight - margin * 2)) + margin;
         tries++;
 
-        // Evitar superponer al texto (no hay otras cajas)
+        // Evitar superponer texto o botones
         const overlapTexto = !(x + btnWidth < textoRect.left || x > textoRect.right || y + btnHeight < textoRect.top || y > textoRect.bottom);
+        const overlapButtons = !(x + btnWidth < buttonsRect.left || x > buttonsRect.right || y + btnHeight < buttonsRect.top || y > buttonsRect.bottom);
 
-        if (!overlapTexto) break;
+        if (!overlapTexto && !overlapButtons) break;
 
       } while (tries < 100);
 
@@ -214,11 +224,11 @@
     }
 
     function iniciarCarga() {
-      // Oculta el texto y botón spam
+      // Oculta todo menos el contenedor de carga
       texto.style.display = 'none';
+      buttonsContainer.style.display = 'none';
       document.querySelectorAll('.spam-button').forEach(el => el.remove());
 
-      // Muestra el contenedor de carga
       loadingContainer.style.display = 'block';
 
       let progress = 0;
@@ -227,7 +237,6 @@
       const slowDuration = totalDuration - fastDuration;
       const intervalMs = 50;
 
-      // Incrementos por tick
       const fastIncrement = 70 / (fastDuration / intervalMs);
       const slowIncrement = 30 / (slowDuration / intervalMs);
 
