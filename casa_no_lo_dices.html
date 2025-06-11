@@ -110,6 +110,19 @@
     border-radius: 10px 0 0 10px;
     transition: width 0.1s linear;
   }
+
+  #mensaje-azul {
+    background-color: #d89cbc;
+    color: white;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
 </style>
 </head>
 <body>
@@ -128,6 +141,9 @@
 <div id="loading-container">
   <div id="loading-text">anticipando ruptura 0%</div>
   <div id="progress-bar"><div id="progress-bar-inner"></div></div>
+  <div id="mensaje-azul" style="display:none;">
+    En verdad estoy muy orgulloso de como llevas el tema por mi, te quiero y gracias por hacer cosas como estas que hacen que la relación vaya mejor y me raye menos por el tema
+  </div>
 </div>
 
 <script>
@@ -137,14 +153,12 @@
   const loadingContainer = document.getElementById('loading-container');
   const loadingText = document.getElementById('loading-text');
   const progressBarInner = document.getElementById('progress-bar-inner');
+  const mensajeAzul = document.getElementById('mensaje-azul');
 
   let spamCount = 0;
-  let loadingInterval;
 
   btnLoCoges.addEventListener('click', () => {
-    // Desaparece el botón original al pulsar
     btnLoCoges.style.display = 'none';
-    // Crear primer botón spam
     crearSpamBoton();
     spamCount++;
   });
@@ -188,7 +202,6 @@
 
     document.body.appendChild(spamBtn);
 
-    // Al pulsar el botón spam, se crea otro spam (y se elimina el actual)
     spamBtn.addEventListener('click', () => {
       spamBtn.remove();
       spamCount++;
@@ -199,7 +212,6 @@
       }
     });
 
-    // Desaparece automáticamente después de 4s (opcional)
     setTimeout(() => {
       if(document.body.contains(spamBtn)){
         spamBtn.style.transition = 'opacity 0.8s';
@@ -214,24 +226,36 @@
   function iniciarCarga() {
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
-
     document.querySelectorAll('.spam-button').forEach(el => el.remove());
 
     loadingContainer.style.display = 'block';
+    mensajeAzul.style.display = 'block';
+
     let progress = 0;
+    let speed = 100; // tiempo en ms para cada incremento inicial
+    const maxProgress = 100;
 
-    loadingInterval = setInterval(() => {
-      progress += 2;
-      if (progress > 100) progress = 100;
+    function avanzarBarra() {
+      if(progress < maxProgress){
+        progress += 1;
+        if(progress > maxProgress) progress = maxProgress;
 
-      loadingText.textContent = `anticipando ruptura ${progress}%`;
-      progressBarInner.style.width = progress + '%';
+        loadingText.textContent = `anticipando ruptura ${progress}%`;
+        progressBarInner.style.width = progress + '%';
 
-      if (progress >= 100) {
-        clearInterval(loadingInterval);
+        // A partir del 70% ralentiza incrementos a 150ms (más lento)
+        if(progress >= 70){
+          speed = 150;
+        }
+
+        setTimeout(avanzarBarra, speed);
+      } else {
+        // Cuando llegue a 100%, redirige
         window.location.href = 'ruptura.html';
       }
-    }, 80);
+    }
+
+    avanzarBarra();
   }
 </script>
 
