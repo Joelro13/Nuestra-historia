@@ -224,7 +224,8 @@
   }
 
   function iniciarCarga() {
-    texto.style.display = 'none';
+   document.querySelector('h1').style.display = 'none';
+   texto.style.display = 'none';
     optionsBox.style.display = 'none';
     document.querySelectorAll('.spam-button').forEach(el => el.remove());
 
