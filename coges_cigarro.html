@@ -1,140 +1,181 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coges el cigarro</title>
   <style>
     body {
-      background-color: #e8f0ff;
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-
-    h1 {
-      text-align: center;
-      color: #000;
-      margin-top: 30px;
-      font-size: 1.8rem;
+      background-color: #e8f0ff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px;
     }
 
     .chat-container {
-      max-width: 600px;
-      margin: 30px auto;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      max-width: 500px;
+      width: 100%;
     }
 
     .bubble {
-      max-width: 75%;
-      padding: 12px 16px;
-      border-radius: 20px;
-      position: relative;
+      max-width: 80%;
+      padding: 10px 14px;
+      margin: 8px;
+      border-radius: 15px;
       font-size: 0.95rem;
-      line-height: 1.5;
-      opacity: 0;
-      animation: fadeIn 0.4s ease forwards;
+      line-height: 1.4;
+      position: relative;
+      word-wrap: break-word;
     }
 
-    .you {
-      background-color: #ffffff;
+    .left {
+      background-color: #fff;
       align-self: flex-start;
+      border-bottom-left-radius: 0;
     }
 
-    .joel {
-      background-color: #d2e3ff;
+    .right {
+      background-color: #d2e3fc;
       align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .typing {
+      display: inline-block;
+      width: 40px;
+      text-align: left;
+    }
+
+    .typing span {
+      display: inline-block;
+      background: #ccc;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin: 0 2px;
+      animation: blink 1.4s infinite ease-in-out both;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+      0%, 80%, 100% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      40% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .tick {
-      display: inline-block;
-      margin-left: 8px;
-      font-size: 0.9rem;
-      color: #4fc3f7;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      bottom: 4px;
+      right: 8px;
     }
 
-    .button-container {
-      text-align: center;
-      margin-top: 30px;
+    .tick svg {
+      width: 100%;
+      height: auto;
+      fill: #34b7f1;
     }
 
-    .back-button {
-      background: #e8f0ff;
-      color: #333;
-      font-size: 1rem;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    h1 {
+      font-size: 1.5rem;
+      color: #000;
+      margin-bottom: 20px;
     }
 
-    .back-button:hover {
-      background: #cfdff7;
-    }
+    @media (max-width: 600px) {
+      .bubble {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
+      .tick {
+        width: 14px;
+        height: 14px;
       }
     }
   </style>
 </head>
 <body>
 
-<h1>Coges el cigarro</h1>
-
-<div class="chat-container" id="chat">
-  <div class="bubble you" style="animation-delay: 0.2s">
-    Esa noche fumaste. Te reíste con el grupo, desconectaste de ver tanto a Joel, y aunque sabías que le haría daño... decidiste no decirle nada.
-    <span class="tick">✅✅</span>
+  <h1>Coges el cigarro</h1>
+  <div class="chat-container" id="chat">
+    <div class="bubble left">
+      Bueno... ¿qué opinas sobre eso? ¿Estás bien?
+    </div>
   </div>
 
-  <div class="bubble you" style="animation-delay: 1.2s">
-    Pero al final lo hiciste. Quedasteis en un banco, y se lo contaste sin rodeos.
-  </div>
+  <script>
+    const chat = document.getElementById('chat');
 
-  <div class="bubble joel" style="animation-delay: 2.2s">
-    Me dolió... pero más allá del humo, lo que más me dolió fue que te diera igual.
-  </div>
+    function crearBurbujaDerecha(texto, conTick = false) {
+      const burbuja = document.createElement('div');
+      burbuja.className = 'bubble right';
+      burbuja.textContent = texto;
 
-  <div class="bubble joel" style="animation-delay: 3.1s">
-    No lo digo reprochando, sino desde el cansancio que siento por tener que pedir que lo que me hiere importe.
-  </div>
+      if (conTick) {
+        const tick = document.createElement('div');
+        tick.className = 'tick';
+        tick.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M1 13l5 5L20 4" stroke="none"/>
+            <path d="M9 13l5 5L23 4" stroke="none"/>
+          </svg>`;
+        burbuja.appendChild(tick);
+      }
 
-  <div class="bubble joel" style="animation-delay: 4s">
-    Ojalá no me afectara. Pero no es así.
-  </div>
+      chat.appendChild(burbuja);
+      chat.scrollTop = chat.scrollHeight;
+    }
 
-  <div class="bubble joel" style="animation-delay: 4.8s">
-    Sé que no piensas igual y que para ti no es tan grave, y eso está bien... si los dos buscamos cosas distintas.
-  </div>
+    function crearTyping() {
+      const typing = document.createElement('div');
+      typing.className = 'bubble right typing';
+      typing.innerHTML = `
+        <span></span><span></span><span></span>
+      `;
+      typing.id = 'escribiendo';
+      chat.appendChild(typing);
+    }
 
-  <div class="bubble joel" style="animation-delay: 5.7s">
-    Pero si queremos crecer juntos, necesito sentir que lo intentamos los dos.
-  </div>
+    function eliminarTyping() {
+      const t = document.getElementById('escribiendo');
+      if (t) t.remove();
+    }
 
-  <div class="bubble joel" style="animation-delay: 6.6s">
-    Si no es así, deberíamos hablar en serio sobre lo nuestro.
-  </div>
-</div>
+    window.onload = () => {
+      setTimeout(() => {
+        crearTyping();
 
-<div class="button-container">
-  <button class="back-button" onclick="history.back()">Volver atrás</button>
-</div>
+        setTimeout(() => {
+          eliminarTyping();
 
-<script>
-  const bubbles = document.querySelectorAll('.bubble');
-  bubbles.forEach(bubble => {
-    const delay = bubble.style.animationDelay || '0s';
-    bubble.style.animation = `fadeIn 0.5s ease forwards`;
-    bubble.style.animationDelay = delay;
-  });
-</script>
+          crearBurbujaDerecha(`Aquella noche fumaste, lo pasaste bien con el grupo ya que te hizo desconectar de estar viendo a Joel bastantes días seguidos. No quieres decírselo a Joel porque sabes que le hará daño, pero se lo acabas contando. Una tarde que quedáis unos días más tarde de lo sucedido, os sentáis en un banco y se lo cuentas, él permanece serio y no sabes lo que pasa.
+
+Me dolió, pero más allá del humo, lo que más me dolió fue que te diera igual. No lo digo reprochando nada, sino desde el cansancio que siento por tener que pedir que lo que me hiere importe.
+
+Sé que no ves las cosas igual que yo y para ti no es tan importante, y de verdad, ojalá me diera igual que lo hicieses y no me importara que puntualmente ocurra, pero no es así.
+
+Tengo muchos errores y no soy el mejor que vas a encontrar, te lo aseguro. Trato de mejorar día a día para ser el chico que mereces, pero para eso necesito sentir que tú también quieres hacer eso y podamos crecer juntos. Si no es así o no buscamos lo mismo no pasa nada, pero deberíamos hablar sobre lo nuestro y a lo que inspiramos tener juntos.`, true);
+        }, 2000); // Tiempo escribiendo
+      }, 1000);
+    }
+  </script>
 
 </body>
 </html>
