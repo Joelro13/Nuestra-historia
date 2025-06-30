@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coges el cigarro</title>
   <style>
     body {
@@ -13,6 +13,12 @@
       flex-direction: column;
       align-items: center;
       padding: 20px 10px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #000;
+      margin-bottom: 20px;
     }
 
     .chat-container {
@@ -26,7 +32,7 @@
       margin: 8px;
       border-radius: 15px;
       font-size: 0.95rem;
-      line-height: 1.4;
+      line-height: 1.5;
       position: relative;
       word-wrap: break-word;
     }
@@ -79,23 +85,17 @@
     }
 
     .tick {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       position: absolute;
-      bottom: 4px;
-      right: 8px;
+      bottom: 6px;
+      right: 10px;
     }
 
     .tick svg {
       width: 100%;
       height: auto;
       fill: #34b7f1;
-    }
-
-    h1 {
-      font-size: 1.5rem;
-      color: #000;
-      margin-bottom: 20px;
     }
 
     @media (max-width: 600px) {
@@ -105,8 +105,8 @@
       }
 
       .tick {
-        width: 14px;
-        height: 14px;
+        width: 16px;
+        height: 16px;
       }
     }
   </style>
@@ -114,9 +114,13 @@
 <body>
 
   <h1>Coges el cigarro</h1>
+
   <div class="chat-container" id="chat">
     <div class="bubble left">
-      Bueno... ¿qué opinas sobre eso? ¿Estás bien?
+      Anoche lo pasé bien con el grupo y me hizo desconectar un poco de estar tanto tiempo juntos.
+    </div>
+    <div class="bubble left">
+      No quería decírtelo porque sabía que te hacía daño, pero te lo he acabado contando porque no quiero mentirte.
     </div>
   </div>
 
@@ -133,8 +137,8 @@
         tick.className = 'tick';
         tick.innerHTML = `
           <svg viewBox="0 0 24 24">
-            <path d="M1 13l5 5L20 4" stroke="none"/>
-            <path d="M9 13l5 5L23 4" stroke="none"/>
+            <path d="M1 13l5 5L20 4"/>
+            <path d="M9 13l5 5L23 4"/>
           </svg>`;
         burbuja.appendChild(tick);
       }
@@ -165,16 +169,20 @@
         setTimeout(() => {
           eliminarTyping();
 
-          crearBurbujaDerecha(`Aquella noche fumaste, lo pasaste bien con el grupo ya que te hizo desconectar de estar viendo a Joel bastantes días seguidos. No quieres decírselo a Joel porque sabes que le hará daño, pero se lo acabas contando. Una tarde que quedáis unos días más tarde de lo sucedido, os sentáis en un banco y se lo cuentas, él permanece serio y no sabes lo que pasa.
-
-Me dolió, pero más allá del humo, lo que más me dolió fue que te diera igual. No lo digo reprochando nada, sino desde el cansancio que siento por tener que pedir que lo que me hiere importe.
+          crearBurbujaDerecha(
+            `Me dolió, pero más allá del humo, lo que más me dolió fue que te diera igual. No lo digo reprochando nada, sino desde el cansancio que siento por tener que pedir que lo que me hiere importe.
 
 Sé que no ves las cosas igual que yo y para ti no es tan importante, y de verdad, ojalá me diera igual que lo hicieses y no me importara que puntualmente ocurra, pero no es así.
 
-Tengo muchos errores y no soy el mejor que vas a encontrar, te lo aseguro. Trato de mejorar día a día para ser el chico que mereces, pero para eso necesito sentir que tú también quieres hacer eso y podamos crecer juntos. Si no es así o no buscamos lo mismo no pasa nada, pero deberíamos hablar sobre lo nuestro y a lo que inspiramos tener juntos.`, true);
-        }, 2000); // Tiempo escribiendo
-      }, 1000);
-    }
+Tengo muchos errores y no soy el mejor que vas a encontrar, te lo aseguro. Trato de mejorar día a día para ser el chico que mereces, pero para eso necesito sentir que tú también quieres hacer eso y podamos crecer juntos.
+
+Si no es así o no buscamos lo mismo no pasa nada, pero deberíamos hablar sobre lo nuestro y a lo que inspiramos tener juntos.`,
+            true
+          );
+
+        }, 2500); // tiempo "escribiendo"
+      }, 1000); // espera antes de empezar
+    };
   </script>
 
 </body>
