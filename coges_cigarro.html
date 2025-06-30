@@ -6,69 +6,135 @@
   <title>Coges el cigarro</title>
   <style>
     body {
-      background: #e8f0ff;
-      font-family: Arial, sans-serif;
-      color: #333;
-      text-align: center;
-      padding: 40px 20px;
+      background-color: #e8f0ff;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
+      padding: 20px;
+      color: #333;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 30px;
-      color: #2a4d8f;
+      text-align: center;
+      color: #000;
+      margin-top: 30px;
+      font-size: 1.8rem;
     }
 
-    #texto {
-      max-width: 800px;
-      margin: 0 auto 40px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      background: white;
-      padding: 25px 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      text-align: left;
+    .chat-container {
+      max-width: 600px;
+      margin: 30px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .bubble {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: 20px;
+      position: relative;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .you {
+      background-color: #ffffff;
+      align-self: flex-start;
+    }
+
+    .joel {
+      background-color: #d2e3ff;
+      align-self: flex-end;
+    }
+
+    .tick {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 0.9rem;
+      color: #4fc3f7;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 30px;
     }
 
     .back-button {
       background: #e8f0ff;
-      color: #2a4d8f;
+      color: #333;
       font-size: 1rem;
       padding: 10px 20px;
-      border: 2px solid #2a4d8f;
-      border-radius: 10px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .back-button:hover {
-      background-color: #2a4d8f;
-      color: white;
+      background: #cfdff7;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Coges el cigarro</h1>
+<h1>Coges el cigarro</h1>
 
-  <div id="texto">
-    Aquella noche fumaste, lo pasaste bien con el grupo ya que te hizo desconectar de estar viendo a Joel bastantes días seguidos.  
-    <br><br>
-    No quieres decírselo a Joel porque sabes que le hará daño, pero se lo acabas contando.  
-    <br><br>
-    Una tarde que quedáis unos días más tarde de lo sucedido, os sentáis en un banco y se lo cuentas. Él permanece serio y no sabes lo que pasa.  
-    <br><br>
-    Cuando comienza a hablar te dice:  
-    <br><br>
-    <em>Aquella noche fumaste. Lo pasaste bien con el grupo, te ayudó a desconectar de ver a Joel tantos días seguidos.Aunque sabías que podía dolerle, unos días después se lo cuentas.
-      Sentados en un banco, Joel permanece serio. Cuando empieza a hablar, dice:
-"Me dolió. Pero más que el cigarro, me dolió sentir que te dio igual. No te lo digo reprochando, sino desde el cansancio de tener que pedir que lo que me hiere importe. Sé que no lo ves igual y ojalá no me afectara, pero sí lo hace."
-"Tengo errores, y sé que no soy el mejor. Intento mejorar para ser el chico que mereces, pero necesito saber que tú también quieres crecer conmigo. Si no es así, no pasa nada... pero deberíamos hablar sobre lo nuestro."</em>
+<div class="chat-container" id="chat">
+  <div class="bubble you" style="animation-delay: 0.2s">
+    Esa noche fumaste. Te reíste con el grupo, desconectaste de ver tanto a Joel, y aunque sabías que le haría daño... decidiste no decirle nada.
+    <span class="tick">✅✅</span>
   </div>
 
+  <div class="bubble you" style="animation-delay: 1.2s">
+    Pero al final lo hiciste. Quedasteis en un banco, y se lo contaste sin rodeos.
+  </div>
+
+  <div class="bubble joel" style="animation-delay: 2.2s">
+    Me dolió... pero más allá del humo, lo que más me dolió fue que te diera igual.
+  </div>
+
+  <div class="bubble joel" style="animation-delay: 3.1s">
+    No lo digo reprochando, sino desde el cansancio que siento por tener que pedir que lo que me hiere importe.
+  </div>
+
+  <div class="bubble joel" style="animation-delay: 4s">
+    Ojalá no me afectara. Pero no es así.
+  </div>
+
+  <div class="bubble joel" style="animation-delay: 4.8s">
+    Sé que no piensas igual y que para ti no es tan grave, y eso está bien... si los dos buscamos cosas distintas.
+  </div>
+
+  <div class="bubble joel" style="animation-delay: 5.7s">
+    Pero si queremos crecer juntos, necesito sentir que lo intentamos los dos.
+  </div>
+
+  <div class="bubble joel" style="animation-delay: 6.6s">
+    Si no es así, deberíamos hablar en serio sobre lo nuestro.
+  </div>
+</div>
+
+<div class="button-container">
   <button class="back-button" onclick="history.back()">Volver atrás</button>
+</div>
+
+<script>
+  const bubbles = document.querySelectorAll('.bubble');
+  bubbles.forEach(bubble => {
+    const delay = bubble.style.animationDelay || '0s';
+    bubble.style.animation = `fadeIn 0.5s ease forwards`;
+    bubble.style.animationDelay = delay;
+  });
+</script>
 
 </body>
 </html>
