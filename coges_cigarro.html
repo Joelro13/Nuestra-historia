@@ -29,7 +29,7 @@
     .bubble {
       max-width: 80%;
       padding: 10px 14px;
-      margin: 12px 0; /* margen vertical entre burbujas */
+      margin: 12px 0;
       border-radius: 15px;
       font-size: 0.95rem;
       line-height: 1.5;
@@ -41,14 +41,14 @@
       background-color: #fff;
       align-self: flex-start;
       border-bottom-left-radius: 0;
-      margin-right: 40%; /* espacio a la derecha para que no quede pegado */
+      margin-right: 40%;
     }
 
     .right {
       background-color: #d2e3fc;
       align-self: flex-end;
       border-bottom-right-radius: 0;
-      margin-left: 40%; /* espacio a la izquierda para que no quede pegado */
+      margin-left: 40%;
     }
 
     .typing {
@@ -58,8 +58,21 @@
       border-radius: 15px;
       max-width: 80px;
       margin: 8px;
+      position: relative;
+      /* Lo dejamos para que se pueda ajustar según lado */
+      word-wrap: break-word;
+    }
+    /* Modifico para que el typing izquierdo se alinee a la izquierda, y el derecho a la derecha */
+    .typing.left {
       align-self: flex-start;
       border-bottom-left-radius: 0;
+      margin-right: 40%; /* para que no pegue a la derecha */
+    }
+    .typing.right {
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+      margin-left: 40%; /* para que no pegue a la izquierda */
+      background: #d2e3fc; /* opcional, para que se vea igual que tus mensajes */
     }
 
     .typing span {
@@ -117,20 +130,21 @@
       }
     }
 
-    /* Estilo botón volver atrás */
+    /* Estilo para el botón volver atrás (cuadro transparente igual que otros que usas) */
     #btn-volver {
-      background-color: #e8f0ff;
+      background: transparent;
+      border: 2px solid #000;
       color: #000;
       font-size: 1rem;
       padding: 10px 20px;
       margin: 30px auto 10px auto;
-      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      border-radius: 5px;
-      display: block;
+      display: none; /* empieza oculto, se mostrará al final */
       max-width: 200px;
       transition: background-color 0.3s ease;
       text-align: center;
+      font-weight: bold;
     }
     #btn-volver:hover {
       background-color: #cbd7ff;
@@ -147,6 +161,7 @@
 
   <script>
     const chat = document.getElementById('chat');
+    const btnVolver = document.getElementById('btn-volver');
 
     function crearBurbuja(texto, lado = 'left') {
       const burbuja = document.createElement('div');
@@ -180,7 +195,7 @@
 
     function crearTyping(lado = 'left') {
       const typing = document.createElement('div');
-      typing.className = 'typing';
+      typing.className = 'typing ' + lado; // asignamos clase left o right para estilos
       typing.innerHTML = `<span></span><span></span><span></span>`;
       typing.id = 'escribiendo-' + lado;
       chat.appendChild(typing);
@@ -225,6 +240,20 @@
                         setTimeout(() => {
                           eliminarTyping('right');
                           crearBurbujaDerechaConTick("Tengo muchos errores y no soy el mejor que vas a encontrar, te lo aseguro. Trato de mejorar día a día para ser el chico que mereces, pero para eso necesito sentir que tú también quieres hacer eso y podamos crecer juntos.");
+
+                          // NUEVO MENSAJE QUE PIDE EL USUARIO
+                          setTimeout(() => {
+                            crearTyping('right');
+                            setTimeout(() => {
+                              eliminarTyping('right');
+                              crearBurbujaDerechaConTick("Si no estás dispuesta a hacer este tipo de cambios para que yo pueda conllevar de la mejor manera la relación, dudo que podamos continuar así, sabiendo que hay cosas que me duelen, las comunico y no cambian.");
+
+                              // Mostrar botón "Volver atrás" al final
+                              btnVolver.style.display = 'block';
+
+                            }, 1500);
+                          }, 3000);
+
                         }, 1500);
                       }, 4500);
                     }, 1500);
