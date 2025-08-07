@@ -29,7 +29,7 @@
     .bubble {
       max-width: 80%;
       padding: 10px 14px;
-      margin: 8px;
+      margin: 12px 0; /* margen vertical entre burbujas */
       border-radius: 15px;
       font-size: 0.95rem;
       line-height: 1.5;
@@ -41,12 +41,14 @@
       background-color: #fff;
       align-self: flex-start;
       border-bottom-left-radius: 0;
+      margin-right: 40%; /* espacio a la derecha para que no quede pegado */
     }
 
     .right {
       background-color: #d2e3fc;
       align-self: flex-end;
       border-bottom-right-radius: 0;
+      margin-left: 40%; /* espacio a la izquierda para que no quede pegado */
     }
 
     .typing {
@@ -114,6 +116,25 @@
         height: 16px;
       }
     }
+
+    /* Estilo botón volver atrás */
+    #btn-volver {
+      background-color: #e8f0ff;
+      color: #000;
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 30px auto 10px auto;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      display: block;
+      max-width: 200px;
+      transition: background-color 0.3s ease;
+      text-align: center;
+    }
+    #btn-volver:hover {
+      background-color: #cbd7ff;
+    }
   </style>
 </head>
 <body>
@@ -121,6 +142,8 @@
   <h1>Coges el cigarro</h1>
 
   <div class="chat-container" id="chat"></div>
+
+  <button id="btn-volver" onclick="window.history.back()">Volver atrás</button>
 
   <script>
     const chat = document.getElementById('chat');
