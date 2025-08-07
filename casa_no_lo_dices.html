@@ -123,6 +123,29 @@
     margin-right: auto;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
+
+  #btn-volver {
+    background: #e8f0ff;
+    color: #000;
+    font-size: 1rem;
+    padding: 10px 20px;
+    margin: 30px auto 10px auto;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 10;
+    display: none;
+    max-width: 200px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  #btn-volver:hover {
+    background-color: #d7e3ff;
+  }
 </style>
 </head>
 <body>
@@ -135,7 +158,6 @@
 <div class="options-box">
   <button id="btn-lo-coges" class="option-button">Lo coges</button>
   <button onclick="location.href='no_lo_coges.html'" class="option-button">No lo coges</button>
-  <button onclick="history.back()" class="option-button">Volver atrás</button>
 </div>
 
 <div id="loading-container">
@@ -146,6 +168,8 @@
   </div>
 </div>
 
+<button id="btn-volver" onclick="location.href='https://joelro13.github.io/Nuestra-historia/casa_no_lo_dices.html'">Volver atrás</button>
+
 <script>
   const btnLoCoges = document.getElementById('btn-lo-coges');
   const texto = document.getElementById('texto');
@@ -154,6 +178,7 @@
   const loadingText = document.getElementById('loading-text');
   const progressBarInner = document.getElementById('progress-bar-inner');
   const mensajeAzul = document.getElementById('mensaje-azul');
+  const btnVolver = document.getElementById('btn-volver');
 
   let spamCount = 0;
 
@@ -224,16 +249,17 @@
   }
 
   function iniciarCarga() {
-   document.querySelector('h1').style.display = 'none';
-   texto.style.display = 'none';
+    document.querySelector('h1').style.display = 'none';
+    texto.style.display = 'none';
     optionsBox.style.display = 'none';
     document.querySelectorAll('.spam-button').forEach(el => el.remove());
 
     loadingContainer.style.display = 'block';
     mensajeAzul.style.display = 'block';
+    btnVolver.style.display = 'inline-block';
 
     let progress = 0;
-    let speed = 100; // tiempo en ms para cada incremento inicial
+    let speed = 100;
     const maxProgress = 100;
 
     function avanzarBarra() {
@@ -244,14 +270,12 @@
         loadingText.textContent = `anticipando ruptura ${progress}%`;
         progressBarInner.style.width = progress + '%';
 
-        // A partir del 70% ralentiza incrementos a 150ms (más lento)
         if(progress >= 70){
           speed = 150;
         }
 
         setTimeout(avanzarBarra, speed);
       } else {
-        // Cuando llegue a 100%, redirige
         window.location.href = 'coges_cigarro.html';
       }
     }
