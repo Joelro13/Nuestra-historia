@@ -150,7 +150,6 @@
       chat.appendChild(burbuja);
       chat.scrollTop = chat.scrollHeight;
 
-      // cambiar a visto tras 1s
       setTimeout(() => {
         tick.classList.add('visto');
       }, 1000);
@@ -176,22 +175,28 @@
         setTimeout(() => {
           eliminarTyping('left');
           crearBurbuja("Anoche lo pasé bien con el grupo y me hizo desconectar un poco de estar tanto tiempo juntos.", 'left');
+
           setTimeout(() => {
             crearTyping('left');
             setTimeout(() => {
               eliminarTyping('left');
               crearBurbuja("No quería decírtelo porque sabía que te hacía daño, pero te lo he acabado contando porque no quiero mentirte.", 'left');
 
+              // RESPUESTA 1
               setTimeout(() => {
                 crearTyping('right');
                 setTimeout(() => {
                   eliminarTyping('right');
                   crearBurbujaDerechaConTick("Me dolió, pero más allá del humo, lo que más me dolió fue que te diera igual. No lo digo reprochando nada, sino desde el cansancio que siento por tener que pedir que lo que me hiere importe.");
+
+                  // RESPUESTA 2
                   setTimeout(() => {
                     crearTyping('right');
                     setTimeout(() => {
                       eliminarTyping('right');
                       crearBurbujaDerechaConTick("Sé que no ves las cosas igual que yo y para ti no es tan importante, y de verdad, ojalá me diera igual que lo hicieses y no me importara que puntualmente ocurra, pero no es así.");
+
+                      // RESPUESTA 3
                       setTimeout(() => {
                         crearTyping('right');
                         setTimeout(() => {
