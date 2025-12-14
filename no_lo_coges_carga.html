@@ -24,28 +24,46 @@
     .text {
       font-size: 3rem;
       font-weight: bold;
-      color: #333;
-      letter-spacing: 0.1em;
+      color: #4a90e2; /* azul bonito */
+      letter-spacing: 0.08em;
     }
 
     .text span {
       display: inline-block;
-      animation: smoke 3s ease-in-out forwards;
+      opacity: 0;
+      animation: appear 0.6s ease forwards,
+                 float 1.5s ease-in-out 0.6s forwards,
+                 smoke 2s ease-in-out 2.2s forwards;
     }
 
-    /* Animación tipo humo */
-    @keyframes smoke {
-      0% {
+    /* Aparece */
+    @keyframes appear {
+      to {
         opacity: 1;
-        transform: translate(0, 0) scale(1);
-        filter: blur(0);
+      }
+    }
+
+    /* Flotación suave */
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
       }
       100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Dispersión tipo humo */
+    @keyframes smoke {
+      to {
         opacity: 0;
         transform: translate(
-          calc(-40px + 80px * var(--rand-x)),
-          calc(-80px * var(--rand-y))
-        ) scale(1.2);
+          calc(-50px + 100px * var(--rand-x)),
+          calc(-100px * var(--rand-y))
+        );
         filter: blur(6px);
       }
     }
@@ -64,21 +82,23 @@
     const letters = text.innerText.split("");
     text.innerHTML = "";
 
-    letters.forEach(letter => {
+    letters.forEach((letter, i) => {
       const span = document.createElement("span");
       span.innerText = letter === " " ? "\u00A0" : letter;
 
-      // valores aleatorios para dispersión tipo humo
       span.style.setProperty("--rand-x", Math.random());
       span.style.setProperty("--rand-y", Math.random());
+
+      // pequeño delay por letra para efecto bonito
+      span.style.animationDelay = `${i * 0.04}s`;
 
       text.appendChild(span);
     });
 
-    // redirección automática a la página de respuesta
+    // Redirección (más tarde, para que se vea bien)
     setTimeout(() => {
-      window.location.href = "no_lo_coges.html"; // cambia el nombre si quieres
-    }, 3200);
+      window.location.href = "respuesta.html";
+    }, 5200);
   </script>
 </body>
 </html>
