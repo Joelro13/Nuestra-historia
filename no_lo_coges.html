@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decides hablarlo</title>
+
+  <style>
+    body {
+      background-color: #e8f0ff;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background: transparent;
+      position: relative;
+      text-align: center;
+    }
+
+    /* Cuadrito superior derecho */
+    .note {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: #f6b6d8;
+      color: #333;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      max-width: 220px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 50px;
+    }
+
+    .strike {
+      text-decoration: line-through;
+      color: #666;
+    }
+
+    .reply {
+      color: #d64545; /* rojo bonito */
+      font-weight: bold;
+      margin-left: 6px;
+    }
+
+    button {
+      padding: 12px 26px;
+      font-size: 1rem;
+      border: none;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="note">
+      ¿Has visto? he dicho la palabra <b>obligatoriedad</b>,  
+      me creo Cervantes o algo, vale
+    </div>
+
+    <p id="mainText">
+      No coges el cigarro y decides hablarlo con él; te incomoda la sensación
+      de obligatoriedad que aparece cuando Joel te invita a su casa tantas veces.
+      Tú también quieres que vaya a la tuya y estar chill los 2 allí sin tener que moverte,
+      ¿verdad?
+      <span id="princesos" class="strike hidden">Estos princesos de hoy en día...</span>
+      <span id="respuesta" class="reply hidden">
+        Eeee, la mayoría de veces que no voy es porque no me pueden llevar,
+        no es mi culpa. Muchas gracias por entender cariñooo ;)
+      </span>
+    </p>
+
+    <button id="pulseBtn">Púlsame</button>
+    <button
+      id="backBtn"
+      class="hidden"
+      onclick="window.location.href='Nuestra-historia/casa_no_lo_dices.html'"
+    >
+      Volver atrás
+    </button>
+
+  </div>
+
+  <script>
+    const pulseBtn = document.getElementById("pulseBtn");
+    const backBtn = document.getElementById("backBtn");
+    const princesos = document.getElementById("princesos");
+    const respuesta = document.getElementById("respuesta");
+
+    // mostrar inicialmente la frase normal
+    princesos.classList.remove("hidden");
+
+    pulseBtn.addEventListener("click", () => {
+      // tachar y responder
+      respuesta.classList.remove("hidden");
+
+      // cambiar botones
+      pulseBtn.classList.add("hidden");
+      backBtn.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
