@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Decides hablarlo</title>
+  <title>No coges el cigarro</title>
 
   <style>
     body {
@@ -19,45 +19,85 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 750px;
       width: 100%;
-      background: transparent;
       position: relative;
       text-align: center;
     }
 
-    /* Cuadrito superior derecho */
+    /* TÍTULO */
+    h1 {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    /* CUADRO ROSA */
     .note {
       position: absolute;
-      top: -10px;
-      right: -10px;
+      top: -40px;
+      right: -20px;
       background-color: #f6b6d8;
       color: #333;
       padding: 10px 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 0.85rem;
-      max-width: 220px;
+      max-width: 240px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
+    @media (max-width: 768px) {
+      .note {
+        right: 0;
+        top: -60px;
+      }
+    }
+
+    /* TEXTO PRINCIPAL */
     p {
       font-size: 1.2rem;
       color: #444;
       line-height: 1.6;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
 
-    .strike {
-      text-decoration: line-through;
-      color: #666;
+    /* TEXTO A TACHAR */
+    .strike-wrapper {
+      display: inline-block;
+      position: relative;
     }
 
+    .strike-line {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      height: 2px;
+      background-color: #666;
+      width: 0;
+      transition: width 0.6s ease;
+    }
+
+    .striked .strike-line {
+      width: 100%;
+    }
+
+    /* TEXTO ROJO */
     .reply {
-      color: #d64545; /* rojo bonito */
+      margin-top: 20px;
+      color: #d64545;
       font-weight: bold;
-      margin-left: 6px;
+      font-size: 1.1rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
+    .reply.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* BOTONES */
     button {
       padding: 12px 26px;
       font-size: 1rem;
@@ -67,6 +107,7 @@
       border-radius: 12px;
       cursor: pointer;
       transition: background 0.3s;
+      margin-top: 20px;
     }
 
     button:hover {
@@ -87,19 +128,26 @@
       me creo Cervantes o algo, vale
     </div>
 
-    <p id="mainText">
-      No coges el cigarro y decides hablarlo con él; te incomoda la sensación
-      de obligatoriedad que aparece cuando Joel te invita a su casa tantas veces.
-      Tú también quieres que vaya a la tuya y estar chill los 2 allí sin tener que moverte,
-      ¿verdad?
-      <span id="princesos" class="strike hidden">Estos princesos de hoy en día...</span>
-      <span id="respuesta" class="reply hidden">
-        Eeee, la mayoría de veces que no voy es porque no me pueden llevar,
-        no es mi culpa. Muchas gracias por entender cariñooo ;)
+    <h1>No coges el cigarro</h1>
+
+    <p>
+      Y decides hablar con él; te incomoda la sensación de obligatoriedad que aparece
+      cuando Joel te invita a su casa tantas veces. Tú también quieres que vaya a la tuya
+      y estar chill los 2 allí sin tener que moverte, ¿verdad?
+      <br><br>
+      <span id="princesos" class="strike-wrapper">
+        Estos princesos de hoy en día...
+        <span class="strike-line"></span>
       </span>
     </p>
 
     <button id="pulseBtn">Púlsame</button>
+
+    <div id="respuesta" class="reply">
+      Eeee, la mayoría de veces que no voy es porque no me pueden llevar,
+      no es mi culpa. Muchas gracias por entender cariñooo ;)
+    </div>
+
     <button
       id="backBtn"
       class="hidden"
@@ -116,14 +164,10 @@
     const princesos = document.getElementById("princesos");
     const respuesta = document.getElementById("respuesta");
 
-    // mostrar inicialmente la frase normal
-    princesos.classList.remove("hidden");
-
     pulseBtn.addEventListener("click", () => {
-      // tachar y responder
-      respuesta.classList.remove("hidden");
+      princesos.classList.add("striked");
+      respuesta.classList.add("show");
 
-      // cambiar botones
       pulseBtn.classList.add("hidden");
       backBtn.classList.remove("hidden");
     });
