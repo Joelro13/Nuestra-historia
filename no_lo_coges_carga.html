@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olé</title>
+
+  <style>
+    body {
+      background-color: #e8f0ff;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .text {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #333;
+      letter-spacing: 0.1em;
+    }
+
+    .text span {
+      display: inline-block;
+      animation: smoke 3s ease-in-out forwards;
+    }
+
+    /* Animación tipo humo */
+    @keyframes smoke {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(
+          calc(-40px + 80px * var(--rand-x)),
+          calc(-80px * var(--rand-y))
+        ) scale(1.2);
+        filter: blur(6px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="text" id="smokeText">
+      Oleeee, esa es mi niña
+    </div>
+  </div>
+
+  <script>
+    const text = document.getElementById("smokeText");
+    const letters = text.innerText.split("");
+    text.innerHTML = "";
+
+    letters.forEach(letter => {
+      const span = document.createElement("span");
+      span.innerText = letter === " " ? "\u00A0" : letter;
+
+      // valores aleatorios para dispersión tipo humo
+      span.style.setProperty("--rand-x", Math.random());
+      span.style.setProperty("--rand-y", Math.random());
+
+      text.appendChild(span);
+    });
+
+    // redirección automática a la página de respuesta
+    setTimeout(() => {
+      window.location.href = "no_lo_coges.html"; // cambia el nombre si quieres
+    }, 3200);
+  </script>
+</body>
+</html>
