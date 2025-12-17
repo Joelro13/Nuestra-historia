@@ -95,101 +95,112 @@
   <img src="images/WhatsApp_Image_2025-05-18_16.43.39.jpg" alt="Nuestra foto">
 </div>
 
+<!-- Audio typing para la intro -->
 <audio id="typing" src="sonidos/among-us-typing.mp3" preload="auto" loop></audio>
+<!-- Audio normal que ya estaba -->
+<audio id="sonidos" src="sonidos/cough-104521.mp3"></audio>
 
 <script>
 const textoIntro = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
 const textoDiv = document.getElementById('texto');
 const botonesDiv = document.getElementById('botones');
 const typingAudio = document.getElementById('typing');
-
-typingAudio.volume = 0.15; // volumen bajo
-
-function startTypingSound() {
-  typingAudio.currentTime = 0;
-  typingAudio.play().catch(()=>{});
-}
-
-function stopTypingSound() {
-  typingAudio.pause();
-}
+typingAudio.volume = 0.15;
 
 function escribirTexto(str, cb, destino = textoDiv) {
   let i = 0;
+  typingAudio.currentTime = 0;
+  typingAudio.play().catch(()=>{});
 
-  function loop() {
-    if(i < str.length) {
+  (function loop() {
+    if (i < str.length) {
       destino.innerHTML += str.charAt(i);
 
       let pausa = 40;
       const escrito = destino.innerHTML;
-      let pauseAudio = false;
+      let pausaAudio = false;
 
-      // Pausas largas o especiales
-      if(escrito.endsWith('...')) { 
-        pausa = 800; 
-        pauseAudio = true;
-      } else if(escrito.endsWith('bro?')) { 
-        pausa = 750; 
-        pauseAudio = true; // 🔹 ahora sí pausa aquí
-      } else if(str.charAt(i) === '.') { 
-        pausa = 350; 
-        pauseAudio = true;
-      } else if(str.charAt(i) === ',') { 
-        pausa = 250; 
-        pauseAudio = true;
-      } else if(escrito.endsWith('??')) { 
-        pausa = 350; 
-        pauseAudio = true;
-      }
+      if (escrito.endsWith('...')) { pausa = 800; pausaAudio = true; }
+      else if (escrito.endsWith('bro?')) { pausa = 750; pausaAudio = true; }
+      else if (str.charAt(i) === '.') { pausa = 350; pausaAudio = true; }
+      else if (str.charAt(i) === ',') { pausa = 250; pausaAudio = true; }
+      else if (escrito.endsWith('??')) { pausa = 350; pausaAudio = true; }
 
-      if(pauseAudio) stopTypingSound();
-      else if(typingAudio.paused) startTypingSound();
-
-      i++;
+      if (pausaAudio) { typingAudio.pause(); }
       setTimeout(() => {
-        if(pauseAudio) startTypingSound();
+        if (pausaAudio) typingAudio.play().catch(()=>{});
+        i++;
         loop();
       }, pausa);
-
     } else {
-      stopTypingSound();
+      typingAudio.pause();
       if(cb) cb();
     }
-  }
-
-  startTypingSound();
-  loop();
+  })();
 }
 
 function borrarTexto(cb) {
   let current = textoDiv.innerHTML;
+  typingAudio.currentTime = 0;
+  typingAudio.play().catch(()=>{});
 
-  function erase() {
+  (function erase() {
     if(current.length) {
       current = current.slice(0,-1);
       textoDiv.innerHTML = current;
-      setTimeout(erase, 25);
+      setTimeout(erase,25);
     } else {
-      stopTypingSound();
-      if(cb) cb();
+      typingAudio.pause();
+      cb();
     }
-  }
-
-  startTypingSound();
-  erase();
+  })();
 }
 
-// Funciones de botones
+// Función original de mostrar siguiente escena
 function mostrarSiguiente() {
   botonesDiv.style.display = 'none';
-  // ⬇ En lugar de "¡Siguiente escena!" vamos directo a la página correspondiente
-  window.location.href = 'casa_se_lo_dices.html';
+  borrarTexto(() => {
+    // Aquí se mantiene todo lo que ya estaba en tu juego original
+    const audio = document.getElementById('sonidos');
+    audio.volume = 0.35;
+    audio.currentTime = 0;
+    audio.play();
+
+    audio.onended = () => {
+      // Todo lo que sigue en tu juego original se mantiene
+      setTimeout(() => {
+        textoDiv.innerHTML = ''; // aseguramos que esté limpio
+
+        escribirTexto('vale', () => {
+          setTimeout(() => {
+            escribirTexto(' ya está.', () => {
+              setTimeout(() => {
+                const resto = `Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+                escribirTexto(resto, mostrarOpcionesNuevaEscena);
+              }, 800);
+            });
+          }, 250);
+        });
+
+      }, 400);
+    };
+  });
+}
+
+function mostrarOpcionesNuevaEscena() {
+  const nuevas = document.createElement('div');
+  nuevas.className = 'options-box';
+  nuevas.innerHTML = `
+    <button class="option-button" onclick="location.href='casa_se_lo_dices.html'">Se lo dices</button>
+    <button class="option-button" onclick="location.href='casa_no_lo_dices.html'">No decírselo</button>
+  `;
+  document.body.appendChild(nuevas);
 }
 
 function respuestaNegativa() {
-  botonesDiv.style.display = 'none';
   textoDiv.innerHTML = '';
+  botonesDiv.style.display = 'none';
+
   const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
   escribirTexto(castigo, () => {
     const foto = document.getElementById('foto-castigo');
@@ -200,12 +211,15 @@ function respuestaNegativa() {
       const nuevoParrafo = document.createElement('p');
       textoDiv.appendChild(nuevoParrafo);
       const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-      escribirTexto(extra, () => setTimeout(() => location.href='index.html', 2500), nuevoParrafo);
+      escribirTexto(extra, () => {
+        setTimeout(() => location.href='index.html',2500);
+      }, nuevoParrafo);
     }, 1000);
   });
 }
 
-window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display = 'block'), 500);
+window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display='block'), 500);
+
 </script>
 
 </body>
