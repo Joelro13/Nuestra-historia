@@ -50,7 +50,7 @@
 
 .notification {
   position: fixed;
-  top: -60px;
+  top: 40px;
   right: 20px;
 
   background-color: #6d98d4;
@@ -67,11 +67,9 @@
   box-shadow: 0 0 25px rgba(255,255,255,0.4);
 
   animation:
-  slideDown 0.8s ease forwards,
-  moveToCenterX 4s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
-
+    slideDown 0.8s ease forwards,
+    cleanMoveX 4.5s ease-in-out 0.9s forwards;
 }
-
 
 
 @keyframes slideDown {
@@ -83,44 +81,34 @@
   }
 }
 
-@keyframes moveToCenterX {
+@keyframes cleanMoveX {
   0% {
-    right: 20px;
-    left: auto;
-    transform: scale(1);
-    background-color: #6d98d4; /* azul base */
+    transform: translateX(0) scale(1);
+    background-color: #6d98d4;
   }
 
-  30% {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%) scale(1.25);
-    background-color: #ff8fbf; /* rosa suave */
+  20% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #8fb9ff;
   }
 
-  50% {
-    left: 50%;
-    transform: translateX(-50%) scale(1.25);
-    background-color: #8fb9ff; /* azul claro */
+  40% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #ff8fbf;
   }
 
-  70% {
-    left: 50%;
-    transform: translateX(-50%) scale(1.25);
-    background-color: #c69cff; /* lila suave */
+  60% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #c69cff;
   }
 
-  /* 👇 AQUÍ ES DONDE SE QUEDA MÁS TIEMPO */
-  85% {
-    left: 50%;
-    transform: translateX(-50%) scale(1.25);
+  80% {
+    transform: translateX(-30vw) scale(1.15);
     background-color: #6d98d4;
   }
 
   100% {
-    right: 20px;
-    left: auto;
-    transform: scale(1);
+    transform: translateX(0) scale(1);
     background-color: #6d98d4;
   }
 }
