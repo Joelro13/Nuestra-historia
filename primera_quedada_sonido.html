@@ -54,31 +54,68 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .notification {
-      position: fixed;
-      top: -60px;
-      right: 20px;
-      background-color: #6d98d4;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
-      padding: 8px 30px;
-      border-radius: 20px;
-      text-align: center;
-      z-index: 1000;
-      animation: slideDown 1s forwards;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      white-space: nowrap;
-    }
+   top: 40px;
+  right: 20px;
 
-    @keyframes slideDown {
-      0% {
-        top: -60px;
-      }
-      100% {
-        top: 40px;
-      }
-    }
+  background-color: #6d98d4;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 12px 40px;
+  border-radius: 25px;
+
+  text-align: center;
+  white-space: nowrap;
+  z-index: 1000;
+
+  box-shadow: 0 0 25px rgba(255,255,255,0.4);
+
+  animation:
+    slideDown 0.8s ease forwards,
+    cleanMoveX 4.5s ease-in-out 0.9s forwards;
+}
+
+
+@keyframes slideDown {
+  0% {
+    top: -60px;
+  }
+  100% {
+    top: 40px;
+  }
+}
+
+@keyframes cleanMoveX {
+  0% {
+    transform: translateX(0) scale(1);
+    background-color: #6d98d4;
+  }
+
+  20% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #8fb9ff;
+  }
+
+  40% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #ff8fbf;
+  }
+
+  60% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #c69cff;
+  }
+
+  80% {
+    transform: translateX(-30vw) scale(1.15);
+    background-color: #6d98d4;
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
+    background-color: #6d98d4;
+  }
+}
   </style>
 </head>
 <body>
