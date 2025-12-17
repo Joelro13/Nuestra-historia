@@ -95,41 +95,76 @@
   <img src="images/WhatsApp_Image_2025-05-18_16.43.39.jpg" alt="Nuestra foto">
 </div>
 
-<audio id="sonidos" src="sonidos/cough-104521.mp3"></audio>
+<audio id="typing" src="sonidos/among-us-typing.mp3" preload="auto" loop></audio>
 
 <script>
 const textoIntro = `Os quedáis en su casa y tú comienzas a sentirte muy incómoda porque bueno, es vuestra primera quedada y ya estáis en su casa bro? estas generaciones de hoy en día??... Ups me estoy saliendo del rol de narrador, mierda que me pongo nervioso, emm... ¿Quieres que siga?`;
 const textoDiv = document.getElementById('texto');
 const botonesDiv = document.getElementById('botones');
 
+const typingAudio = document.getElementById('typing');
+
+function startTypingSound() {
+  typingAudio.volume = 0.25;
+  typingAudio.currentTime = 0;
+  typingAudio.play().catch(()=>{});
+}
+
+function stopTypingSound() {
+  typingAudio.pause();
+  typingAudio.currentTime = 0;
+}
+
 function escribirTexto(str, cb, destino = textoDiv) {
   let i = 0;
+  startTypingSound();
+
   (function loop() {
     if (i < str.length) {
       destino.innerHTML += str.charAt(i);
+
       let pausa = 40;
       const escrito = destino.innerHTML;
-      if (escrito.endsWith('...')) pausa = 800;
-      else if (escrito.endsWith('bro?')) pausa = 750;
-      else if (str.charAt(i) === '.') pausa = 350;
-      else if (str.charAt(i) === ',') pausa = 250;
-      else if (escrito.endsWith('??')) pausa = 350;
+
+      // Pausas largas
+      if (escrito.endsWith('...')) {
+        pausa = 800;
+        stopTypingSound();
+        setTimeout(startTypingSound, 100);
+      } else if (escrito.endsWith('bro?')) {
+        pausa = 750;
+      } else if (str.charAt(i) === '.') {
+        pausa = 350;
+        stopTypingSound();
+        setTimeout(startTypingSound, 50);
+      } else if (str.charAt(i) === ',') {
+        pausa = 250;
+      } else if (escrito.endsWith('??')) {
+        pausa = 350;
+      }
+
       i++;
       setTimeout(loop, pausa);
-    } else if (cb) {
-      cb();
+    } else {
+      stopTypingSound();
+      if(cb) cb();
     }
   })();
 }
 
 function borrarTexto(cb) {
   let current = textoDiv.innerHTML;
+  startTypingSound();
+
   (function erase() {
-    if (current.length) {
-      current = current.slice(0, -1);
+    if(current.length) {
+      current = current.slice(0,-1);
       textoDiv.innerHTML = current;
       setTimeout(erase, 25);
-    } else cb();
+    } else {
+      stopTypingSound();
+      if(cb) cb();
+    }
   })();
 }
 
@@ -137,28 +172,18 @@ function mostrarSiguiente() {
   botonesDiv.style.display = 'none';
 
   borrarTexto(() => {
-    const audio = document.getElementById('sonidos');
-    audio.volume = 0.35;
-    audio.currentTime = 0;
-    audio.play();
-
-    audio.onended = () => {
+    // Aquí puedes mantener tu audio normal de voz para "Sí"
+    textoDiv.innerHTML = '';
+    escribirTexto('vale', () => {
       setTimeout(() => {
-        textoDiv.innerHTML = ''; // aseguramos que esté limpio
-
-        escribirTexto('vale', () => {
+        escribirTexto(' ya está.', () => {
           setTimeout(() => {
-            escribirTexto(' ya está.', () => {
-              setTimeout(() => {
-                const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
-                escribirTexto(resto, mostrarOpcionesNuevaEscena);
-              }, 800);
-            });
-          }, 250);
+            const resto = ` Estáis en su casa y te sientes incómoda, pero no sabes si decírselo para ir a otro sitio... ¿Qué haces?`;
+            escribirTexto(resto, mostrarOpcionesNuevaEscena);
+          }, 800);
         });
-
-      }, 400);
-    };
+      }, 250);
+    });
   });
 }
 
@@ -176,22 +201,21 @@ function respuestaNegativa() {
   textoDiv.innerHTML = '';
   botonesDiv.style.display = 'none';
 
-const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
-escribirTexto(castigo, () => {
-  const foto = document.getElementById('foto-castigo');
-  foto.style.display = 'block';
-  foto.classList.add('show');
+  const castigo = `Ah sí? O sea que me estás intentando vacilar en mi propio juego?? Qué mal, como castigo te voy a poner esta foto`;
+  escribirTexto(castigo, () => {
+    const foto = document.getElementById('foto-castigo');
+    foto.style.display = 'block';
+    foto.classList.add('show');
 
-  setTimeout(() => {
-    const nuevoParrafo = document.createElement('p');
-    textoDiv.appendChild(nuevoParrafo);
-    const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
-    escribirTexto(extra, () => {
-      setTimeout(() => location.href = 'index.html', 2500);
-    }, nuevoParrafo);
-  }, 1000);
-});
-
+    setTimeout(() => {
+      const nuevoParrafo = document.createElement('p');
+      textoDiv.appendChild(nuevoParrafo);
+      const extra = `salimos guapos eh?, nah en verdad el castigo es que te voy a reiniciar la página al principio ;)`;
+      escribirTexto(extra, () => {
+        setTimeout(() => location.href = 'index.html', 2500);
+      }, nuevoParrafo);
+    }, 1000);
+  });
 }
 
 window.onload = () => setTimeout(() => escribirTexto(textoIntro, () => botonesDiv.style.display = 'block'), 500);
