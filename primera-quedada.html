@@ -52,21 +52,25 @@
   position: fixed;
   top: -60px;
   right: 20px;
+
   background-color: #6d98d4;
   color: white;
   font-size: 1rem;
   font-weight: bold;
-  padding: 16px 50px;
-  border-radius: 30px;
+  padding: 12px 40px;
+  border-radius: 25px;
+
   text-align: center;
-  z-index: 1000;
   white-space: nowrap;
-  box-shadow: 0 0 40px rgba(255,255,255,0.6);
+  z-index: 1000;
+
+  box-shadow: 0 0 25px rgba(255,255,255,0.4);
 
   animation:
     slideDown 0.8s ease forwards,
-    epicExpand 2.8s ease-in-out 0.8s forwards;
+    moveToCenterX 2s ease-in-out 0.9s forwards;
 }
+
 
 
 @keyframes slideDown {
@@ -78,41 +82,30 @@
   }
 }
 
-@keyframes epicExpand {
+@keyframes moveToCenterX {
   0% {
-    top: 40px;
-    left: auto;
     right: 20px;
+    left: auto;
     transform: scale(1);
     background-color: #6d98d4;
   }
 
-  25% {
-    top: 50%;
+  40% {
     left: 50%;
     right: auto;
-    transform: translate(-50%, -50%) scale(2.2, 1.4);
+    transform: translateX(-50%) scale(1.25);
     background-color: #ff6fae;
   }
 
-  55% {
-    top: 50%;
+  70% {
     left: 50%;
-    transform: translate(-50%, -50%) scale(2.8, 2.2);
+    transform: translateX(-50%) scale(1.25);
     background-color: #6d98d4;
   }
 
-  75% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(3.2, 2.8);
-    background-color: #ff6fae;
-  }
-
   100% {
-    top: 40px;
-    left: auto;
     right: 20px;
+    left: auto;
     transform: scale(1);
     background-color: #6d98d4;
   }
