@@ -67,8 +67,9 @@
   box-shadow: 0 0 25px rgba(255,255,255,0.4);
 
   animation:
-    slideDown 0.8s ease forwards,
-    moveToCenterX 2s ease-in-out 0.9s forwards;
+  slideDown 0.8s ease forwards,
+  moveToCenterX 4s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+
 }
 
 
@@ -87,17 +88,30 @@
     right: 20px;
     left: auto;
     transform: scale(1);
-    background-color: #6d98d4;
+    background-color: #6d98d4; /* azul base */
   }
 
-  40% {
+  30% {
     left: 50%;
     right: auto;
     transform: translateX(-50%) scale(1.25);
-    background-color: #ff6fae;
+    background-color: #ff8fbf; /* rosa suave */
+  }
+
+  50% {
+    left: 50%;
+    transform: translateX(-50%) scale(1.25);
+    background-color: #8fb9ff; /* azul claro */
   }
 
   70% {
+    left: 50%;
+    transform: translateX(-50%) scale(1.25);
+    background-color: #c69cff; /* lila suave */
+  }
+
+  /* 👇 AQUÍ ES DONDE SE QUEDA MÁS TIEMPO */
+  85% {
     left: 50%;
     transform: translateX(-50%) scale(1.25);
     background-color: #6d98d4;
@@ -110,7 +124,6 @@
     background-color: #6d98d4;
   }
 }
-
 
   </style>
 </head>
