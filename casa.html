@@ -103,7 +103,7 @@ const textoDiv = document.getElementById('texto');
 const botonesDiv = document.getElementById('botones');
 const typingAudio = document.getElementById('typing');
 
-typingAudio.volume = 0.15; // 🔊 volumen bajo
+typingAudio.volume = 0.15; // volumen bajo
 
 function startTypingSound() {
   typingAudio.currentTime = 0;
@@ -125,11 +125,13 @@ function escribirTexto(str, cb, destino = textoDiv) {
       const escrito = destino.innerHTML;
       let pauseAudio = false;
 
+      // Pausas largas o especiales
       if(escrito.endsWith('...')) { 
         pausa = 800; 
         pauseAudio = true;
       } else if(escrito.endsWith('bro?')) { 
         pausa = 750; 
+        pauseAudio = true; // 🔹 ahora sí pausa aquí
       } else if(str.charAt(i) === '.') { 
         pausa = 350; 
         pauseAudio = true;
@@ -181,10 +183,8 @@ function borrarTexto(cb) {
 // Funciones de botones
 function mostrarSiguiente() {
   botonesDiv.style.display = 'none';
-  borrarTexto(() => {
-    // Aquí se puede colocar audio de aclaración u otra lógica
-    textoDiv.innerHTML = '¡Siguiente escena!'; // placeholder
-  });
+  // ⬇ En lugar de "¡Siguiente escena!" vamos directo a la página correspondiente
+  window.location.href = 'casa_se_lo_dices.html';
 }
 
 function respuestaNegativa() {
