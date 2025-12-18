@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elegiste no decirlo</title>
+
 <style>
   body {
     background: #f0b7d4;
@@ -50,31 +51,11 @@
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     padding: 20px;
-    margin: 30px auto 10px auto;
+    margin: 30px auto;
     width: fit-content;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 10;
-  }
-
-  /* 🔹 BOTÓN "TE HAS PERDIDO?" */
-  #btn-perdido {
-    display: none;
-    margin: 20px auto 0 auto;
-    background: #84b7f0;
-    color: white;
-    font-size: 0.95rem;
-    padding: 8px 18px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
-
-  #btn-perdido:hover {
-    transform: scale(1.05);
-    background-color: #6fa8e8;
   }
 
   .spam-button {
@@ -154,17 +135,42 @@
     border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.3s;
-    position: relative;
-    z-index: 10;
     display: none;
-    max-width: 200px;
-    text-align: center;
     font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
   #btn-volver:hover {
     background-color: #d7e3ff;
+  }
+
+  /* 🔥 NUEVO BOTÓN */
+  #btn-perdido {
+    display: none;
+    margin: 40px auto 0 auto;
+    background: #6d98d4;
+    color: white;
+    font-size: 1rem;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    animation: pulseGlow 2s infinite;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+    50% {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(255,255,255,0.6);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
   }
 </style>
 </head>
@@ -179,24 +185,24 @@
 
 <div class="options-box">
   <button id="btn-lo-coges" class="option-button">Lo coges</button>
-  <button class="option-button" onclick="irNoLoCoges()">No lo coges</button>
+  <button onclick="location.href='no_lo_coges_carga.html'" class="option-button">No lo coges</button>
 </div>
-
-<!-- 🔹 BOTÓN NUEVO -->
-<button id="btn-perdido" onclick="location.href='te_has_perdido.html'">
-  ¿Te has perdido?
-</button>
 
 <div id="loading-container">
   <div id="loading-text">anticipando ruptura 0%</div>
-  <div id="progress-bar"><div id="progress-bar-inner"></div></div>
+  <div id="progress-bar">
+    <div id="progress-bar-inner"></div>
+  </div>
   <div id="mensaje-azul" style="display:none;">
     En verdad estoy muy orgulloso de como llevas el tema por mi, te quiero y gracias por hacer cosas como estas que hacen que la relación vaya mejor y me raye menos por el tema
   </div>
 </div>
 
-<button id="btn-volver" onclick="location.href='https://joelro13.github.io/Nuestra-historia/casa_no_lo_dices.html'">
-  Volver atrás
+<button id="btn-volver" onclick="location.href='casa_no_lo_dices.html'">Volver atrás</button>
+
+<!-- 🆕 BOTÓN NUEVO -->
+<button id="btn-perdido" onclick="location.href='te_has_perdido.html'">
+  ¿Te has perdido?
 </button>
 
 <script>
@@ -212,9 +218,11 @@
 
   let spamCount = 0;
 
-  // 🔹 Mostrar botón si vuelve desde otra opción
-  if (sessionStorage.getItem('vuelveDeOpcion') === 'true') {
+  // Mostrar botón si vuelves a entrar
+  if (sessionStorage.getItem('visitado_no_decirlo')) {
     btnPerdido.style.display = 'block';
+  } else {
+    sessionStorage.setItem('visitado_no_decirlo', 'true');
   }
 
   btnLoCoges.addEventListener('click', () => {
@@ -223,13 +231,8 @@
     spamCount++;
   });
 
-  function irNoLoCoges() {
-    sessionStorage.setItem('vuelveDeOpcion', 'true');
-    location.href = 'no_lo_coges_carga.html';
-  }
-
   function crearSpamBoton() {
-    if(spamCount >= 5){
+    if (spamCount >= 5) {
       iniciarCarga();
       return;
     }
@@ -238,23 +241,16 @@
     spamBtn.textContent = 'Lo coges';
     spamBtn.className = 'spam-button';
 
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-
-    spamBtn.style.left = Math.random() * (vw - 120) + 'px';
-    spamBtn.style.top = Math.random() * (vh - 40) + 'px';
+    spamBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
+    spamBtn.style.top = Math.random() * (window.innerHeight - 40) + 'px';
 
     document.body.appendChild(spamBtn);
 
-    spamBtn.addEventListener('click', () => {
+    spamBtn.onclick = () => {
       spamBtn.remove();
       spamCount++;
-      if(spamCount < 5){
-        crearSpamBoton();
-      } else {
-        iniciarCarga();
-      }
-    });
+      spamCount < 5 ? crearSpamBoton() : iniciarCarga();
+    };
   }
 
   function iniciarCarga() {
@@ -268,19 +264,16 @@
 
     let progress = 0;
 
-    function avanzarBarra() {
-      if(progress < 100){
-        progress++;
-        loadingText.textContent = `anticipando ruptura ${progress}%`;
-        progressBarInner.style.width = progress + '%';
-        setTimeout(avanzarBarra, 120);
-      } else {
-        sessionStorage.setItem('vuelveDeOpcion', 'true');
-        location.href = 'coges_cigarro.html';
-      }
-    }
+    const interval = setInterval(() => {
+      progress++;
+      loadingText.textContent = `anticipando ruptura ${progress}%`;
+      progressBarInner.style.width = progress + '%';
 
-    avanzarBarra();
+      if (progress >= 100) {
+        clearInterval(interval);
+        window.location.href = 'coges_cigarro.html';
+      }
+    }, 120);
   }
 </script>
 
