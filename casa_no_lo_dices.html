@@ -50,11 +50,31 @@
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     padding: 20px;
-    margin: 30px auto;
+    margin: 30px auto 10px auto;
     width: fit-content;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 10;
+  }
+
+  /* 🔹 BOTÓN "TE HAS PERDIDO?" */
+  #btn-perdido {
+    display: none;
+    margin: 20px auto 0 auto;
+    background: #84b7f0;
+    color: white;
+    font-size: 0.95rem;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  #btn-perdido:hover {
+    transform: scale(1.05);
+    background-color: #6fa8e8;
   }
 
   .spam-button {
@@ -148,17 +168,24 @@
   }
 </style>
 </head>
+
 <body>
 
 <h1>Elegiste no decirlo</h1>
+
 <div id="texto">
   Te callas y pasan los días, cuando algo te molesta prefieres guardártelo para que no hayan problemas y eso hace que mentalmente empeores, un día quedas con Keira y el grupo de Mario sin Joel y tras contarle a ella lo que ocurre te ofrece un cigarro para calmarte.
 </div>
 
 <div class="options-box">
   <button id="btn-lo-coges" class="option-button">Lo coges</button>
-  <button onclick="location.href='no_lo_coges_carga.html'" class="option-button">No lo coges</button>
+  <button class="option-button" onclick="irNoLoCoges()">No lo coges</button>
 </div>
+
+<!-- 🔹 BOTÓN NUEVO -->
+<button id="btn-perdido" onclick="location.href='te_has_perdido.html'">
+  ¿Te has perdido?
+</button>
 
 <div id="loading-container">
   <div id="loading-text">anticipando ruptura 0%</div>
@@ -168,7 +195,9 @@
   </div>
 </div>
 
-<button id="btn-volver" onclick="location.href='https://joelro13.github.io/Nuestra-historia/casa_no_lo_dices.html'">Volver atrás</button>
+<button id="btn-volver" onclick="location.href='https://joelro13.github.io/Nuestra-historia/casa_no_lo_dices.html'">
+  Volver atrás
+</button>
 
 <script>
   const btnLoCoges = document.getElementById('btn-lo-coges');
@@ -179,14 +208,25 @@
   const progressBarInner = document.getElementById('progress-bar-inner');
   const mensajeAzul = document.getElementById('mensaje-azul');
   const btnVolver = document.getElementById('btn-volver');
+  const btnPerdido = document.getElementById('btn-perdido');
 
   let spamCount = 0;
+
+  // 🔹 Mostrar botón si vuelve desde otra opción
+  if (sessionStorage.getItem('vuelveDeOpcion') === 'true') {
+    btnPerdido.style.display = 'block';
+  }
 
   btnLoCoges.addEventListener('click', () => {
     btnLoCoges.style.display = 'none';
     crearSpamBoton();
     spamCount++;
   });
+
+  function irNoLoCoges() {
+    sessionStorage.setItem('vuelveDeOpcion', 'true');
+    location.href = 'no_lo_coges_carga.html';
+  }
 
   function crearSpamBoton() {
     if(spamCount >= 5){
@@ -201,29 +241,8 @@
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    const rectOptions = optionsBox.getBoundingClientRect();
-    const rectTexto = texto.getBoundingClientRect();
-
-    let x, y;
-    let tries = 0;
-
-    do {
-      x = Math.random() * (vw - 120) + 10;
-      y = Math.random() * (vh - 40) + 10;
-
-      const overlapsOptions = x + 100 > rectOptions.left && x < rectOptions.right &&
-                             y + 30 > rectOptions.top && y < rectOptions.bottom;
-      const overlapsTexto = x + 100 > rectTexto.left && x < rectTexto.right &&
-                           y + 30 > rectTexto.top && y < rectTexto.bottom;
-
-      if (!overlapsOptions && !overlapsTexto) break;
-
-      tries++;
-      if (tries > 50) break;
-    } while(true);
-
-    spamBtn.style.left = x + 'px';
-    spamBtn.style.top = y + 'px';
+    spamBtn.style.left = Math.random() * (vw - 120) + 'px';
+    spamBtn.style.top = Math.random() * (vh - 40) + 'px';
 
     document.body.appendChild(spamBtn);
 
@@ -236,47 +255,28 @@
         iniciarCarga();
       }
     });
-
-    setTimeout(() => {
-      if(document.body.contains(spamBtn)){
-        spamBtn.style.transition = 'opacity 0.8s';
-        spamBtn.style.opacity = '0';
-        setTimeout(() => {
-          if(document.body.contains(spamBtn)) spamBtn.remove();
-        }, 800);
-      }
-    }, 4000);
   }
 
   function iniciarCarga() {
     document.querySelector('h1').style.display = 'none';
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
-    document.querySelectorAll('.spam-button').forEach(el => el.remove());
 
     loadingContainer.style.display = 'block';
     mensajeAzul.style.display = 'block';
     btnVolver.style.display = 'inline-block';
 
     let progress = 0;
-    let speed = 100;
-    const maxProgress = 100;
 
     function avanzarBarra() {
-      if(progress < maxProgress){
-        progress += 1;
-        if(progress > maxProgress) progress = maxProgress;
-
+      if(progress < 100){
+        progress++;
         loadingText.textContent = `anticipando ruptura ${progress}%`;
         progressBarInner.style.width = progress + '%';
-
-        if(progress >= 70){
-          speed = 150;
-        }
-
-        setTimeout(avanzarBarra, speed);
+        setTimeout(avanzarBarra, 120);
       } else {
-        window.location.href = 'coges_cigarro.html';
+        sessionStorage.setItem('vuelveDeOpcion', 'true');
+        location.href = 'coges_cigarro.html';
       }
     }
 
