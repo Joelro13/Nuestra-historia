@@ -12,6 +12,7 @@
       text-align: center;
       padding: 20px;
       margin: 0;
+
       opacity: 0;
       transition: opacity 6s ease;
     }
@@ -59,38 +60,67 @@
 
     .notification {
       position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) scale(1);
+      top: -60px;
+      right: 20px;
+
       background-color: #6d98d4;
       color: white;
       font-size: 1rem;
       font-weight: bold;
-      padding: 8px 30px;
-      border-radius: 20px;
-      z-index: 1000;
-      opacity: 0;
+      padding: 12px 40px;
+      border-radius: 25px;
+
+      text-align: center;
       white-space: nowrap;
+      z-index: 1000;
+
+      box-shadow: 0 0 25px rgba(255,255,255,0.4);
+
+      opacity: 0;
       pointer-events: none;
     }
 
-    @keyframes notificacionAnim {
+    .notification.show {
+      opacity: 1;
+      animation:
+        slideDown 0.8s ease forwards,
+        cleanMoveX 4.5s ease-in-out 0.9s forwards;
+    }
+
+    @keyframes slideDown {
+      0% { top: -60px; }
+      100% { top: 40px; }
+    }
+
+    @keyframes cleanMoveX {
       0% {
-        transform: translateX(-50%) translateY(-30px) scale(0.9);
-        opacity: 0;
+        transform: translateX(0) scale(1);
+        background-color: #6d98d4;
       }
+
+      20% {
+        transform: translateX(-30vw) scale(1.15);
+        background-color: #8fb9ff;
+      }
+
       40% {
-        opacity: 1;
+        transform: translateX(-30vw) scale(1.15);
+        background-color: #ff8fbf;
       }
+
       60% {
-        transform: translateX(-50%) translateY(0) scale(1.15);
+        transform: translateX(-30vw) scale(1.15);
+        background-color: #c69cff;
       }
+
       80% {
-        transform: translateX(-50%) scale(1.05);
+        transform: translateX(-30vw) scale(1.15);
+        background-color: #6d98d4;
       }
+
       100% {
-        transform: translateX(-50%) scale(1);
-        opacity: 1;
+        transform: translateX(0) scale(1);
+        background-color: #6d98d4;
       }
     }
   </style>
@@ -99,7 +129,7 @@
 <body>
 
   <!-- NOTIFICACIÓN -->
-  <div class="notification" id="notificacion">
+  <div class="notification" id="notif">
     Modo 1ª persona activado en esta pregunta, ¡disfruta!
   </div>
 
@@ -120,41 +150,32 @@
 
   <script>
     window.onload = () => {
-      const body = document.body;
+      document.body.classList.add('visible');
+
       const respiro = document.getElementById('respiro');
-      const noti = document.getElementById('notificacion');
+      const notif = document.getElementById('notif');
 
-      /* Efecto despertar */
-      body.classList.add('visible');
+      respiro.play().catch(() => {});
 
-      /* Sonido respiración */
-      respiro.volume = 1;
-      respiro.play().then(() => {
+      // Cuando termina el "despertar"
+      setTimeout(() => {
+        notif.classList.add('show');
+      }, 6000); // coincide con el fade-in del body
 
-        setTimeout(() => {
-          const fadeDuration = 1500;
-          const steps = 15;
-          const stepTime = fadeDuration / steps;
-          let step = 0;
-
-          const fadeInterval = setInterval(() => {
-            step++;
-            respiro.volume = Math.max(0, 1 - step / steps);
-
-            if (step >= steps) {
-              clearInterval(fadeInterval);
-              respiro.pause();
-              respiro.currentTime = 0;
-
-              /* 🔔 NOTIFICACIÓN (DESPUÉS DE TODO) */
-              noti.style.opacity = 1;
-              noti.style.animation = 'notificacionAnim 2.8s ease forwards';
-            }
-          }, stepTime);
-
-        }, 4500);
-
-      }).catch(() => {});
+      // Fade out del sonido
+      setTimeout(() => {
+        let step = 0;
+        const steps = 15;
+        const fadeInterval = setInterval(() => {
+          step++;
+          respiro.volume = Math.max(0, 1 - step / steps);
+          if (step >= steps) {
+            clearInterval(fadeInterval);
+            respiro.pause();
+            respiro.currentTime = 0;
+          }
+        }, 100);
+      }, 4500);
     };
 
     function fadeOutAndRedirect(url) {
