@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>¿Dónde fuimos en nuestra primera quedada?</title>
+
   <style>
     body {
-      background-color: #f0b7d4; /* Fondo rosa */
+      background-color: #f0b7d4;
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
       margin: 0;
       opacity: 0;
-      transition: opacity 6s ease; /* efecto despertar */
+      transition: opacity 6s ease;
     }
 
     body.visible {
@@ -54,7 +55,8 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* Notificación */
+    /* ================= NOTIFICACIÓN ================= */
+
     .notification {
       position: fixed;
       top: 20px;
@@ -66,32 +68,38 @@
       font-weight: bold;
       padding: 8px 30px;
       border-radius: 20px;
-      text-align: center;
       z-index: 1000;
+      opacity: 0;
       white-space: nowrap;
-      opacity: 0; /* Oculto hasta que se active */
+      pointer-events: none;
     }
 
-    @keyframes notificationAnim {
+    @keyframes notificacionAnim {
       0% {
-        transform: translateX(-50%) scale(1);
-        background-color: #6d98d4;
+        transform: translateX(-50%) translateY(-30px) scale(0.9);
+        opacity: 0;
       }
-      20% { background-color: #f4a7d4; }
-      40% { background-color: #6df4c4; }
-      60% { background-color: #f4e46d; }
-      80% { background-color: #d46df4; }
+      40% {
+        opacity: 1;
+      }
+      60% {
+        transform: translateX(-50%) translateY(0) scale(1.15);
+      }
+      80% {
+        transform: translateX(-50%) scale(1.05);
+      }
       100% {
-        transform: translateX(-50%) scale(1.1);
-        background-color: #6d98d4;
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Notificación -->
-  <div class="notification" id="notification">
+  <!-- NOTIFICACIÓN -->
+  <div class="notification" id="notificacion">
     Modo 1ª persona activado en esta pregunta, ¡disfruta!
   </div>
 
@@ -110,32 +118,52 @@
 
   <audio id="respiro" src="sonidos/breath_woman-6049.mp3"></audio>
 
-<script>
-  window.onload = () => {
-    const body = document.body;
-    const respiro = document.getElementById('respiro');
-    const notification = document.getElementById('notification');
+  <script>
+    window.onload = () => {
+      const body = document.body;
+      const respiro = document.getElementById('respiro');
+      const noti = document.getElementById('notificacion');
 
-    // Inicia efecto "despertar" de la pantalla
-    body.classList.add('visible');
+      /* Efecto despertar */
+      body.classList.add('visible');
 
-    // Reproduce audio de respiración
-    respiro.play().catch(e => console.warn('Autoplay fallido:', e));
+      /* Sonido respiración */
+      respiro.volume = 1;
+      respiro.play().then(() => {
 
-    // Después de que la pantalla termine de "despertar" (6s) + 0.5s margen
-    setTimeout(() => {
-      notification.style.opacity = '1';
-      notification.style.animation = 'notificationAnim 3s ease forwards';
-    }, 6500);
-  };
+        setTimeout(() => {
+          const fadeDuration = 1500;
+          const steps = 15;
+          const stepTime = fadeDuration / steps;
+          let step = 0;
 
-  function fadeOutAndRedirect(url) {
-    document.body.classList.remove('visible');
-    setTimeout(() => {
-      window.location.href = url;
-    }, 1000);
-  }
-</script>
+          const fadeInterval = setInterval(() => {
+            step++;
+            respiro.volume = Math.max(0, 1 - step / steps);
+
+            if (step >= steps) {
+              clearInterval(fadeInterval);
+              respiro.pause();
+              respiro.currentTime = 0;
+
+              /* 🔔 NOTIFICACIÓN (DESPUÉS DE TODO) */
+              noti.style.opacity = 1;
+              noti.style.animation = 'notificacionAnim 2.8s ease forwards';
+            }
+          }, stepTime);
+
+        }, 4500);
+
+      }).catch(() => {});
+    };
+
+    function fadeOutAndRedirect(url) {
+      document.body.classList.remove('visible');
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1000);
+    }
+  </script>
 
 </body>
 </html>
