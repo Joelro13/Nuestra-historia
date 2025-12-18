@@ -147,30 +147,42 @@
   #btn-perdido {
     display: none;
     margin: 40px auto 0 auto;
-    background: #6d98d4;
-    color: white;
     font-size: 1rem;
     padding: 12px 28px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
+  }
+
+  /* Bloqueado: cadenas gris */
+  #btn-perdido.bloqueado {
+    background: repeating-linear-gradient(
+      45deg,
+      #999,
+      #999 5px,
+      #ccc 5px,
+      #ccc 10px
+    );
+    color: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
+    box-shadow: inset 0 0 8px #888;
+  }
+
+  /* Desbloqueado: azul original con pulso */
+  #btn-perdido.desbloqueado {
+    background: #6d98d4;
+    color: white;
     animation: pulseGlow 2s infinite;
+    pointer-events: auto;
     box-shadow: 0 0 20px rgba(255,255,255,0.4);
   }
 
   @keyframes pulseGlow {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
-    50% {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(255,255,255,0.6);
-    }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+    50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255,255,255,0.6); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
   }
 </style>
 </head>
@@ -185,7 +197,7 @@
 
 <div class="options-box">
   <button id="btn-lo-coges" class="option-button">Lo coges</button>
-  <button onclick="location.href='no_lo_coges_carga.html'" class="option-button">No lo coges</button>
+  <button id="btn-no-coges" class="option-button" onclick="location.href='no_lo_coges_carga.html'">No lo coges</button>
 </div>
 
 <div id="loading-container">
@@ -201,80 +213,50 @@
 <button id="btn-volver" onclick="location.href='casa_no_lo_dices.html'">Volver atrás</button>
 
 <!-- 🆕 BOTÓN NUEVO -->
-<button id="btn-perdido" onclick="location.href='te_has_perdido.html'">
+<button id="btn-perdido">
   ¿Te has perdido?
 </button>
 
 <script>
   const btnLoCoges = document.getElementById('btn-lo-coges');
-  const texto = document.getElementById('texto');
-  const optionsBox = document.querySelector('.options-box');
-  const loadingContainer = document.getElementById('loading-container');
-  const loadingText = document.getElementById('loading-text');
-  const progressBarInner = document.getElementById('progress-bar-inner');
-  const mensajeAzul = document.getElementById('mensaje-azul');
-  const btnVolver = document.getElementById('btn-volver');
+  const btnNoCoges = document.getElementById('btn-no-coges');
   const btnPerdido = document.getElementById('btn-perdido');
 
   let spamCount = 0;
 
-  // Mostrar botón si vuelves a entrar
-  if (sessionStorage.getItem('visitado_no_decirlo')) {
-    btnPerdido.style.display = 'block';
-  } else {
-    sessionStorage.setItem('visitado_no_decirlo', 'true');
+  // Variables para control de desbloqueo
+  let perdidoBloqueado = false;
+  let haVistoUnaOpcion = false;
+
+  // Mostrar botón solo después de ver una opción
+  btnPerdido.style.display = 'none';
+
+  function mostrarPerdidoBloqueado() {
+    btnPerdido.style.display = 'inline-block';
+    btnPerdido.classList.add('bloqueado');
+    perdidoBloqueado = true;
   }
 
+  function desbloquearPerdido() {
+    btnPerdido.classList.remove('bloqueado');
+    btnPerdido.classList.add('desbloqueado');
+    perdidoBloqueado = false;
+  }
+
+  // Cuando se hace click en cualquier opción
   btnLoCoges.addEventListener('click', () => {
-    btnLoCoges.style.display = 'none';
-    crearSpamBoton();
-    spamCount++;
+    haVistoUnaOpcion = true;
+    if (!perdidoBloqueado) mostrarPerdidoBloqueado();
   });
 
-  function crearSpamBoton() {
-    if (spamCount >= 5) {
-      iniciarCarga();
-      return;
+  btnNoCoges.addEventListener('click', () => {
+    if (haVistoUnaOpcion && perdidoBloqueado) {
+      desbloquearPerdido();
+    } else if (!haVistoUnaOpcion) {
+      haVistoUnaOpcion = true;
+      mostrarPerdidoBloqueado();
     }
-
-    const spamBtn = document.createElement('button');
-    spamBtn.textContent = 'Lo coges';
-    spamBtn.className = 'spam-button';
-
-    spamBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
-    spamBtn.style.top = Math.random() * (window.innerHeight - 40) + 'px';
-
-    document.body.appendChild(spamBtn);
-
-    spamBtn.onclick = () => {
-      spamBtn.remove();
-      spamCount++;
-      spamCount < 5 ? crearSpamBoton() : iniciarCarga();
-    };
-  }
-
-  function iniciarCarga() {
-    document.querySelector('h1').style.display = 'none';
-    texto.style.display = 'none';
-    optionsBox.style.display = 'none';
-
-    loadingContainer.style.display = 'block';
-    mensajeAzul.style.display = 'block';
-    btnVolver.style.display = 'inline-block';
-
-    let progress = 0;
-
-    const interval = setInterval(() => {
-      progress++;
-      loadingText.textContent = `anticipando ruptura ${progress}%`;
-      progressBarInner.style.width = progress + '%';
-
-      if (progress >= 100) {
-        clearInterval(interval);
-        window.location.href = 'coges_cigarro.html';
-      }
-    }, 120);
-  }
+  });
 </script>
 
 </body>
