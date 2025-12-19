@@ -17,10 +17,7 @@
     overflow-x: hidden;
   }
 
-  h1 {
-    margin-top: 100px;
-    font-size: 2rem;
-  }
+  h1 { margin-top: 100px; font-size: 2rem; }
 
   #texto {
     font-size: 1.2rem;
@@ -42,9 +39,7 @@
     z-index: 10;
   }
 
-  .option-button:hover {
-    background-color: #d89cbc;
-  }
+  .option-button:hover { background-color: #d89cbc; }
 
   .options-box {
     display: inline-block;
@@ -73,9 +68,7 @@
     transition: transform 0.3s ease;
   }
 
-  .spam-button:hover {
-    transform: scale(1.2);
-  }
+  .spam-button:hover { transform: scale(1.2); }
 
   #loading-container {
     display: none;
@@ -90,11 +83,7 @@
     z-index: 20;
   }
 
-  #loading-text {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
+  #loading-text { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
 
   #progress-bar {
     width: 100%;
@@ -139,9 +128,7 @@
     font-weight: bold;
   }
 
-  #btn-volver:hover {
-    background-color: #d7e3ff;
-  }
+  #btn-volver:hover { background-color: #d7e3ff; }
 
   #btn-perdido {
     display: none;
@@ -215,11 +202,15 @@
 
   let spamCount = 0;
 
-  // Inicializar botones visitados según sesión
   let visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
   let visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
 
   function actualizarBtnPerdido() {
+    const enCarga = loadingContainer.style.display === 'block';
+    if (enCarga) {
+      btnPerdido.style.display = 'none';
+      return;
+    }
     if (visitLoCoges || visitNoCoges) {
       btnPerdido.style.display = 'block';
       if (visitLoCoges && visitNoCoges) {
@@ -247,7 +238,7 @@
   }
 
   btnLoCoges.addEventListener('click', () => {
-    btnPerdido.style.display = 'none'; // ocultar durante carga
+    btnPerdido.style.display = 'none';
     btnLoCoges.style.display = 'none';
     sessionStorage.setItem('visitLoCoges', 'true');
     desbloquearSiAmbasVisitadas();
@@ -267,16 +258,12 @@
       iniciarCarga();
       return;
     }
-
     const spamBtn = document.createElement('button');
     spamBtn.textContent = 'Lo coges';
     spamBtn.className = 'spam-button';
-
     spamBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
     spamBtn.style.top = Math.random() * (window.innerHeight - 40) + 'px';
-
     document.body.appendChild(spamBtn);
-
     spamBtn.onclick = () => {
       spamBtn.remove();
       spamCount++;
@@ -288,18 +275,16 @@
     document.querySelector('h1').style.display = 'none';
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
-    btnPerdido.style.display = 'none'; // ocultar mientras carga
+    btnPerdido.style.display = 'none';
     loadingContainer.style.display = 'block';
     mensajeAzul.style.display = 'block';
     btnVolver.style.display = 'inline-block';
 
     let progress = 0;
-
     const interval = setInterval(() => {
       progress++;
       loadingText.textContent = `anticipando ruptura ${progress}%`;
       progressBarInner.style.width = progress + '%';
-
       if (progress >= 100) {
         clearInterval(interval);
         window.location.href = 'coges_cigarro.html';
