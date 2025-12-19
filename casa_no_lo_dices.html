@@ -37,25 +37,14 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    position: relative;
-    z-index: 10;
-  }
-
-  .option-button:hover {
-    background-color: #d89cbc;
   }
 
   .options-box {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,0.2);
     border-radius: 10px;
     padding: 20px;
     margin: 30px auto;
-    width: fit-content;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 10;
   }
 
   .spam-button {
@@ -64,17 +53,9 @@
     color: #fff;
     border-radius: 5px;
     padding: 10px 20px;
-    font-size: 1rem;
     border: none;
     cursor: pointer;
-    user-select: none;
-    opacity: 0.85;
     z-index: 5;
-    transition: transform 0.3s ease;
-  }
-
-  .spam-button:hover {
-    transform: scale(1.2);
   }
 
   #loading-container {
@@ -84,16 +65,7 @@
     max-width: 400px;
     background: white;
     border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
     padding: 20px;
-    position: relative;
-    z-index: 20;
-  }
-
-  #loading-text {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
   }
 
   #progress-bar {
@@ -108,76 +80,65 @@
     height: 100%;
     width: 0%;
     background: #d89cbc;
-    border-radius: 10px 0 0 10px;
-    transition: width 0.1s linear;
   }
 
   #mensaje-azul {
-    background-color: #84b7f0;
+    display: none;
+    background: #84b7f0;
     color: white;
     border-radius: 10px;
-    padding: 15px 20px;
+    padding: 15px;
     margin-top: 20px;
-    font-size: 1rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 
   #btn-volver {
+    display: none;
+    margin-top: 30px;
     background: #e8f0ff;
-    color: #000;
-    font-size: 1rem;
-    padding: 10px 20px;
-    margin: 30px auto 10px auto;
     border: none;
+    padding: 10px 20px;
     border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    display: none;
     font-weight: bold;
   }
 
-  #btn-volver:hover {
-    background-color: #d7e3ff;
-  }
-
-  /* 🔥 NUEVO BOTÓN */
+  /* BOTÓN PERDIDO */
   #btn-perdido {
-    display: block;
-    margin: 40px auto 0 auto;
+    display: none;
+    margin: 40px auto 0;
     background: #6d98d4;
     color: white;
-    font-size: 1rem;
-    padding: 12px 28px;
-    border: none;
+    padding: 12px 30px;
     border-radius: 30px;
+    border: none;
     cursor: pointer;
-    animation: pulseGlow 2s infinite;
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    animation: pulse 2s infinite;
   }
 
   #btn-perdido.bloqueado {
     background: gray;
-    color: #aaa;
+    color: #ccc;
     cursor: not-allowed;
-    box-shadow: none;
+    animation: none;
+    position: relative;
   }
 
-  @keyframes pulseGlow {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
-    50% {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(255,255,255,0.6);
-    }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
+  #btn-perdido.bloqueado::before,
+  #btn-perdido.bloqueado::after {
+    content: "⛓";
+    position: absolute;
+    font-size: 1.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  #btn-perdido.bloqueado::before { left: -25px; }
+  #btn-perdido.bloqueado::after { right: -25px; }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
   }
 </style>
 </head>
@@ -196,114 +157,47 @@
 </div>
 
 <div id="loading-container">
-  <div id="loading-text">anticipando ruptura 0%</div>
   <div id="progress-bar">
     <div id="progress-bar-inner"></div>
   </div>
-  <div id="mensaje-azul" style="display:none;">
+  <div id="mensaje-azul">
     En verdad estoy muy orgulloso de como llevas el tema por mi, te quiero y gracias por hacer cosas como estas que hacen que la relación vaya mejor y me raye menos por el tema
   </div>
 </div>
 
 <button id="btn-volver" onclick="location.href='casa_no_lo_dices.html'">Volver atrás</button>
 
-<button id="btn-perdido" class="bloqueado" onclick="irPerdido()">
-  ¿Te has perdido?
-</button>
+<button id="btn-perdido" class="bloqueado" onclick="irPerdido()">¿Te has perdido?</button>
 
 <script>
-  const btnLoCoges = document.getElementById('btn-lo-coges');
-  const btnNoCoges = document.getElementById('btn-no-coges');
   const btnPerdido = document.getElementById('btn-perdido');
-  const texto = document.getElementById('texto');
-  const optionsBox = document.querySelector('.options-box');
-  const loadingContainer = document.getElementById('loading-container');
-  const loadingText = document.getElementById('loading-text');
-  const progressBarInner = document.getElementById('progress-bar-inner');
-  const mensajeAzul = document.getElementById('mensaje-azul');
-  const btnVolver = document.getElementById('btn-volver');
 
-  let spamCount = 0;
+  let loCoges = sessionStorage.getItem('visitLoCoges') === 'true';
+  let noCoges = sessionStorage.getItem('visitNoCoges') === 'true';
 
-  // Inicializar botones visitados según sesión
-  let visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
-  let visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
+  if (loCoges || noCoges) {
+    btnPerdido.style.display = 'block';
+  }
 
-  if (visitLoCoges && visitNoCoges) {
+  if (loCoges && noCoges) {
     btnPerdido.classList.remove('bloqueado');
   }
 
   function irPerdido() {
     if (!btnPerdido.classList.contains('bloqueado')) {
-      window.location.href = 'te_has_perdido.html';
+      location.href = 'te_has_perdido.html';
     }
   }
 
-  function desbloquearSiAmbasVisitadas() {
-    visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
-    visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
-    if (visitLoCoges && visitNoCoges) {
-      btnPerdido.classList.remove('bloqueado');
-    }
-  }
-
-  btnLoCoges.addEventListener('click', () => {
-    btnLoCoges.style.display = 'none';
+  document.getElementById('btn-lo-coges').onclick = () => {
     sessionStorage.setItem('visitLoCoges', 'true');
-    desbloquearSiAmbasVisitadas();
-    crearSpamBoton();
-    spamCount++;
-  });
+    location.href = 'coges_cigarro.html';
+  };
 
-  btnNoCoges.addEventListener('click', () => {
+  document.getElementById('btn-no-coges').onclick = () => {
     sessionStorage.setItem('visitNoCoges', 'true');
-    desbloquearSiAmbasVisitadas();
-  });
-
-  function crearSpamBoton() {
-    if (spamCount >= 5) {
-      iniciarCarga();
-      return;
-    }
-
-    const spamBtn = document.createElement('button');
-    spamBtn.textContent = 'Lo coges';
-    spamBtn.className = 'spam-button';
-
-    spamBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
-    spamBtn.style.top = Math.random() * (window.innerHeight - 40) + 'px';
-
-    document.body.appendChild(spamBtn);
-
-    spamBtn.onclick = () => {
-      spamBtn.remove();
-      spamCount++;
-      spamCount < 5 ? crearSpamBoton() : iniciarCarga();
-    };
-  }
-
-  function iniciarCarga() {
-    document.querySelector('h1').style.display = 'none';
-    texto.style.display = 'none';
-    optionsBox.style.display = 'none';
-
-    loadingContainer.style.display = 'block';
-    mensajeAzul.style.display = 'block';
-    btnVolver.style.display = 'inline-block';
-
-    let progress = 0;
-
-    const interval = setInterval(() => {
-      progress++;
-      loadingText.textContent = `anticipando ruptura ${progress}%`;
-      progressBarInner.style.width = progress + '%';
-
-      if (progress >= 100) {
-        clearInterval(interval);
-        window.location.href = 'coges_cigarro.html';
-      }
-    }, 120);
-  }
+    location.href = 'no_coges_cigarro.html';
+  };
 </script>
 
 </body>
