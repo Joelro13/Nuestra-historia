@@ -1,52 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Museo de los Recuerdos</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Museo de los recuerdos</title>
 
 <style>
-  /* Reset y estilos básicos */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Configuración general */
   body {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    height: 100vh;
-    background: #111;
-    color: white;
+    background: #fdf6f0;
+    overflow-x: hidden;
   }
 
   h1 {
-    width: 100%;
     text-align: center;
-    font-size: 2rem;
-    padding: 20px 0;
-    background: #222;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    margin: 20px 0;
+    font-size: 2.2rem;
+    color: #333;
   }
 
-  .museo {
+  /* Contenedor horizontal */
+  .museo-container {
     display: flex;
-    flex-direction: row; /* horizontal */
-    align-items: center;
-    height: calc(100vh - 60px);
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100vw;
+    height: 90vh;
     padding: 20px;
+    gap: 30px;
   }
 
+  /* Cada item (foto/video + texto) */
   .item {
-    position: relative;
     flex: 0 0 auto;
-    margin-right: 40px;
-    width: 80vw;
-    max-width: 600px;
-    height: 80vh;
-    overflow: hidden;
-    border-radius: 20px;
-    background: #222;
+    width: 300px;
+    position: relative;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 1s ease, transform 1s ease;
@@ -57,71 +49,72 @@
     transform: translateY(0);
   }
 
-  .item img, .item video {
+  img, video {
     width: 100%;
-    height: 100%;
+    border-radius: 15px;
+    display: block;
+  }
+
+  video {
     object-fit: cover;
-    border-radius: 20px;
   }
 
   .texto {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
     background: rgba(0,0,0,0.5);
-    padding: 10px;
-    border-radius: 12px;
-    font-size: 1.1rem;
+    color: #fff;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 0.9rem;
   }
 
-  /* Scroll suave y experiencia tablet/móvil */
-  .museo::-webkit-scrollbar { height: 10px; }
-  .museo::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
-  .museo::-webkit-scrollbar-track { background: #222; }
+  /* Scroll para tablet */
+  .museo-container::-webkit-scrollbar {
+    height: 10px;
+  }
+  .museo-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+  .museo-container::-webkit-scrollbar-track {
+    background: #eee;
+  }
+
+  @media (max-width: 768px) {
+    .item {
+      width: 250px;
+    }
+  }
 </style>
 </head>
 
 <body>
 
-<h1>Museo de los Recuerdos</h1>
+<h1>Museo de los recuerdos</h1>
 
-<div class="museo">
-  <!-- Ejemplo imagen -->
-  <div class="item">
-    <img src="foto1.jpg" alt="Recuerdo 1">
-    <div class="texto">Este fue nuestro primer viaje juntos</div>
-  </div>
-
-  <!-- Ejemplo video -->
-  <div class="item">
-    <video src="video1.mp4" autoplay muted loop playsinline></video>
-    <div class="texto">Un momento divertido que nunca olvidaremos</div>
-  </div>
-
-  <!-- Más items aquí -->
-  <div class="item">
-    <img src="foto2.jpg" alt="Recuerdo 2">
-    <div class="texto">Aquí estábamos celebrando tu cumpleaños</div>
-  </div>
+<div class="museo-container">
+  <div class="item"><img src="imagenes/1.jpeg" alt="Recuerdo 1"><div class="texto">La primera vez que fuimos el hotel (me da buenísimos recuerdos, quiero volver jajajaj)</div></div>
+  <div class="item"><img src="imagenes/2.jpeg" alt="Recuerdo 2"><div class="texto">Una de nuestras primeras fotos juntos!</div></div>
+  <div class="item"><img src="imagenes/3.jpeg" alt="Recuerdo 3"><div class="texto">Primera vez que vamos juntos al cine (la verdad que uno de mis mejores días, me gustaría repetir el plan así de mono)</div></div>
+  <div class="item"><img src="imagenes/4.jpeg" alt="Recuerdo 4"><div class="texto">La primera vez que te vi en un torneo amor!</div></div>
+  <div class="item"><img src="imagenes/5.jpeg" alt="Recuerdo 5"><div class="texto">Nuestros pollitos jajajaj histórico</div></div>
+  <div class="item"><img src="imagenes/6.jpeg" alt="Recuerdo 6"><div class="texto">San Isidro! (Inolvidable, no salgo de fiesta casi nunca pero contigo me dan ganas, lo pasé genial contigo)</div></div>
+  <div class="item"><img src="imagenes/0.jpeg" alt="Recuerdo extra"><div class="texto">Foto extraa jajajajaj (me encanta como sales aquí, tienes unos ojos preciosos)</div></div>
 </div>
 
 <script>
-  // Animación aparición cuando entra en pantalla
+  // Animación: las imágenes aparecen poco a poco al cargar
   const items = document.querySelectorAll('.item');
-
-  function checkVisible() {
-    items.forEach(item => {
-      const rect = item.getBoundingClientRect();
-      if(rect.left < window.innerWidth && rect.right > 0) {
-        item.classList.add('visible');
-      }
-    });
-  }
-
-  document.querySelector('.museo').addEventListener('scroll', checkVisible);
-  window.addEventListener('load', checkVisible);
-  window.addEventListener('resize', checkVisible);
+  let delay = 0;
+  items.forEach(item => {
+    setTimeout(() => {
+      item.classList.add('visible');
+    }, delay);
+    delay += 400; // cada item aparece 0.4s después del anterior
+  });
 </script>
 
 </body>
