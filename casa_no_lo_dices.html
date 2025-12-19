@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elegiste no decirlo</title>
-
 <style>
   body {
     background: #f0b7d4;
@@ -17,9 +16,16 @@
     overflow-x: hidden;
   }
 
-  h1 { margin-top: 100px; font-size: 2rem; }
+  h1 {
+    margin-top: 100px;
+    font-size: 2rem;
+  }
 
-  #texto { font-size: 1.2rem; margin: 30px auto; max-width: 700px; }
+  #texto {
+    font-size: 1.2rem;
+    margin: 30px auto;
+    max-width: 700px;
+  }
 
   .option-button {
     background: #f0b7d4;
@@ -31,42 +37,82 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    position: relative;
+    z-index: 10;
   }
 
-  .option-button:hover { background-color: #d89cbc; }
+  .option-button:hover {
+    background-color: #d89cbc;
+  }
 
   .options-box {
     display: inline-block;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     padding: 20px;
-    margin: 30px auto;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 30px auto 10px auto;
+    width: fit-content;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+  }
+
+  /* 🔹 BOTÓN "TE HAS PERDIDO?" */
+  #btn-perdido {
+    display: none;
+    margin: 20px auto 0 auto;
+    background: #84b7f0;
+    color: white;
+    font-size: 0.95rem;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  #btn-perdido:hover {
+    transform: scale(1.05);
+    background-color: #6fa8e8;
   }
 
   .spam-button {
-    position: absolute;
+    position: fixed;
     background: #d89cbc;
     color: #fff;
     border-radius: 5px;
     padding: 10px 20px;
+    font-size: 1rem;
     border: none;
     cursor: pointer;
+    user-select: none;
     opacity: 0.85;
+    z-index: 5;
     transition: transform 0.3s ease;
   }
 
-  .spam-button:hover { transform: scale(1.2); }
+  .spam-button:hover {
+    transform: scale(1.2);
+  }
 
   #loading-container {
     display: none;
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
+    margin: 40px auto;
     width: 70%;
     max-width: 400px;
-    margin: 100px auto;
-    text-align: center;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    position: relative;
+    z-index: 20;
+  }
+
+  #loading-text {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
 
   #progress-bar {
@@ -81,49 +127,44 @@
     height: 100%;
     width: 0%;
     background: #d89cbc;
+    border-radius: 10px 0 0 10px;
     transition: width 0.1s linear;
   }
 
   #mensaje-azul {
-    display: none;
     background-color: #84b7f0;
     color: white;
     border-radius: 10px;
-    padding: 15px;
+    padding: 15px 20px;
     margin-top: 20px;
+    font-size: 1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 
   #btn-volver {
-    display: none;
-    margin-top: 30px;
     background: #e8f0ff;
+    color: #000;
+    font-size: 1rem;
     padding: 10px 20px;
+    margin: 30px auto 10px auto;
+    border: none;
     border-radius: 12px;
-    border: none;
     cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 10;
+    display: none;
+    max-width: 200px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
-  /* BOTÓN PERDIDO */
-  #btn-perdido {
-    display: block;
-    margin: 40px auto 0 auto;
-    background: #4a90e2;
-    color: white;
-    padding: 12px 28px;
-    border-radius: 30px;
-    border: none;
-    cursor: not-allowed;
-    opacity: 0.6;
-    transition: background 0.3s, opacity 0.3s;
-  }
-
-  #btn-perdido.desbloqueado {
-    cursor: pointer;
-    opacity: 1;
-  }
-
-  #btn-perdido.desbloqueado:hover {
-    background-color: #357ab8;
+  #btn-volver:hover {
+    background-color: #d7e3ff;
   }
 </style>
 </head>
@@ -138,99 +179,108 @@
 
 <div class="options-box">
   <button id="btn-lo-coges" class="option-button">Lo coges</button>
-  <button id="btn-no-coges" class="option-button">No lo coges</button>
+  <button class="option-button" onclick="irNoLoCoges()">No lo coges</button>
 </div>
 
+<!-- 🔹 BOTÓN NUEVO -->
+<button id="btn-perdido" onclick="location.href='te_has_perdido.html'">
+  ¿Te has perdido?
+</button>
+
 <div id="loading-container">
-  <div id="progress-bar">
-    <div id="progress-bar-inner"></div>
-  </div>
-  <div id="mensaje-azul">
+  <div id="loading-text">anticipando ruptura 0%</div>
+  <div id="progress-bar"><div id="progress-bar-inner"></div></div>
+  <div id="mensaje-azul" style="display:none;">
     En verdad estoy muy orgulloso de como llevas el tema por mi, te quiero y gracias por hacer cosas como estas que hacen que la relación vaya mejor y me raye menos por el tema
   </div>
 </div>
 
-<button id="btn-volver" onclick="location.href='casa_no_lo_dices.html'">Volver atrás</button>
-
-<button id="btn-perdido" class="bloqueado">¿Te has perdido?</button>
+<button id="btn-volver" onclick="location.href='https://joelro13.github.io/Nuestra-historia/casa_no_lo_dices.html'">
+  Volver atrás
+</button>
 
 <script>
-  const btnLo = document.getElementById('btn-lo-coges');
-  const btnNo = document.getElementById('btn-no-coges');
+  const btnLoCoges = document.getElementById('btn-lo-coges');
+  const texto = document.getElementById('texto');
+  const optionsBox = document.querySelector('.options-box');
+  const loadingContainer = document.getElementById('loading-container');
+  const loadingText = document.getElementById('loading-text');
+  const progressBarInner = document.getElementById('progress-bar-inner');
+  const mensajeAzul = document.getElementById('mensaje-azul');
+  const btnVolver = document.getElementById('btn-volver');
   const btnPerdido = document.getElementById('btn-perdido');
 
   let spamCount = 0;
 
-  function actualizarPerdido() {
-    const lo = sessionStorage.getItem('visitLoCoges') === 'true';
-    const no = sessionStorage.getItem('visitNoCoges') === 'true';
-
-    // Mostrar siempre el botón perdido desde que se pulsa una opción
-    if (lo || no) btnPerdido.style.display = 'block';
-
-    // Desbloquear solo cuando se hayan pulsado ambas opciones
-    if (lo && no) btnPerdido.classList.add('desbloqueado');
+  // 🔹 Mostrar botón si vuelve desde otra opción
+  if (sessionStorage.getItem('vuelveDeOpcion') === 'true') {
+    btnPerdido.style.display = 'block';
   }
 
-  actualizarPerdido();
-
-  btnPerdido.onclick = () => {
-    if (btnPerdido.classList.contains('desbloqueado')) {
-      location.href = 'te_has_perdido.html';
-    }
-  };
-
-  btnLo.onclick = () => {
-    sessionStorage.setItem('visitLoCoges', 'true');
+  btnLoCoges.addEventListener('click', () => {
+    btnLoCoges.style.display = 'none';
+    crearSpamBoton();
     spamCount++;
-    actualizarPerdido();
-    crearSpam();
-  };
+  });
 
-  btnNo.onclick = () => {
-    sessionStorage.setItem('visitNoCoges', 'true');
-    actualizarPerdido();
-    setTimeout(() => location.href = 'no_lo_coges_carga.html', 300);
-  };
+  function irNoLoCoges() {
+    sessionStorage.setItem('vuelveDeOpcion', 'true');
+    location.href = 'no_lo_coges_carga.html';
+  }
 
-  function crearSpam() {
-    if (spamCount >= 5) {
+  function crearSpamBoton() {
+    if(spamCount >= 5){
       iniciarCarga();
       return;
     }
 
-    const b = document.createElement('button');
-    b.textContent = 'Lo coges';
-    b.className = 'spam-button';
-    b.style.left = Math.random() * (window.innerWidth - 120) + 'px';
-    b.style.top = Math.random() * (window.innerHeight - 40) + 'px';
-    document.body.appendChild(b);
+    const spamBtn = document.createElement('button');
+    spamBtn.textContent = 'Lo coges';
+    spamBtn.className = 'spam-button';
 
-    b.onclick = () => {
-      b.remove();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    spamBtn.style.left = Math.random() * (vw - 120) + 'px';
+    spamBtn.style.top = Math.random() * (vh - 40) + 'px';
+
+    document.body.appendChild(spamBtn);
+
+    spamBtn.addEventListener('click', () => {
+      spamBtn.remove();
       spamCount++;
-      crearSpam();
-    };
+      if(spamCount < 5){
+        crearSpamBoton();
+      } else {
+        iniciarCarga();
+      }
+    });
   }
 
   function iniciarCarga() {
-    document.getElementById('texto').style.display = 'none';
-    document.querySelector('.options-box').style.display = 'none';
-    btnPerdido.style.display = 'none';
+    document.querySelector('h1').style.display = 'none';
+    texto.style.display = 'none';
+    optionsBox.style.display = 'none';
 
-    document.getElementById('loading-container').style.display = 'block';
-    document.getElementById('mensaje-azul').style.display = 'block';
-    document.getElementById('btn-volver').style.display = 'inline-block';
+    loadingContainer.style.display = 'block';
+    mensajeAzul.style.display = 'block';
+    btnVolver.style.display = 'inline-block';
 
     let progress = 0;
-    const interval = setInterval(() => {
-      progress++;
-      document.getElementById('progress-bar-inner').style.width = progress + '%';
-      if (progress >= 100) {
-        clearInterval(interval);
+
+    function avanzarBarra() {
+      if(progress < 100){
+        progress++;
+        loadingText.textContent = `anticipando ruptura ${progress}%`;
+        progressBarInner.style.width = progress + '%';
+        setTimeout(avanzarBarra, 120);
+      } else {
+        sessionStorage.setItem('vuelveDeOpcion', 'true');
         location.href = 'coges_cigarro.html';
       }
-    }, 120);
+    }
+
+    avanzarBarra();
   }
 </script>
 
