@@ -266,12 +266,15 @@ if (visitLoCoges && visitNoCoges) {
     spamCount++;
   });
 
-  btnNoCoges.addEventListener('click', () => {
-    btnPerdido.style.display = 'block';
-    sessionStorage.setItem('visitNoCoges', 'true');
-    desbloquearSiAmbasVisitadas();
+ btnNoCoges.addEventListener('click', () => {
+  btnPerdido.style.display = 'block';
+  sessionStorage.setItem('visitNoCoges', 'true');
+  desbloquearSiAmbasVisitadas();
+
+  setTimeout(() => {
     window.location.href = 'no_lo_coges_carga.html';
-  });
+  }, 300);
+});
 
   function crearSpamBoton() {
     if (spamCount >= 5) {
