@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
@@ -143,7 +143,6 @@
     background-color: #d7e3ff;
   }
 
-  /* 🔥 NUEVO BOTÓN */
   #btn-perdido {
     display: none;
     margin: 40px auto 0 auto;
@@ -166,18 +165,9 @@
   }
 
   @keyframes pulseGlow {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
-    50% {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(255,255,255,0.6);
-    }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+    50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255,255,255,0.6); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
   }
 </style>
 </head>
@@ -229,19 +219,20 @@
   let visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
   let visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
 
-  // Mostrar botón si ya ha visitado al menos una opción
-if (visitLoCoges || visitNoCoges) {
-  btnPerdido.style.display = 'block';
-}
-
-// Desbloquear si ha visitado ambas
-if (visitLoCoges && visitNoCoges) {
-  btnPerdido.classList.remove('bloqueado');
-}
-
-  if (visitLoCoges && visitNoCoges) {
-    btnPerdido.classList.remove('bloqueado');
+  function actualizarBtnPerdido() {
+    if (visitLoCoges || visitNoCoges) {
+      btnPerdido.style.display = 'block';
+      if (visitLoCoges && visitNoCoges) {
+        btnPerdido.classList.remove('bloqueado');
+      } else {
+        btnPerdido.classList.add('bloqueado');
+      }
+    } else {
+      btnPerdido.style.display = 'none';
+    }
   }
+
+  actualizarBtnPerdido();
 
   function irPerdido() {
     if (!btnPerdido.classList.contains('bloqueado')) {
@@ -252,13 +243,11 @@ if (visitLoCoges && visitNoCoges) {
   function desbloquearSiAmbasVisitadas() {
     visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
     visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
-    if (visitLoCoges && visitNoCoges) {
-      btnPerdido.classList.remove('bloqueado');
-    }
+    actualizarBtnPerdido();
   }
 
   btnLoCoges.addEventListener('click', () => {
-    btnPerdido.style.display = 'block';
+    btnPerdido.style.display = 'none'; // ocultar durante carga
     btnLoCoges.style.display = 'none';
     sessionStorage.setItem('visitLoCoges', 'true');
     desbloquearSiAmbasVisitadas();
@@ -266,15 +255,12 @@ if (visitLoCoges && visitNoCoges) {
     spamCount++;
   });
 
- btnNoCoges.addEventListener('click', () => {
-  btnPerdido.style.display = 'block';
-  sessionStorage.setItem('visitNoCoges', 'true');
-  desbloquearSiAmbasVisitadas();
-
-  setTimeout(() => {
-    window.location.href = 'no_lo_coges_carga.html';
-  }, 300);
-});
+  btnNoCoges.addEventListener('click', () => {
+    btnPerdido.style.display = 'block';
+    sessionStorage.setItem('visitNoCoges', 'true');
+    desbloquearSiAmbasVisitadas();
+    setTimeout(() => { window.location.href = 'no_lo_coges_carga.html'; }, 300);
+  });
 
   function crearSpamBoton() {
     if (spamCount >= 5) {
@@ -302,7 +288,7 @@ if (visitLoCoges && visitNoCoges) {
     document.querySelector('h1').style.display = 'none';
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
-
+    btnPerdido.style.display = 'none'; // ocultar mientras carga
     loadingContainer.style.display = 'block';
     mensajeAzul.style.display = 'block';
     btnVolver.style.display = 'inline-block';
