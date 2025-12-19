@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
@@ -38,8 +38,6 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    position: relative;
-    z-index: 10;
   }
 
   .option-button:hover {
@@ -52,10 +50,7 @@
     border-radius: 10px;
     padding: 20px;
     margin: 30px auto;
-    width: fit-content;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
 
   .spam-button {
@@ -64,12 +59,9 @@
     color: #fff;
     border-radius: 5px;
     padding: 10px 20px;
-    font-size: 1rem;
     border: none;
     cursor: pointer;
-    user-select: none;
     opacity: 0.85;
-    z-index: 5;
     transition: transform 0.3s ease;
   }
 
@@ -84,16 +76,7 @@
     max-width: 400px;
     background: white;
     border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
     padding: 20px;
-    position: relative;
-    z-index: 20;
-  }
-
-  #loading-text {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
   }
 
   #progress-bar {
@@ -108,66 +91,52 @@
     height: 100%;
     width: 0%;
     background: #d89cbc;
-    border-radius: 10px 0 0 10px;
     transition: width 0.1s linear;
   }
 
   #mensaje-azul {
+    display: none;
     background-color: #84b7f0;
     color: white;
     border-radius: 10px;
-    padding: 15px 20px;
+    padding: 15px;
     margin-top: 20px;
-    font-size: 1rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 
   #btn-volver {
-    background: #e8f0ff;
-    color: #000;
-    font-size: 1rem;
-    padding: 10px 20px;
-    margin: 30px auto 10px auto;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s;
     display: none;
-    font-weight: bold;
+    margin-top: 30px;
+    background: #e8f0ff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
   }
 
-  #btn-volver:hover {
-    background-color: #d7e3ff;
-  }
-
+  /* BOTÓN PERDIDO */
   #btn-perdido {
+    display: none;                 /* 👈 CLAVE */
     margin: 40px auto 0 auto;
     background: #6d98d4;
     color: white;
-    font-size: 1rem;
     padding: 12px 28px;
-    border: none;
     border-radius: 30px;
+    border: none;
     cursor: pointer;
     animation: pulseGlow 2s infinite;
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
   }
 
   #btn-perdido.bloqueado {
     background: gray;
     color: #aaa;
     cursor: not-allowed;
-    box-shadow: none;
     animation: none;
   }
 
   @keyframes pulseGlow {
-    0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-    50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255,255,255,0.6); }
-    100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
   }
 </style>
 </head>
@@ -186,11 +155,10 @@
 </div>
 
 <div id="loading-container">
-  <div id="loading-text">anticipando ruptura 0%</div>
   <div id="progress-bar">
     <div id="progress-bar-inner"></div>
   </div>
-  <div id="mensaje-azul" style="display:none;">
+  <div id="mensaje-azul">
     En verdad estoy muy orgulloso de como llevas el tema por mi, te quiero y gracias por hacer cosas como estas que hacen que la relación vaya mejor y me raye menos por el tema
   </div>
 </div>
@@ -200,97 +168,55 @@
 <button id="btn-perdido" class="bloqueado">¿Te has perdido?</button>
 
 <script>
-  const btnLoCoges = document.getElementById('btn-lo-coges');
-  const btnNoCoges = document.getElementById('btn-no-coges');
+  const btnLo = document.getElementById('btn-lo-coges');
+  const btnNo = document.getElementById('btn-no-coges');
   const btnPerdido = document.getElementById('btn-perdido');
-  const texto = document.getElementById('texto');
-  const optionsBox = document.querySelector('.options-box');
-  const loadingContainer = document.getElementById('loading-container');
-  const loadingText = document.getElementById('loading-text');
-  const progressBarInner = document.getElementById('progress-bar-inner');
-  const mensajeAzul = document.getElementById('mensaje-azul');
-  const btnVolver = document.getElementById('btn-volver');
 
-  let spamCount = 0;
-
-  function actualizarEstadoPerdido() {
+  function actualizarPerdido() {
     const lo = sessionStorage.getItem('visitLoCoges') === 'true';
     const no = sessionStorage.getItem('visitNoCoges') === 'true';
 
-    if (lo && no) {
-      btnPerdido.classList.remove('bloqueado');
-    } else {
-      btnPerdido.classList.add('bloqueado');
-    }
+    if (lo || no) btnPerdido.style.display = 'block';
+    if (lo && no) btnPerdido.classList.remove('bloqueado');
   }
 
-  actualizarEstadoPerdido();
+  actualizarPerdido();
 
   btnPerdido.onclick = () => {
     if (!btnPerdido.classList.contains('bloqueado')) {
-      window.location.href = 'te_has_perdido.html';
+      location.href = 'te_has_perdido.html';
     }
   };
 
-  btnLoCoges.addEventListener('click', () => {
+  btnLo.onclick = () => {
     sessionStorage.setItem('visitLoCoges', 'true');
-    btnPerdido.style.display = 'none';
-    btnLoCoges.style.display = 'none';
-    crearSpamBoton();
-    spamCount++;
-  });
+    actualizarPerdido();
+    crearSpam();
+  };
 
-  btnNoCoges.addEventListener('click', () => {
+  btnNo.onclick = () => {
     sessionStorage.setItem('visitNoCoges', 'true');
-    actualizarEstadoPerdido();
-    setTimeout(() => {
-      window.location.href = 'no_lo_coges_carga.html';
-    }, 300);
-  });
+    actualizarPerdido();
+    setTimeout(() => location.href = 'no_lo_coges_carga.html', 300);
+  };
 
-  function crearSpamBoton() {
-    if (spamCount >= 5) {
-      iniciarCarga();
-      return;
+  let spam = 0;
+  function crearSpam() {
+    if (spam >= 5) iniciarCarga();
+    else {
+      const b = document.createElement('button');
+      b.textContent = 'Lo coges';
+      b.className = 'spam-button';
+      b.style.left = Math.random()*80+'%';
+      b.style.top = Math.random()*80+'%';
+      document.body.appendChild(b);
+      b.onclick = () => { b.remove(); spam++; crearSpam(); };
     }
-
-    const spamBtn = document.createElement('button');
-    spamBtn.textContent = 'Lo coges';
-    spamBtn.className = 'spam-button';
-
-    spamBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
-    spamBtn.style.top = Math.random() * (window.innerHeight - 40) + 'px';
-
-    document.body.appendChild(spamBtn);
-
-    spamBtn.onclick = () => {
-      spamBtn.remove();
-      spamCount++;
-      spamCount < 5 ? crearSpamBoton() : iniciarCarga();
-    };
   }
 
   function iniciarCarga() {
-    document.querySelector('h1').style.display = 'none';
-    texto.style.display = 'none';
-    optionsBox.style.display = 'none';
     btnPerdido.style.display = 'none';
-
-    loadingContainer.style.display = 'block';
-    mensajeAzul.style.display = 'block';
-    btnVolver.style.display = 'inline-block';
-
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress++;
-      loadingText.textContent = `anticipando ruptura ${progress}%`;
-      progressBarInner.style.width = progress + '%';
-
-      if (progress >= 100) {
-        clearInterval(interval);
-        window.location.href = 'coges_cigarro.html';
-      }
-    }, 120);
+    document.getElementById('loading-container').style.display = 'block';
   }
 </script>
 
