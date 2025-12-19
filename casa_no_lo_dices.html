@@ -19,11 +19,7 @@
 
   h1 { margin-top: 100px; font-size: 2rem; }
 
-  #texto {
-    font-size: 1.2rem;
-    margin: 30px auto;
-    max-width: 700px;
-  }
+  #texto { font-size: 1.2rem; margin: 30px auto; max-width: 700px; }
 
   .option-button {
     background: #f0b7d4;
@@ -131,7 +127,7 @@
   #btn-volver:hover { background-color: #d7e3ff; }
 
   #btn-perdido {
-    display: none;
+    display: block;
     margin: 40px auto 0 auto;
     background: #6d98d4;
     color: white;
@@ -202,28 +198,12 @@
 
   let spamCount = 0;
 
+  // Inicializar botones visitados según sesión
   let visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
   let visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
 
-  function actualizarBtnPerdido() {
-    const enCarga = loadingContainer.style.display === 'block';
-    if (enCarga) {
-      btnPerdido.style.display = 'none';
-      return;
-    }
-    if (visitLoCoges || visitNoCoges) {
-      btnPerdido.style.display = 'block';
-      if (visitLoCoges && visitNoCoges) {
-        btnPerdido.classList.remove('bloqueado');
-      } else {
-        btnPerdido.classList.add('bloqueado');
-      }
-    } else {
-      btnPerdido.style.display = 'none';
-    }
-  }
-
-  actualizarBtnPerdido();
+  // Botón bloqueado al entrar
+  btnPerdido.classList.add('bloqueado');
 
   function irPerdido() {
     if (!btnPerdido.classList.contains('bloqueado')) {
@@ -231,17 +211,19 @@
     }
   }
 
-  function desbloquearSiAmbasVisitadas() {
+  function actualizarBotonPerdido() {
     visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
     visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
-    actualizarBtnPerdido();
+    if (visitLoCoges && visitNoCoges) {
+      btnPerdido.classList.remove('bloqueado');
+    }
   }
 
   btnLoCoges.addEventListener('click', () => {
-    btnPerdido.style.display = 'none';
+    btnPerdido.style.display = 'none'; // ocultar mientras spam
     btnLoCoges.style.display = 'none';
     sessionStorage.setItem('visitLoCoges', 'true');
-    desbloquearSiAmbasVisitadas();
+    actualizarBotonPerdido();
     crearSpamBoton();
     spamCount++;
   });
@@ -249,7 +231,7 @@
   btnNoCoges.addEventListener('click', () => {
     btnPerdido.style.display = 'block';
     sessionStorage.setItem('visitNoCoges', 'true');
-    desbloquearSiAmbasVisitadas();
+    actualizarBotonPerdido();
     setTimeout(() => { window.location.href = 'no_lo_coges_carga.html'; }, 300);
   });
 
@@ -258,12 +240,16 @@
       iniciarCarga();
       return;
     }
+
     const spamBtn = document.createElement('button');
     spamBtn.textContent = 'Lo coges';
     spamBtn.className = 'spam-button';
+
     spamBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
     spamBtn.style.top = Math.random() * (window.innerHeight - 40) + 'px';
+
     document.body.appendChild(spamBtn);
+
     spamBtn.onclick = () => {
       spamBtn.remove();
       spamCount++;
@@ -275,7 +261,7 @@
     document.querySelector('h1').style.display = 'none';
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
-    btnPerdido.style.display = 'none';
+    btnPerdido.style.display = 'none'; // ocultar mientras carga
     loadingContainer.style.display = 'block';
     mensajeAzul.style.display = 'block';
     btnVolver.style.display = 'inline-block';
