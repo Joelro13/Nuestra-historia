@@ -158,12 +158,11 @@
     box-shadow: 0 0 20px rgba(255,255,255,0.4);
   }
 
-  /* ESTILO BLOQUEADO */
   #btn-perdido.bloqueado {
     background: gray;
+    color: #aaa;
     cursor: not-allowed;
     box-shadow: none;
-    color: #aaa;
   }
 
   @keyframes pulseGlow {
@@ -193,7 +192,7 @@
 
 <div class="options-box">
   <button id="btn-lo-coges" class="option-button">Lo coges</button>
-  <button id="btn-no-coges" class="option-button" onclick="location.href='no_lo_coges_carga.html'">No lo coges</button>
+  <button id="btn-no-coges" class="option-button">No lo coges</button>
 </div>
 
 <div id="loading-container">
@@ -208,7 +207,6 @@
 
 <button id="btn-volver" onclick="location.href='casa_no_lo_dices.html'">Volver atrás</button>
 
-<!-- 🆕 BOTÓN NUEVO -->
 <button id="btn-perdido" class="bloqueado" onclick="irPerdido()">
   ¿Te has perdido?
 </button>
@@ -227,10 +225,11 @@
 
   let spamCount = 0;
 
-  // Inicializar estado del botón perdido
-  if (!sessionStorage.getItem('perdidoDesbloqueado')) {
-    btnPerdido.classList.add('bloqueado');
-  } else {
+  // Inicializar botones visitados según sesión
+  let visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
+  let visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
+
+  if (visitLoCoges && visitNoCoges) {
     btnPerdido.classList.remove('bloqueado');
   }
 
@@ -240,22 +239,25 @@
     }
   }
 
-  function desbloquearPerdido() {
-    btnPerdido.classList.remove('bloqueado');
-    sessionStorage.setItem('perdidoDesbloqueado', 'true');
+  function desbloquearSiAmbasVisitadas() {
+    visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
+    visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
+    if (visitLoCoges && visitNoCoges) {
+      btnPerdido.classList.remove('bloqueado');
+    }
   }
 
-  // Mostrar spam "Lo coges"
   btnLoCoges.addEventListener('click', () => {
     btnLoCoges.style.display = 'none';
+    sessionStorage.setItem('visitLoCoges', 'true');
+    desbloquearSiAmbasVisitadas();
     crearSpamBoton();
     spamCount++;
-    desbloquearPerdido();
   });
 
-  // Si pulsas directamente la otra opción
   btnNoCoges.addEventListener('click', () => {
-    desbloquearPerdido();
+    sessionStorage.setItem('visitNoCoges', 'true');
+    desbloquearSiAmbasVisitadas();
   });
 
   function crearSpamBoton() {
@@ -302,7 +304,6 @@
       }
     }, 120);
   }
-
 </script>
 
 </body>
