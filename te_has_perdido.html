@@ -4,162 +4,124 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Museo de los Recuerdos</title>
+
 <style>
+  /* Reset y estilos básicos */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    overflow-x: hidden;
-    background: #000;
-    color: #fff;
-  }
-
-  /* Contenedor que sube al cielo */
-  #cielo {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(#87ceeb, #fff);
-    transform: translateY(100vh);
-    animation: subirCielo 2s forwards;
-  }
-
-  @keyframes subirCielo {
-    0% { transform: translateY(100vh); }
-    100% { transform: translateY(0); }
-  }
-
-  /* Persiana de circo */
-  .persiana {
-    position: fixed;
-    width: 100%;
-    height: 50%;
-    background: #c00;
-    z-index: 100;
-    top: 0;
-    transform: translateY(-100%);
-    animation: persianaCerrar 1s forwards;
-  }
-  .persiana.bottom {
-    top: auto;
-    bottom: 0;
-    transform: translateY(100%);
-  }
-
-  @keyframes persianaCerrar {
-    0% { transform: translateY(-100%); }
-    50% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
-  }
-  .persiana.bottom {
-    animation-name: persianaCerrarBottom;
-  }
-  @keyframes persianaCerrarBottom {
-    0% { transform: translateY(100%); }
-    50% { transform: translateY(0); }
-    100% { transform: translateY(100%); }
-  }
-
-  /* Título Museo */
-  #titulo {
-    position: absolute;
-    top: 20%;
-    width: 100%;
-    text-align: center;
-    font-size: 3rem;
-    opacity: 0;
-    animation: fadeTitulo 2s 2s forwards;
-  }
-
-  @keyframes fadeTitulo {
-    0% { opacity: 0; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  /* Contenedor línea temporal */
-  #timeline {
-    display: flex;
     overflow-x: auto;
-    padding: 40px;
-    scroll-snap-type: x mandatory;
-    gap: 40px;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 100vh;
+    background: #111;
+    color: white;
   }
 
-  .evento {
-    flex: 0 0 300px;
-    scroll-snap-align: start;
-    background: #222;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s ease;
-  }
-
-  .evento img {
+  h1 {
     width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    text-align: center;
+    font-size: 2rem;
+    padding: 20px 0;
+    background: #222;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
-  .evento.visible {
+  .museo {
+    display: flex;
+    flex-direction: row; /* horizontal */
+    align-items: center;
+    height: calc(100vh - 60px);
+    padding: 20px;
+  }
+
+  .item {
+    position: relative;
+    flex: 0 0 auto;
+    margin-right: 40px;
+    width: 80vw;
+    max-width: 600px;
+    height: 80vh;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #222;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .item.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* Scroll personalizado opcional */
-  #timeline::-webkit-scrollbar {
-    height: 8px;
+  .item img, .item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
   }
-  #timeline::-webkit-scrollbar-thumb {
-    background: #c00;
-    border-radius: 4px;
+
+  .texto {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 1.1rem;
   }
+
+  /* Scroll suave y experiencia tablet/móvil */
+  .museo::-webkit-scrollbar { height: 10px; }
+  .museo::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
+  .museo::-webkit-scrollbar-track { background: #222; }
 </style>
 </head>
+
 <body>
 
-<!-- Persiana de circo -->
-<div class="persiana top"></div>
-<div class="persiana bottom"></div>
+<h1>Museo de los Recuerdos</h1>
 
-<div id="cielo">
-  <div id="titulo">Museo de los Recuerdos</div>
-  
-  <div id="timeline">
-    <div class="evento">
-      <img src="images/foto1.jpg" alt="Foto 1">
-      <p>Primer encuentro con Mario y Joel.</p>
-    </div>
-    <div class="evento">
-      <img src="images/foto2.jpg" alt="Foto 2">
-      <p>Quedada en el parque, risas y recuerdos.</p>
-    </div>
-    <div class="evento">
-      <img src="images/foto3.jpg" alt="Foto 3">
-      <p>Primer viaje juntos, inolvidable.</p>
-    </div>
-    <!-- Añade más eventos aquí -->
+<div class="museo">
+  <!-- Ejemplo imagen -->
+  <div class="item">
+    <img src="foto1.jpg" alt="Recuerdo 1">
+    <div class="texto">Este fue nuestro primer viaje juntos</div>
+  </div>
+
+  <!-- Ejemplo video -->
+  <div class="item">
+    <video src="video1.mp4" autoplay muted loop playsinline></video>
+    <div class="texto">Un momento divertido que nunca olvidaremos</div>
+  </div>
+
+  <!-- Más items aquí -->
+  <div class="item">
+    <img src="foto2.jpg" alt="Recuerdo 2">
+    <div class="texto">Aquí estábamos celebrando tu cumpleaños</div>
   </div>
 </div>
 
 <script>
-  // Detectar cuando cada evento entra en pantalla
-  const eventos = document.querySelectorAll('.evento');
+  // Animación aparición cuando entra en pantalla
+  const items = document.querySelectorAll('.item');
 
   function checkVisible() {
-    const triggerBottom = window.innerWidth / 1.3;
-
-    eventos.forEach(evento => {
-      const rect = evento.getBoundingClientRect();
-      if(rect.left < window.innerWidth - 100){
-        evento.classList.add('visible');
+    items.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      if(rect.left < window.innerWidth && rect.right > 0) {
+        item.classList.add('visible');
       }
     });
   }
 
-  window.addEventListener('scroll', checkVisible);
+  document.querySelector('.museo').addEventListener('scroll', checkVisible);
   window.addEventListener('load', checkVisible);
+  window.addEventListener('resize', checkVisible);
 </script>
 
 </body>
