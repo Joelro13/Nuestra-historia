@@ -6,7 +6,6 @@
 <title>Museo de los recuerdos</title>
 
 <style>
-  /* Fondo cielo con nubes suaves animadas */
   body {
     margin: 0;
     padding: 0;
@@ -23,9 +22,25 @@
     font-size: 2.8rem;
     color: #ffffff;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 10;
   }
 
-  /* Contenedor horizontal */
+  /* Columnas romanas decorativas */
+  .columna {
+    position: fixed;
+    top: 50px;
+    width: 60px;
+    height: 80%;
+    background: rgba(255,255,255,0.2);
+    border-left: 5px solid #fff;
+    border-right: 5px solid #fff;
+    border-radius: 20px;
+    z-index: 1;
+  }
+  .columna.left { left: 20px; }
+  .columna.right { right: 20px; }
+
   .museo-container {
     display: flex;
     flex-direction: row;
@@ -36,9 +51,10 @@
     height: 80vh;
     padding: 20px;
     gap: 40px;
+    position: relative;
+    z-index: 5;
   }
 
-  /* Cada recuerdo */
   .item {
     flex: 0 0 auto;
     width: 320px;
@@ -66,10 +82,6 @@
     border-radius: 25px;
   }
 
-  .item video {
-    border-radius: 25px;
-  }
-
   .texto {
     position: absolute;
     bottom: 0;
@@ -84,7 +96,6 @@
     border-top-right-radius: 25px;
   }
 
-  /* Scroll bonito */
   .museo-container::-webkit-scrollbar {
     height: 14px;
   }
@@ -97,7 +108,7 @@
     border-radius: 7px;
   }
 
-  /* Animación de nubes flotando */
+  /* Nubes flotantes */
   .nube {
     position: absolute;
     width: 200px;
@@ -122,36 +133,38 @@
   @media (max-width: 768px) {
     .item { width: 250px; height: 380px; }
   }
-
 </style>
 </head>
 
 <body>
 
-<!-- Nubes decorativas -->
 <div class="nube"></div>
 <div class="nube"></div>
 <div class="nube"></div>
+
+<!-- Columnas romanas -->
+<div class="columna left"></div>
+<div class="columna right"></div>
 
 <h1>Museo de los recuerdos</h1>
 
 <div class="museo-container">
-  <div class="item"><img src="imagenes/1.jpeg" alt="Primera vez en el hotel!"><div class="texto">Me da buenísimos recuerdos, quiero volver jajajaj</div></div>
-  <div class="item"><img src="imagenes/2.jpeg" alt="Una de las primeras fotos juntos!"><div class="texto">Me gudtó mucho aunque a ti creo que no tanto eee</div></div>
-  <div class="item"><img src="imagenes/3.jpeg" alt="Primera vez que fuimos al cine!"><div class="texto">La verdad que uno de los mejores días para mí, me gustaría repetir el plan así de mono</div></div>
-  <div class="item"><img src="imagenes/4.jpeg" alt="Primer torneo que te vi!"><div class="texto">Me encanta verte,peleas genial y aprendo mucho al verte y me intereso bastantee </div></div>
-  <div class="item"><img src="imagenes/5.jpeg" alt="Nuestros pollitos!"><div class="texto">Le alegramos el dia a mi hermano y para que mentir, a mi también ;)</div></div>
-  <div class="item"><img src="imagenes/6.jpeg" alt="San Isidro!"><div class="texto"> Inolvidable, no salgo de fiesta casi nunca pero contigo me dan ganas, lo pasé genial contigo, aunque a ti no te guste tanto conmigo jajajaj</div></div>
-  <div class="item"><img src="imagenes/0.jpeg" alt="Recuerdo extra"><div class="texto">Me encanta como sales aquí, literalmente tienes unos ojos preciosos</div></div>
+  <div class="item"><img src="imagenes/1.jpeg" alt="Recuerdo 1"><div class="texto">La primera vez que fuimos el hotel (me da buenísimos recuerdos, quiero volver jajajaj)</div></div>
+  <div class="item"><img src="imagenes/2.jpeg" alt="Recuerdo 2"><div class="texto">Una de nuestras primeras fotos juntos!</div></div>
+  <div class="item"><img src="imagenes/3.jpeg" alt="Recuerdo 3"><div class="texto">Primera vez que vamos juntos al cine (la verdad que uno de mis mejores días, me gustaría repetir el plan así de mono)</div></div>
+  <div class="item"><img src="imagenes/4.jpeg" alt="Recuerdo 4"><div class="texto">La primera vez que te vi en un torneo amor!</div></div>
+  <div class="item"><img src="imagenes/5.jpeg" alt="Recuerdo 5"><div class="texto">Nuestros pollitos jajajaj histórico</div></div>
+  <div class="item"><img src="imagenes/6.jpeg" alt="Recuerdo 6"><div class="texto">San Isidro! (Inolvidable, no salgo de fiesta casi nunca pero contigo me dan ganas, lo pasé genial contigo)</div></div>
+  <div class="item"><img src="imagenes/0.jpeg" alt="Recuerdo extra"><div class="texto">Foto extraa jajajajaj (me encanta como sales aquí, tienes unos ojos preciosos)</div></div>
 </div>
 
 <script>
-  // Animación aparición con fade-in y flotación
+  // Fade-in escalonado con más tiempo
   const items = document.querySelectorAll('.item');
   let delay = 0;
   items.forEach(item => {
     setTimeout(() => { item.classList.add('visible'); }, delay);
-    delay += 500;
+    delay += 2000; // 2 segundos entre cada aparición
   });
 </script>
 
