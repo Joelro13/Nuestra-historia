@@ -22,24 +22,24 @@
     font-size: 2.8rem;
     color: #ffffff;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 10;
   }
 
   /* Columnas romanas decorativas */
   .columna {
-    position: fixed;
-    top: 50px;
-    width: 60px;
-    height: 80%;
+    position: absolute;
+    width: 50px;
+    height: 80vh;
     background: rgba(255,255,255,0.2);
-    border-left: 5px solid #fff;
-    border-right: 5px solid #fff;
-    border-radius: 20px;
-    z-index: 1;
+    top: 10%;
+    border-radius: 25px;
+    left: 20px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    z-index: 0;
   }
-  .columna.left { left: 20px; }
-  .columna.right { right: 20px; }
+  .columna.right {
+    right: 20px;
+    left: auto;
+  }
 
   .museo-container {
     display: flex;
@@ -51,8 +51,8 @@
     height: 80vh;
     padding: 20px;
     gap: 40px;
+    z-index: 1;
     position: relative;
-    z-index: 5;
   }
 
   .item {
@@ -64,8 +64,8 @@
     overflow: hidden;
     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 1s ease, transform 1s ease;
+    transform: translateY(80px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
     background: #e0f7ff;
   }
 
@@ -108,7 +108,6 @@
     border-radius: 7px;
   }
 
-  /* Nubes flotantes */
   .nube {
     position: absolute;
     width: 200px;
@@ -119,7 +118,6 @@
     animation: float 30s linear infinite;
     z-index: 0;
   }
-
   .nube:nth-child(1) { top: 50px; left: -250px; animation-duration: 40s; }
   .nube:nth-child(2) { top: 150px; left: -300px; animation-duration: 50s; }
   .nube:nth-child(3) { top: 250px; left: -200px; animation-duration: 35s; }
@@ -138,33 +136,33 @@
 
 <body>
 
-<div class="nube"></div>
-<div class="nube"></div>
-<div class="nube"></div>
-
 <!-- Columnas romanas -->
-<div class="columna left"></div>
+<div class="columna"></div>
 <div class="columna right"></div>
+
+<!-- Nubes -->
+<div class="nube"></div>
+<div class="nube"></div>
+<div class="nube"></div>
 
 <h1>Museo de los recuerdos</h1>
 
 <div class="museo-container">
-  <div class="item"><img src="imagenes/1.jpeg" alt="Recuerdo 1"><div class="texto">La primera vez que fuimos el hotel (me da buenísimos recuerdos, quiero volver jajajaj)</div></div>
-  <div class="item"><img src="imagenes/2.jpeg" alt="Recuerdo 2"><div class="texto">Una de nuestras primeras fotos juntos!</div></div>
-  <div class="item"><img src="imagenes/3.jpeg" alt="Recuerdo 3"><div class="texto">Primera vez que vamos juntos al cine (la verdad que uno de mis mejores días, me gustaría repetir el plan así de mono)</div></div>
-  <div class="item"><img src="imagenes/4.jpeg" alt="Recuerdo 4"><div class="texto">La primera vez que te vi en un torneo amor!</div></div>
-  <div class="item"><img src="imagenes/5.jpeg" alt="Recuerdo 5"><div class="texto">Nuestros pollitos jajajaj histórico</div></div>
-  <div class="item"><img src="imagenes/6.jpeg" alt="Recuerdo 6"><div class="texto">San Isidro! (Inolvidable, no salgo de fiesta casi nunca pero contigo me dan ganas, lo pasé genial contigo)</div></div>
+  <div class="item"><img src="imagenes/1.jpeg" alt="Primera vez en el hotel"><div class="texto">La primera vez que fuimos al hotel (me da buenísimos recuerdos, quiero volver jajajaj)</div></div>
+  <div class="item"><img src="imagenes/2.jpeg" alt="Primeras fotos juntos"><div class="texto">Una de nuestras primeras fotos juntos!</div></div>
+  <div class="item"><img src="imagenes/3.jpeg" alt="Cine"><div class="texto">Primera vez que vamos juntos al cine (la verdad que uno de mis mejores días, me gustaría repetir el plan así de mono)</div></div>
+  <div class="item"><img src="imagenes/4.jpeg" alt="Primer torneo"><div class="texto">La primera vez que te vi en un torneo amor!</div></div>
+  <div class="item"><img src="imagenes/5.jpeg" alt="Nuestros pollitos"><div class="texto">Le alegramos el día a mi hermano y para que mentir, a mi también ;)</div></div>
+  <div class="item"><img src="imagenes/6.jpeg" alt="San Isidro"><div class="texto">San Isidro! (Inolvidable, no salgo de fiesta casi nunca pero contigo me dan ganas, lo pasé genial contigo)</div></div>
   <div class="item"><img src="imagenes/0.jpeg" alt="Recuerdo extra"><div class="texto">Foto extraa jajajajaj (me encanta como sales aquí, tienes unos ojos preciosos)</div></div>
 </div>
 
 <script>
-  // Fade-in escalonado con más tiempo
   const items = document.querySelectorAll('.item');
   let delay = 0;
   items.forEach(item => {
     setTimeout(() => { item.classList.add('visible'); }, delay);
-    delay += 2000; // 2 segundos entre cada aparición
+    delay += 2500; // 2.5 segundos entre cada aparición
   });
 </script>
 
