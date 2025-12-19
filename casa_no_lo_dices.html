@@ -17,9 +17,16 @@
     overflow-x: hidden;
   }
 
-  h1 { margin-top: 100px; font-size: 2rem; }
+  h1 {
+    margin-top: 100px;
+    font-size: 2rem;
+  }
 
-  #texto { font-size: 1.2rem; margin: 30px auto; max-width: 700px; }
+  #texto {
+    font-size: 1.2rem;
+    margin: 30px auto;
+    max-width: 700px;
+  }
 
   .option-button {
     background: #f0b7d4;
@@ -35,7 +42,9 @@
     z-index: 10;
   }
 
-  .option-button:hover { background-color: #d89cbc; }
+  .option-button:hover {
+    background-color: #d89cbc;
+  }
 
   .options-box {
     display: inline-block;
@@ -64,7 +73,9 @@
     transition: transform 0.3s ease;
   }
 
-  .spam-button:hover { transform: scale(1.2); }
+  .spam-button:hover {
+    transform: scale(1.2);
+  }
 
   #loading-container {
     display: none;
@@ -79,7 +90,11 @@
     z-index: 20;
   }
 
-  #loading-text { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
+  #loading-text {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
 
   #progress-bar {
     width: 100%;
@@ -124,10 +139,11 @@
     font-weight: bold;
   }
 
-  #btn-volver:hover { background-color: #d7e3ff; }
+  #btn-volver:hover {
+    background-color: #d7e3ff;
+  }
 
   #btn-perdido {
-    display: block;
     margin: 40px auto 0 auto;
     background: #6d98d4;
     color: white;
@@ -145,6 +161,7 @@
     color: #aaa;
     cursor: not-allowed;
     box-shadow: none;
+    animation: none;
   }
 
   @keyframes pulseGlow {
@@ -180,9 +197,7 @@
 
 <button id="btn-volver" onclick="location.href='casa_no_lo_dices.html'">Volver atrás</button>
 
-<button id="btn-perdido" class="bloqueado" onclick="irPerdido()">
-  ¿Te has perdido?
-</button>
+<button id="btn-perdido" class="bloqueado">¿Te has perdido?</button>
 
 <script>
   const btnLoCoges = document.getElementById('btn-lo-coges');
@@ -198,41 +213,39 @@
 
   let spamCount = 0;
 
-  // Inicializar botones visitados según sesión
-  let visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
-  let visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
+  function actualizarEstadoPerdido() {
+    const lo = sessionStorage.getItem('visitLoCoges') === 'true';
+    const no = sessionStorage.getItem('visitNoCoges') === 'true';
 
-  // Botón bloqueado al entrar
-  btnPerdido.classList.add('bloqueado');
+    if (lo && no) {
+      btnPerdido.classList.remove('bloqueado');
+    } else {
+      btnPerdido.classList.add('bloqueado');
+    }
+  }
 
-  function irPerdido() {
+  actualizarEstadoPerdido();
+
+  btnPerdido.onclick = () => {
     if (!btnPerdido.classList.contains('bloqueado')) {
       window.location.href = 'te_has_perdido.html';
     }
-  }
-
-  function actualizarBotonPerdido() {
-    visitLoCoges = sessionStorage.getItem('visitLoCoges') === 'true';
-    visitNoCoges = sessionStorage.getItem('visitNoCoges') === 'true';
-    if (visitLoCoges && visitNoCoges) {
-      btnPerdido.classList.remove('bloqueado');
-    }
-  }
+  };
 
   btnLoCoges.addEventListener('click', () => {
-    btnPerdido.style.display = 'none'; // ocultar mientras spam
-    btnLoCoges.style.display = 'none';
     sessionStorage.setItem('visitLoCoges', 'true');
-    actualizarBotonPerdido();
+    btnPerdido.style.display = 'none';
+    btnLoCoges.style.display = 'none';
     crearSpamBoton();
     spamCount++;
   });
 
   btnNoCoges.addEventListener('click', () => {
-    btnPerdido.style.display = 'block';
     sessionStorage.setItem('visitNoCoges', 'true');
-    actualizarBotonPerdido();
-    setTimeout(() => { window.location.href = 'no_lo_coges_carga.html'; }, 300);
+    actualizarEstadoPerdido();
+    setTimeout(() => {
+      window.location.href = 'no_lo_coges_carga.html';
+    }, 300);
   });
 
   function crearSpamBoton() {
@@ -261,7 +274,8 @@
     document.querySelector('h1').style.display = 'none';
     texto.style.display = 'none';
     optionsBox.style.display = 'none';
-    btnPerdido.style.display = 'none'; // ocultar mientras carga
+    btnPerdido.style.display = 'none';
+
     loadingContainer.style.display = 'block';
     mensajeAzul.style.display = 'block';
     btnVolver.style.display = 'inline-block';
@@ -271,6 +285,7 @@
       progress++;
       loadingText.textContent = `anticipando ruptura ${progress}%`;
       progressBarInner.style.width = progress + '%';
+
       if (progress >= 100) {
         clearInterval(interval);
         window.location.href = 'coges_cigarro.html';
