@@ -20,13 +20,13 @@ body {
 /* ===== H1 ===== */
 h1 {
   text-align: center;
-  margin: 120px 0 25px 0;
+  margin: 120px 0 25px 0; /* más abajo */
   font-size: 2.8rem;
   color: white;
   text-shadow: 0 4px 10px rgba(0,0,0,0.35);
   z-index: 5;
   position: relative;
-  opacity: 0;
+  opacity: 0; /* aparecerá después cortinas */
   transform: translateY(80px);
   transition: opacity 1.8s ease, transform 1.8s ease;
 }
@@ -89,7 +89,7 @@ h1 {
   justify-content: space-between;
   padding: 5px 0;
   opacity: 0.7;
-  filter: blur(1.5px);
+  filter: blur(1.5px); /* efecto de fondo */
 }
 .columna::before, .columna::after {
   content: "";
@@ -131,23 +131,31 @@ h1 {
 .item img, .item video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .texto { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.5); color: white; padding: 14px; font-size: 1rem; text-align: center; }
 
+/* ===== FINAL TEXTO + BOTON ===== */
 .final-texto {
-  flex: 0 0 400px;  /* ancho fijo, como un item */
-  font-size: 1.1rem;
+  flex: 0 0 280px; /* más pequeño */
+  font-size: 1rem;
   color: white;
   text-shadow: 0 2px 6px rgba(0,0,0,0.6);
-  background: rgba(0,0,0,0.4); /* semitransparente */
-  padding: 15px;
-  border-radius: 12px;
+  background: rgba(0,0,0,0.4);
+  padding: 12px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+.final-texto.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 .final-texto button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  margin-top: 12px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
   border: none;
   border-radius: 8px;
   background-color: #4a1f2f;
@@ -155,9 +163,7 @@ h1 {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-.final-texto button:hover {
-  background-color: #6b2a45;
-}
+.final-texto button:hover { background-color: #6b2a45; }
 
 /* ===== SCROLLBAR ===== */
 .museo-container::-webkit-scrollbar { height: 14px; }
@@ -185,7 +191,7 @@ h1 {
 /* ===== MEDIA QUERY ===== */
 @media (max-width: 768px) {
   .item { width: 250px; height: 380px; }
-  .final-texto { flex: 0 0 250px; font-size: 0.95rem; margin-left: 10px; bottom: 15px; }
+  .final-texto { flex: 0 0 250px; font-size: 0.95rem; margin-left: 10px;}
 }
 </style>
 </head>
@@ -241,24 +247,21 @@ h1 {
     <div class="texto">San Isidro! Inolvidable, contigo me dan ganas de todo</div>
   </div>
 
- <!-- ITEM FINAL CON TEXTO SOBRE LA FOTO -->
-<div class="item final-item">
-  <img src="images/0.jpg">
-  <div class="texto">Foto extra jajajaj, tienes unos ojos preciosos</div>
-</div>
+  <!-- ITEM FINAL CON TEXTO Y BOTON A LA DERECHA -->
+  <div class="item final-item">
+    <img src="images/0.jpg">
+  </div>
+  <div class="final-texto">
+    Todos son recuerdos que hemos tenido juntos, pero nos quedan muchas cosas por vivir juntos y el museo, aún no va a terminar...
+    <br>
+    <button onclick="location.href='continuacion.html'">Continuará</button>
+  </div>
 
-<!-- BLOQUE DE TEXTO Y BOTON A LA DERECHA -->
-<div class="final-texto">
-  Todos son recuerdos que hemos tenido juntos, pero nos quedan muchas cosas por vivir juntos y el museo, aún no va a terminar...
-  <br>
-  <button onclick="location.href='continuacion.html'">Continuará</button>
-</div>
 </div>
 
 <script>
 const items = document.querySelectorAll('.item');
 const titulo = document.getElementById('tituloMuseo');
-const cortinas = document.querySelectorAll('.cortina');
 
 // Mostrar titulo después de abrir cortinas
 setTimeout(() => {
@@ -279,6 +282,19 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 
 items.forEach(item => observer.observe(item));
+
+// Animación de final-texto
+const finalTexto = document.querySelector('.final-texto');
+const observerFinal = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      finalTexto.classList.add('visible');
+      observerFinal.unobserve(finalTexto);
+    }
+  });
+}, { threshold: 0.3 });
+
+observerFinal.observe(finalTexto);
 </script>
 
 </body>
