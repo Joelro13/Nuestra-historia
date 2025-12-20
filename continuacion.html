@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #e8f0ff; /* azul resultado */
+    background-color: #e8f0ff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,24 +90,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
-    color: red;
+    flex-direction: column;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.6s;
     z-index: 999;
-    flex-direction: column;
   }
 
   .overlay-corazon.show {
     opacity: 1;
     pointer-events: all;
-    animation: latir 1s ease-in-out infinite alternate;
   }
 
-  @keyframes latir {
-    0% { transform: scale(0.8); }
-    100% { transform: scale(1.2); }
+  .corazon {
+    font-size: 5rem;
+    color: black;
+    transition: font-size 1.5s ease-in-out;
+  }
+
+  .corazon.expand {
+    font-size: 100vh;
   }
 
   .mensaje-final {
@@ -115,6 +116,8 @@
     font-size: 1.5rem;
     text-align: center;
     margin-top: 20px;
+    font-family: monospace;
+    white-space: pre-wrap;
   }
 
 </style>
@@ -146,11 +149,12 @@
 <button class="btn-final">Más cosas aún??</button>
 
 <div class="overlay-corazon">
-  🖤
-  <div class="mensaje-final">Te quiero mucho, con cariño tu novio favorito Joel :)</div>
+  <div class="corazon">🖤</div>
+  <div class="mensaje-final"></div>
 </div>
 
 <script>
+  // Manejo estrellas
   const estrellas = document.querySelectorAll('.estrella');
   const mensaje = document.querySelector('.mensaje-estrellas');
   let seleccion = 0;
@@ -158,21 +162,14 @@
   estrellas.forEach(e => {
     e.addEventListener('mouseover', () => {
       const val = parseInt(e.dataset.value);
-      estrellas.forEach(s => {
-        s.classList.toggle('hover', parseInt(s.dataset.value) <= val);
-      });
+      estrellas.forEach(s => s.classList.toggle('hover', parseInt(s.dataset.value) <= val));
     });
     e.addEventListener('mouseout', () => {
-      estrellas.forEach(s => {
-        s.classList.remove('hover');
-      });
+      estrellas.forEach(s => s.classList.remove('hover'));
     });
     e.addEventListener('click', () => {
       seleccion = parseInt(e.dataset.value);
-      estrellas.forEach(s => {
-        s.classList.toggle('selected', parseInt(s.dataset.value) <= seleccion);
-      });
-      // Mensaje según estrellas
+      estrellas.forEach(s => s.classList.toggle('selected', parseInt(s.dataset.value) <= seleccion));
       if(seleccion === 1) mensaje.textContent = "Vale buena vacilada ahora pon tu opinión sincera bro";
       else if(seleccion >= 2 && seleccion <= 5) mensaje.textContent = "ENSERIO? venga no jodas JAJAJA";
       else if(seleccion >= 6 && seleccion <= 9) mensaje.textContent = "bueeno, respeto tu opinión pero no la comparto...";
@@ -183,13 +180,32 @@
   // Botón final y overlay corazón
   const btnFinal = document.querySelector('.btn-final');
   const overlay = document.querySelector('.overlay-corazon');
+  const corazon = document.querySelector('.corazon');
+  const mensajeFinal = document.querySelector('.overlay-corazon .mensaje-final');
 
   btnFinal.addEventListener('click', () => {
     overlay.classList.add('show');
-  });
 
+    // Pequeño retraso antes de expandir corazón
+    setTimeout(() => {
+      corazon.classList.add('expand');
+    }, 50);
+
+    // Después de expandir, efecto máquina de escribir
+    setTimeout(() => {
+      const texto = "Te quiero, con cariño tu novio favorito Joel :)";
+      let i = 0;
+      function escribir() {
+        if(i < texto.length){
+          mensajeFinal.textContent += texto.charAt(i);
+          i++;
+          setTimeout(escribir, 50);
+        }
+      }
+      escribir();
+    }, 1600); // coincide con duración de expandir corazón
+  });
 </script>
 
 </body>
 </html>
-
