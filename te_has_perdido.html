@@ -6,211 +6,199 @@
 <title>Museo de los recuerdos</title>
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: linear-gradient(to bottom, #9fd3ff, #ffffff);
-    animation: subirAlCielo 2.2s ease-out forwards;
-  }
+/* ===== BODY ===== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: linear-gradient(to bottom, #9fd3ff, #ffffff);
+  animation: subirAlCielo 2.2s ease-out forwards;
+  position: relative;
+}
 
-  h1 {
-    text-align: center;
-    margin: 25px 0;
-    font-size: 2.8rem;
-    color: white;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.35);
-    z-index: 5;
-    position: relative;
-  }
+/* ===== H1 ===== */
+h1 {
+  text-align: center;
+  margin: 25px 0;
+  font-size: 2.8rem;
+  color: white;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  z-index: 5;
+  position: relative;
+}
 
-  /* Cortinas */
-  .cortina {
-    position: fixed;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: #4a1f2f;
-    z-index: 10;
-  }
-  .cortina.izquierda {
-    left: 0;
-    transform: translateX(0);
-    animation: abrirCortinaIzq 2s ease-out forwards;
-  }
-  .cortina.derecha {
-    right: 0;
-    transform: translateX(0);
-    animation: abrirCortinaDer 2s ease-out forwards;
-  }
+/* ===== CORTINAS ROJAS REALISTAS ===== */
+.cortina {
+  position: fixed;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 10;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,0,0,0.2);
+}
 
-  @keyframes abrirCortinaIzq {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
-  @keyframes abrirCortinaDer {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(100%); }
-  }
-
-  .museo-container {
-    display: flex;
-    gap: 50px;
-    padding: 30px 60px;
-    overflow-x: auto;
-    height: 80vh;
-    scroll-behavior: smooth;
-    position: relative;
-    z-index: 1;
-  }
-
-  .item {
-    flex: 0 0 auto;
-    width: 320px;
-    height: 480px;
-    border-radius: 25px;
-    overflow: hidden;
-    background: #e6f6ff;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    opacity: 0;
-    transform: translateY(100px);
-    transition: opacity 1.8s ease, transform 1.8s ease;
-    position: relative;
-  }
-
-  .item.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .item img, .item video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .texto {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.5);
-    color: white;
-    padding: 14px;
-    font-size: 1rem;
-    text-align: center;
-  }
-
-  .museo-container::-webkit-scrollbar {
-    height: 14px;
-  }
-  .museo-container::-webkit-scrollbar-thumb {
-    background: rgba(120,180,255,0.7);
-    border-radius: 7px;
-  }
-  .museo-container::-webkit-scrollbar-track {
-    background: rgba(200,230,255,0.4);
-  }
-
-  /* Nubes */
-  .nube {
-    position: absolute;
-    width: 220px;
-    height: 110px;
-    background: rgba(255,255,255,0.6);
-    border-radius: 50%;
-    filter: blur(18px);
-    animation: flotar 40s linear infinite;
-  }
-
-  .nube:nth-child(1) { top: 60px; left: -250px; }
-  .nube:nth-child(2) { top: 160px; left: -300px; animation-duration: 55s; }
-  .nube:nth-child(3) { top: 260px; left: -200px; animation-duration: 35s; }
-
-  @keyframes flotar {
-    from { transform: translateX(0); }
-    to { transform: translateX(220vw); }
-  }
-  /* Columnas romanas realistas */
-  .columna {
-    position: fixed;
-    top: 0;
-    width: 70px;
-    height: 100%;
-    background: linear-gradient(to bottom, #f3f0e6 0%, #e0dacf 100%);
-    border-left: 2px solid #d4cbb7;
-    border-right: 2px solid #d4cbb7;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.3), 2px 0 10px rgba(0,0,0,0.2);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 5px 0;
-  }
-  .columna::before, .columna::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 20px;
-    background: radial-gradient(circle, rgba(200,180,150,0.8), transparent);
-  }
-  .columna.izq { left: 0; }
-  .columna.der { right: 0; }
-
-  /* Cortinas más realistas */
-  .cortina {
-    position: fixed;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, #4a1f2f 0%, #6b2a45 100%);
-    z-index: 10;
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
-    overflow: hidden;
-  }
-  .cortina.izquierda {
-    left: 0;
-    transform: translateX(0);
-    animation: abrirCortinaIzq 2s ease-out forwards;
-    background-image: repeating-linear-gradient(
-      to right,
+.cortina.izquierda {
+  left: 0;
+  transform: translateX(0);
+  animation: abrirCortinaIzq 2s ease-out forwards;
+  background-image:
+    linear-gradient(to right,
       rgba(255,255,255,0.05) 0px,
       rgba(255,255,255,0.05) 3px,
       transparent 3px,
       transparent 6px
-    );
-  }
-  .cortina.derecha {
-    right: 0;
-    transform: translateX(0);
-    animation: abrirCortinaDer 2s ease-out forwards;
-    background-image: repeating-linear-gradient(
-      to left,
+    ),
+    linear-gradient(to right, #7b1f2f 0%, #4a0e1d 50%, #7b1f2f 100%);
+}
+
+.cortina.derecha {
+  right: 0;
+  transform: translateX(0);
+  animation: abrirCortinaDer 2s ease-out forwards;
+  background-image:
+    linear-gradient(to left,
       rgba(255,255,255,0.05) 0px,
       rgba(255,255,255,0.05) 3px,
       transparent 3px,
       transparent 6px
-    );
-  }
+    ),
+    linear-gradient(to right, #7b1f2f 0%, #4a0e1d 50%, #7b1f2f 100%);
+}
 
-  @keyframes abrirCortinaIzq {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
-  @keyframes abrirCortinaDer {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(100%); }
-  }
+@keyframes abrirCortinaIzq {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+@keyframes abrirCortinaDer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
 
-  @keyframes subirAlCielo {
-    from { transform: translateY(80px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
+/* ===== COLUMNAS ROMANAS REALISTAS ===== */
+.columna {
+  position: fixed;
+  top: 0;
+  width: 70px;
+  height: 100%;
+  background: linear-gradient(to bottom, #f3f0e6 0%, #e0dacf 100%);
+  border-left: 2px solid #d4cbb7;
+  border-right: 2px solid #d4cbb7;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 2px 0 15px rgba(0,0,0,0.2);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px 0;
+}
 
+.columna::before, .columna::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 25px;
+  background: radial-gradient(circle, rgba(200,180,150,0.8), transparent);
+}
+
+.columna.izq { left: 0; }
+.columna.der { right: 0; }
+
+/* ===== MUSEO CONTAINER ===== */
+.museo-container {
+  display: flex;
+  gap: 50px;
+  padding: 30px 60px;
+  overflow-x: auto;
+  height: 80vh;
+  scroll-behavior: smooth;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== ITEMS ===== */
+.item {
+  flex: 0 0 auto;
+  width: 320px;
+  height: 480px;
+  border-radius: 25px;
+  overflow: hidden;
+  background: #e6f6ff;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 1.8s ease, transform 1.8s ease;
+  position: relative;
+}
+
+.item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.item img, .item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.texto {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 14px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* ===== SCROLLBAR ===== */
+.museo-container::-webkit-scrollbar {
+  height: 14px;
+}
+.museo-container::-webkit-scrollbar-thumb {
+  background: rgba(120,180,255,0.7);
+  border-radius: 7px;
+}
+.museo-container::-webkit-scrollbar-track {
+  background: rgba(200,230,255,0.4);
+}
+
+/* ===== NUBES ===== */
+.nube {
+  position: absolute;
+  width: 220px;
+  height: 110px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  filter: blur(18px);
+  animation: flotar 40s linear infinite;
+}
+.nube:nth-child(1) { top: 60px; left: -250px; }
+.nube:nth-child(2) { top: 160px; left: -300px; animation-duration: 55s; }
+.nube:nth-child(3) { top: 260px; left: -200px; animation-duration: 35s; }
+
+@keyframes flotar {
+  from { transform: translateX(0); }
+  to { transform: translateX(220vw); }
+}
+
+/* ===== ANIMACION SUBIENDO AL CIELO ===== */
+@keyframes subirAlCielo {
+  from { transform: translateY(80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== MEDIA QUERY ===== */
+@media (max-width: 768px) {
+  .item { width: 250px; height: 380px; }
+}
 </style>
+
 </head>
 
 <body>
