@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #e8f0ff;
+    background-color: #e8f0ff; /* azul resultado */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,7 +86,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: black;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,6 +93,7 @@
     opacity: 0;
     pointer-events: none;
     z-index: 999;
+    background-color: black;
   }
 
   .overlay-corazon.show {
@@ -105,6 +105,7 @@
     font-size: 5rem;
     color: black;
     transition: font-size 1.5s ease-in-out;
+    z-index: 1;
   }
 
   .corazon.expand {
@@ -112,14 +113,15 @@
   }
 
   .mensaje-final {
+    position: absolute;
+    z-index: 1000;
     color: white;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-align: center;
-    margin-top: 20px;
     font-family: monospace;
     white-space: pre-wrap;
+    max-width: 90%;
   }
-
 </style>
 </head>
 <body>
@@ -154,7 +156,6 @@
 </div>
 
 <script>
-  // Manejo estrellas
   const estrellas = document.querySelectorAll('.estrella');
   const mensaje = document.querySelector('.mensaje-estrellas');
   let seleccion = 0;
@@ -181,17 +182,15 @@
   const btnFinal = document.querySelector('.btn-final');
   const overlay = document.querySelector('.overlay-corazon');
   const corazon = document.querySelector('.corazon');
-  const mensajeFinal = document.querySelector('.overlay-corazon .mensaje-final');
+  const mensajeFinal = document.querySelector('.mensaje-final');
 
   btnFinal.addEventListener('click', () => {
     overlay.classList.add('show');
 
-    // Pequeño retraso antes de expandir corazón
     setTimeout(() => {
       corazon.classList.add('expand');
     }, 50);
 
-    // Después de expandir, efecto máquina de escribir
     setTimeout(() => {
       const texto = "Te quiero, con cariño tu novio favorito Joel :)";
       let i = 0;
@@ -203,7 +202,7 @@
         }
       }
       escribir();
-    }, 1600); // coincide con duración de expandir corazón
+    }, 1600);
   });
 </script>
 
