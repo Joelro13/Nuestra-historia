@@ -193,14 +193,20 @@
     }, 50);
 
     setTimeout(() => {
-      const texto = `Te quiero,<br>con cariño tu novio favorito Joel :)`;
+      const texto = "Te quiero,<br>con cariño tu novio favorito Joel :)";
       let i = 0;
       function escribir() {
         if(i < texto.length){
-          mensajeFinal.innerHTML += texto.charAt(i);
-          i++;
-          let delay = 80; // velocidad general
-          if(texto.charAt(i-1) === ',') delay = 400; // pausa tras coma
+          // Detectar si viene un <br>
+          if(texto.slice(i, i+4) === "<br>"){
+            mensajeFinal.innerHTML += "<br>";
+            i += 4; // saltar los 4 caracteres del <br>
+          } else {
+            mensajeFinal.innerHTML += texto.charAt(i);
+            i++;
+          }
+          let delay = 80;
+          if(texto.charAt(i-1) === ',') delay = 400;
           setTimeout(escribir, delay);
         }
       }
@@ -208,6 +214,5 @@
     }, 1600);
   });
 </script>
-
 </body>
 </html>
