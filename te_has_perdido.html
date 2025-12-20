@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Museo de los recuerdos</title>
+
 <style>
 /* ===== BODY ===== */
 body {
@@ -69,14 +70,8 @@ h1 {
     linear-gradient(to right, #7b1f2f 0%, #4a0e1d 50%, #7b1f2f 100%);
 }
 
-@keyframes abrirCortinaIzq {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-@keyframes abrirCortinaDer {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(100%); }
-}
+@keyframes abrirCortinaIzq { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+@keyframes abrirCortinaDer { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
 
 /* ===== COLUMNAS ROMANAS ===== */
 .columna {
@@ -87,19 +82,21 @@ h1 {
   background: linear-gradient(to bottom, #f3f0e6 0%, #e0dacf 100%);
   border-left: 2px solid #d4cbb7;
   border-right: 2px solid #d4cbb7;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 2px 0 15px rgba(0,0,0,0.2);
-  z-index: 2;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+  z-index: 0; /* fondo */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 5px 0;
+  opacity: 0.7;
+  filter: blur(1.5px); /* efecto de fondo */
 }
 .columna::before, .columna::after {
   content: "";
   display: block;
   width: 100%;
   height: 25px;
-  background: radial-gradient(circle, rgba(200,180,150,0.8), transparent);
+  background: radial-gradient(circle, rgba(200,180,150,0.6), transparent);
 }
 .columna.izq { left: 0; }
 .columna.der { right: 0; }
@@ -130,27 +127,9 @@ h1 {
   transition: opacity 1.8s ease, transform 1.8s ease;
   position: relative;
 }
-.item.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.item img, .item video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.texto {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  padding: 14px;
-  font-size: 1rem;
-  text-align: center;
-}
+.item.visible { opacity: 1; transform: translateY(0); }
+.item img, .item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.texto { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.5); color: white; padding: 14px; font-size: 1rem; text-align: center; }
 
 /* ===== TEXTO FINAL Y BOTON ===== */
 .final-texto {
@@ -170,21 +149,12 @@ h1 {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-.final-texto button:hover {
-  background-color: #6b2a45;
-}
+.final-texto button:hover { background-color: #6b2a45; }
 
 /* ===== SCROLLBAR ===== */
-.museo-container::-webkit-scrollbar {
-  height: 14px;
-}
-.museo-container::-webkit-scrollbar-thumb {
-  background: rgba(120,180,255,0.7);
-  border-radius: 7px;
-}
-.museo-container::-webkit-scrollbar-track {
-  background: rgba(200,230,255,0.4);
-}
+.museo-container::-webkit-scrollbar { height: 14px; }
+.museo-container::-webkit-scrollbar-thumb { background: rgba(120,180,255,0.7); border-radius: 7px; }
+.museo-container::-webkit-scrollbar-track { background: rgba(200,230,255,0.4); }
 
 /* ===== NUBES ===== */
 .nube {
@@ -202,10 +172,7 @@ h1 {
 @keyframes flotar { from { transform: translateX(0); } to { transform: translateX(220vw); } }
 
 /* ===== ANIMACION SUBIENDO AL CIELO ===== */
-@keyframes subirAlCielo {
-  from { transform: translateY(80px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+@keyframes subirAlCielo { from { transform: translateY(80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 /* ===== MEDIA QUERY ===== */
 @media (max-width: 768px) {
@@ -214,25 +181,26 @@ h1 {
 }
 </style>
 </head>
+
 <body>
 
-<!-- Columnas romanas -->
+<!-- COLUMNAS ROMANAS -->
 <div class="columna izq"></div>
 <div class="columna der"></div>
 
-<!-- Nubes -->
+<!-- NUBES -->
 <div class="nube"></div>
 <div class="nube"></div>
 <div class="nube"></div>
 
-<!-- Cortinas -->
+<!-- CORTINAS -->
 <div class="cortina izquierda"></div>
 <div class="cortina derecha"></div>
 
-<!-- Titulo -->
-<h1 id="titulo-museo">Museo de los recuerdos</h1>
+<!-- TITULO -->
+<h1 id="tituloMuseo">Museo de los recuerdos</h1>
 
-<!-- Contenedor del museo -->
+<!-- CONTENEDOR DEL MUSEO -->
 <div class="museo-container">
 
   <div class="item">
@@ -265,8 +233,8 @@ h1 {
     <div class="texto">San Isidro! Inolvidable, contigo me dan ganas de todo</div>
   </div>
 
-  <!-- Ultima imagen con texto a la derecha -->
-  <div class="item" style="position:relative; display:flex; flex-direction:row; align-items:center;">
+  <!-- ITEM FINAL CON TEXTO Y BOTON -->
+  <div class="item final-item">
     <img src="images/0.jpg">
     <div class="final-texto">
       Todos son recuerdos que hemos tenido juntos, pero nos quedan muchas cosas por vivir juntos y el museo, aún no va a terminar...
@@ -279,25 +247,26 @@ h1 {
 
 <script>
 const items = document.querySelectorAll('.item');
-const titulo = document.getElementById('titulo-museo');
+const titulo = document.getElementById('tituloMuseo');
+const cortinas = document.querySelectorAll('.cortina');
 
 // Mostrar titulo después de abrir cortinas
 setTimeout(() => {
-  titulo.style.opacity = 1;
-  titulo.style.transform = 'translateY(0)';
-}, 2100); // cortinas duran 2s, un poquito más de margen
+  titulo.style.opacity = "1";
+  titulo.style.transform = "translateY(0)";
+}, 2100); // 2s animación cortinas + 100ms margen
 
-// Animación de items con delay en las primeras 4
+// Animación de items
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       const index = [...items].indexOf(entry.target);
-      const delay = index < 4 ? 1400 + index*600 : 500;
-      setTimeout(() => { entry.target.classList.add('visible'); }, delay);
+      const delay = index < 4 ? 1400 + index * 600 : 500;
+      setTimeout(()=>{entry.target.classList.add('visible');}, delay);
       observer.unobserve(entry.target);
     }
   });
-},{threshold: 0.4});
+}, { threshold: 0.4 });
 
 items.forEach(item => observer.observe(item));
 </script>
