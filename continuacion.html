@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e8f0ff; /* azul resultado */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  h1 {
+    margin-top: 80px;
+    font-size: 3rem;
+    color: #1a1a1a;
+  }
+
+  p.subtexto {
+    max-width: 650px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 20px 20px 40px 20px;
+    color: #222;
+  }
+
+  /* ESTRELLAS */
+  .estrellas {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+  }
+
+  .estrella {
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  .estrella:hover,
+  .estrella.hover,
+  .estrella.selected {
+    color: gold;
+    transform: scale(1.3);
+  }
+
+  .mensaje-estrellas {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 40px;
+    min-height: 50px;
+    color: #333;
+  }
+
+  /* BOTON FINAL */
+  .btn-final {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #4a1f2f;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    margin-bottom: 50px;
+  }
+
+  .btn-final:hover {
+    background-color: #6b2a45;
+  }
+
+  /* CORAZON ANIMADO */
+  .overlay-corazon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: red;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s;
+    z-index: 999;
+    flex-direction: column;
+  }
+
+  .overlay-corazon.show {
+    opacity: 1;
+    pointer-events: all;
+    animation: latir 1s ease-in-out infinite alternate;
+  }
+
+  @keyframes latir {
+    0% { transform: scale(0.8); }
+    100% { transform: scale(1.2); }
+  }
+
+  .mensaje-final {
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Final</h1>
+<p class="subtexto">
+  Eeee sí, ya va siendo hora de dar por finalizado mi mini regalito, parece mentira pero esto es mucho curro ehh,
+  he intentado usar mi imaginación para crear distintas situaciones más o menos reales en nuestra relación.
+  Espero que te haya gustado muchísimo cariño, y si te ha gustado, califícame anda.
+</p>
+
+<div class="estrellas">
+  <span class="estrella" data-value="1">&#9733;</span>
+  <span class="estrella" data-value="2">&#9733;</span>
+  <span class="estrella" data-value="3">&#9733;</span>
+  <span class="estrella" data-value="4">&#9733;</span>
+  <span class="estrella" data-value="5">&#9733;</span>
+  <span class="estrella" data-value="6">&#9733;</span>
+  <span class="estrella" data-value="7">&#9733;</span>
+  <span class="estrella" data-value="8">&#9733;</span>
+  <span class="estrella" data-value="9">&#9733;</span>
+  <span class="estrella" data-value="10">&#9733;</span>
+</div>
+
+<div class="mensaje-estrellas"></div>
+
+<button class="btn-final">Más cosas aún??</button>
+
+<div class="overlay-corazon">
+  🖤
+  <div class="mensaje-final">Te quiero mucho, con cariño tu novio favorito Joel :)</div>
+</div>
+
+<script>
+  const estrellas = document.querySelectorAll('.estrella');
+  const mensaje = document.querySelector('.mensaje-estrellas');
+  let seleccion = 0;
+
+  estrellas.forEach(e => {
+    e.addEventListener('mouseover', () => {
+      const val = parseInt(e.dataset.value);
+      estrellas.forEach(s => {
+        s.classList.toggle('hover', parseInt(s.dataset.value) <= val);
+      });
+    });
+    e.addEventListener('mouseout', () => {
+      estrellas.forEach(s => {
+        s.classList.remove('hover');
+      });
+    });
+    e.addEventListener('click', () => {
+      seleccion = parseInt(e.dataset.value);
+      estrellas.forEach(s => {
+        s.classList.toggle('selected', parseInt(s.dataset.value) <= seleccion);
+      });
+      // Mensaje según estrellas
+      if(seleccion === 1) mensaje.textContent = "Vale buena vacilada ahora pon tu opinión sincera bro";
+      else if(seleccion >= 2 && seleccion <= 5) mensaje.textContent = "ENSERIO? venga no jodas JAJAJA";
+      else if(seleccion >= 6 && seleccion <= 9) mensaje.textContent = "bueeno, respeto tu opinión pero no la comparto...";
+      else if(seleccion === 10) mensaje.textContent = "Oleeee me alegro de que te haya gustado ya me dirás si quieres que me curre más cositas de estas (espero que no lo hayas puesto para contentarme ehh)";
+    });
+  });
+
+  // Botón final y overlay corazón
+  const btnFinal = document.querySelector('.btn-final');
+  const overlay = document.querySelector('.overlay-corazon');
+
+  btnFinal.addEventListener('click', () => {
+    overlay.classList.add('show');
+  });
+
+</script>
+
+</body>
+</html>
+
