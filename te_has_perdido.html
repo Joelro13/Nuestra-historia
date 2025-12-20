@@ -104,6 +104,22 @@
   @media (max-width: 768px) {
     .item { width: 250px; height: 380px; }
   }
+  /* Entrada desde abajo como subiendo al cielo */
+body {
+  animation: subirAlCielo 2.2s ease-out forwards;
+}
+
+@keyframes subirAlCielo {
+  from {
+    transform: translateY(80px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 </style>
 </head>
 
@@ -119,7 +135,7 @@
 
   <div class="item">
     <img src="images/1.jpeg">
-    <div class="texto">La primera vez que fuimos al hotel (me da buenísimos recuerdos, quiero volver jajajaj)</div>
+    <div class="texto">La primera vez que fuimos solos al hotel (me da buenísimos recuerdos, quiero volver jajajaj)</div>
   </div>
 
   <div class="item">
@@ -160,9 +176,15 @@
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        const index = [...items].indexOf(entry.target);
+
+        // Las 4 primeras tardan más
+        const delay = index < 4 ? 1400 + index * 600 : 500;
+
         setTimeout(() => {
           entry.target.classList.add('visible');
-        }, 600); // retraso elegante
+        }, delay);
+
         observer.unobserve(entry.target);
       }
     });
@@ -172,6 +194,7 @@
 
   items.forEach(item => observer.observe(item));
 </script>
+
 
 </body>
 </html>
