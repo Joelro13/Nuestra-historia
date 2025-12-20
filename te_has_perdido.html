@@ -135,28 +135,76 @@
     to { transform: translateX(220vw); }
   }
 
-  /* Columnas romanas decorativas */
+<style>
+  /* Columnas romanas realistas */
   .columna {
     position: fixed;
     top: 0;
-    width: 60px;
+    width: 70px;
     height: 100%;
-    background: repeating-linear-gradient(
-      to bottom,
-      #f3f0e6,
-      #f3f0e6 10px,
-      #e0dacf 10px,
-      #e0dacf 20px
-    );
-    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    background: linear-gradient(to bottom, #f3f0e6 0%, #e0dacf 100%);
+    border-left: 2px solid #d4cbb7;
+    border-right: 2px solid #d4cbb7;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.3), 2px 0 10px rgba(0,0,0,0.2);
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+  }
+  .columna::before, .columna::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 20px;
+    background: radial-gradient(circle, rgba(200,180,150,0.8), transparent);
   }
   .columna.izq { left: 0; }
   .columna.der { right: 0; }
 
-  @media (max-width: 768px) {
-    .item { width: 250px; height: 380px; }
-    .columna { display: none; }
+  /* Cortinas más realistas */
+  .cortina {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, #4a1f2f 0%, #6b2a45 100%);
+    z-index: 10;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+  .cortina.izquierda {
+    left: 0;
+    transform: translateX(0);
+    animation: abrirCortinaIzq 2s ease-out forwards;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba(255,255,255,0.05) 0px,
+      rgba(255,255,255,0.05) 3px,
+      transparent 3px,
+      transparent 6px
+    );
+  }
+  .cortina.derecha {
+    right: 0;
+    transform: translateX(0);
+    animation: abrirCortinaDer 2s ease-out forwards;
+    background-image: repeating-linear-gradient(
+      to left,
+      rgba(255,255,255,0.05) 0px,
+      rgba(255,255,255,0.05) 3px,
+      transparent 3px,
+      transparent 6px
+    );
+  }
+
+  @keyframes abrirCortinaIzq {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  @keyframes abrirCortinaDer {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
   }
 
   @keyframes subirAlCielo {
