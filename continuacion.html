@@ -198,7 +198,9 @@
         if(i < texto.length){
           mensajeFinal.textContent += texto.charAt(i);
           i++;
-          setTimeout(escribir, 50);
+          let delay = 80; // velocidad más lenta
+          if(texto.charAt(i-1) === ',') delay = 400; // pausa más larga tras coma
+          setTimeout(escribir, delay);
         }
       }
       escribir();
