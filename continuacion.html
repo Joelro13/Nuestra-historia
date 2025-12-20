@@ -186,6 +186,7 @@
 
   btnFinal.addEventListener('click', () => {
     overlay.classList.add('show');
+    mensajeFinal.innerHTML = ''; // limpiar antes de empezar
 
     setTimeout(() => {
       corazon.classList.add('expand');
@@ -196,10 +197,10 @@
       let i = 0;
       function escribir() {
         if(i < texto.length){
-          mensajeFinal.textContent += texto.charAt(i);
+          mensajeFinal.innerHTML += texto.charAt(i);
           i++;
-          let delay = 80; // velocidad más lenta
-          if(texto.charAt(i-1) === ',') delay = 400; // pausa más larga tras coma
+          let delay = 80; // velocidad general
+          if(texto.charAt(i-1) === ',') delay = 400; // pausa tras coma
           setTimeout(escribir, delay);
         }
       }
